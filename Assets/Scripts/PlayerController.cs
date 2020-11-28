@@ -29,8 +29,12 @@ public class PlayerController : MonoBehaviour
 
     private void GetPlayerInput()
     {
-        leftStickInput = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-        rightStickInput = new Vector2(Input.GetAxis("R_Horizontal"), Input.GetAxis("R_Vertical"));
+        leftStickInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+        if(leftStickInput.magnitude > 1)
+        {
+            leftStickInput.Normalize();
+        }
+        rightStickInput = new Vector2(Input.GetAxisRaw("R_Horizontal"), Input.GetAxisRaw("R_Vertical"));
 
         // Si se ha movido el ratón sustituimos rightStickInput, asi se puede usar ambas formas de input a la vez y no hay que cambiar de modo ni nada
         if(lastMousePosition != Input.mousePosition)
@@ -54,8 +58,11 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        rb.velocity.Set(Mathf.Lerp(rb.velocity.x, currentMovement.x * playerSpeed, playerAcceleration), Mathf.Lerp(rb.velocity.y, currentMovement.y * playerSpeed, playerAcceleration));
-        //rb.AddForce(new Vector3(leftStickInput.x * playerAcceleration * Time.deltaTime, 0, leftStickInput.y * playerAcceleration * Time.deltaTime), ForceMode.Impulse);
+        //Vector3 currentMovement = new Vector3(leftStickInput.x * playerSpeed * Time.deltaTime, 0, leftStickInput.y * playerSpeed * Time.deltaTime);
+        //rb.MovePosition(rb.position + currentMovement);
+        //rb.velocity = new Vector3(Mathf.Lerp(rb.velocity.x, leftStickInput.x * playerSpeed, playerAcceleration), 0, Mathf.Lerp(rb.velocity.z, leftStickInput.y * playerSpeed, playerAcceleration));
+        // Debug.Log(rb.velocity);
+        rb.AddForce(new Vector3(leftStickInput.x * playerAcceleration * Time.fixedDeltaTime, 0, leftStickInput.y * playerAcceleration * Time.fixedDeltaTime), ForceMode.Impulse);
 
         if (rightStickInput.magnitude > 0f)
         {
@@ -64,8 +71,7 @@ public class PlayerController : MonoBehaviour
             Quaternion playerRotation = Quaternion.LookRotation(currentRotation, Vector3.up);
 
             rb.rotation = (playerRotation);
-
-            
         }
     }
+
 }

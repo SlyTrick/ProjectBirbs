@@ -410,8 +410,8 @@ GameObject:
   m_Component:
   - component: {fileID: 348481720}
   - component: {fileID: 348481719}
-  - component: {fileID: 348481721}
   - component: {fileID: 348481722}
+  - component: {fileID: 348481721}
   m_Layer: 8
   m_Name: Birb
   m_TagString: Untagged
@@ -432,8 +432,8 @@ Rigidbody:
   m_AngularDrag: 0
   m_UseGravity: 0
   m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
+  m_Interpolate: 1
+  m_Constraints: 116
   m_CollisionDetection: 0
 --- !u!4 &348481720
 Transform:
@@ -459,13 +459,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 348481718}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f368c012d76ea174da01f5e366baf056, type: 3}
+  m_Script: {fileID: 11500000, guid: c037af6319e324e4b8d63fd66e028a21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 963194227}
-  playerSpeed: 5
-  playerAcceleration: 150
-  playerDeceleration: 20
+  playerAcceleration: 80
+  playerDeceleration: 10
 --- !u!136 &348481722
 CapsuleCollider:
   m_ObjectHideFlags: 0
