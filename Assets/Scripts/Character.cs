@@ -13,11 +13,17 @@ public class Character : MonoBehaviour
     public float playerAcceleration;
     public float playerDeceleration;
     private Rigidbody rb;
+
+    public GameObject bulletPrefab;
+    public Transform firePoint;
+    public float timeBetweenShots;
+    private bool canShoot;  
     #endregion
 
     public void Move(Vector2 direction)
     {
         rb.AddForce(new Vector3(direction.x * playerAcceleration * Time.fixedDeltaTime, 0, direction.y * playerAcceleration * Time.fixedDeltaTime), ForceMode.Impulse);
+        
     }
 
     public void Rotate(Vector2 direction)
@@ -32,11 +38,31 @@ public class Character : MonoBehaviour
         }
     }
 
+    public void Shoot(bool shootInput)
+    {
+        if(shootInput && canShoot)
+        {
+            canShoot = false;
+            Instantiate(bulletPrefab, firePoint.position, transform.rotation);
+            StartCoroutine(ShotCooldown());
+
+        }
+
+    }
+
+    IEnumerator ShotCooldown()
+    {
+        yield return new WaitForSeconds(timeBetweenShots);
+        canShoot = true;
+    }
+
     #region MonoBehaviour Callbacks
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
         rb.drag = playerDeceleration;
+
+        canShoot = true;
 
         movementSM = new StateMachine();
 

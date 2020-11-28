@@ -36,6 +36,5 @@ public class MovingState : GroundedState
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();
-        character.Move(leftStickInput);
     }
 }

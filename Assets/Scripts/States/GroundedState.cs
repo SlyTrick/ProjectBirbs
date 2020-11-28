@@ -8,6 +8,8 @@ public class GroundedState : State
     private Vector2 rightStickInput;
     private Vector3 lastMousePosition;
 
+    private bool shootInput;
+
     public GroundedState(Character character, StateMachine stateMachine) : base(character, stateMachine)
     {
 
@@ -51,6 +53,8 @@ public class GroundedState : State
                 rightStickInput = new Vector2(pointToLook.x - character.transform.position.x, -pointToLook.z + character.transform.position.z);
             }
         }
+
+        shootInput = Input.GetButton("Shoot");
     }
 
     public override void LogicUpdate()
@@ -62,6 +66,8 @@ public class GroundedState : State
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();
+        character.Move(leftStickInput);
         character.Rotate(rightStickInput);
+        character.Shoot(shootInput);
     }
 }
