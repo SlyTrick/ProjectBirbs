@@ -429,7 +429,7 @@ Rigidbody:
   serializedVersion: 2
   m_Mass: 1
   m_Drag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -462,8 +462,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f368c012d76ea174da01f5e366baf056, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mainCamera: {fileID: 963194227}
   playerSpeed: 5
-  playerAcceleration: 0.4
+  playerAcceleration: 150
+  playerDeceleration: 20
 --- !u!136 &348481722
 CapsuleCollider:
   m_ObjectHideFlags: 0
