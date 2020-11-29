@@ -90,7 +90,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3947266812711560091}
-  - component: {fileID: 3947266812711560090}
+  - component: {fileID: 523462935440762194}
   - component: {fileID: 3947266812711560089}
   - component: {fileID: 3947266812711560088}
   m_Layer: 9
@@ -115,7 +115,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!54 &3947266812711560090
+--- !u!54 &523462935440762194
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -130,7 +130,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 116
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!136 &3947266812711560089
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -159,5 +159,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 15
   timeToLive: 3
+  teamId: 0
   particleEffect: {fileID: 4256318742635070123, guid: 8e239c96296c9a545ae7b21bdd9beafa,
     type: 3}

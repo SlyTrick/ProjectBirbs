@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Character : MonoBehaviour
 {
@@ -20,9 +21,12 @@ public class Character : MonoBehaviour
     public GameObject bulletPrefab;
     public Transform firePoint;
     public float timeBetweenShots;
+    public int teamId;
     private bool canShoot;
 
+
     public InputController inputController;
+    
     #endregion
 
     public void Move(Vector2 direction, float acceleration)
@@ -48,7 +52,9 @@ public class Character : MonoBehaviour
         if(shootInput && canShoot)
         {
             canShoot = false;
-            Instantiate(bulletPrefab, firePoint.position, transform.rotation);
+            GameObject objBullet = Instantiate(bulletPrefab, firePoint.position, transform.rotation);
+            objBullet.GetComponent<BulletController>().teamId = teamId;
+            Physics.IgnoreCollision(GetComponent<Collider>(), objBullet.GetComponentInChildren<Collider>());
             StartCoroutine(ShotCooldown());
 
         }
@@ -68,7 +74,7 @@ public class Character : MonoBehaviour
         rb.drag = playerDeceleration;
 
         canShoot = true;
-
+        teamId = GetComponentInChildren<PlayerInput>().playerIndex;
         movementSM = new StateMachine();
 
         idle = new IdleState(this, movementSM);

@@ -734,10 +734,10 @@ MonoBehaviour:
   m_JoinAction:
     m_UseReference: 0
     m_Action:
-      m_Name: 
+      m_Name: Join
       m_Type: 0
       m_ExpectedControlType: 
-      m_Id: 
+      m_Id: 9d79c6ba-9710-40f9-84e6-8906ee1a349d
       m_Processors: 
       m_Interactions: 
       m_SingletonActionBindings: []

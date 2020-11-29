@@ -354,7 +354,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4379360996716867955}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.25}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6132640161298287751}
@@ -398,7 +398,7 @@ LineRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Positions:
   - {x: 0, y: 0, z: 0}
   - {x: 0, y: 0, z: 5}
@@ -549,7 +549,7 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7280001635364014251}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!114 &3096676895535497841
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -650,4 +650,5 @@ MonoBehaviour:
     type: 3}
   firePoint: {fileID: 4379360996716867954}
   timeBetweenShots: 0.2
+  teamId: 0
   inputController: {fileID: 7808323532440408334}
