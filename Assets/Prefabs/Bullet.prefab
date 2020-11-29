@@ -159,3 +159,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 15
   timeToLive: 3
+  particleEffect: {fileID: 4256318742635070123, guid: 8e239c96296c9a545ae7b21bdd9beafa,
+    type: 3}

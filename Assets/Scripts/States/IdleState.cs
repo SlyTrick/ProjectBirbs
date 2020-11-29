@@ -27,10 +27,11 @@ public class IdleState : GroundedState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-        if (leftStickInput.magnitude != 0)
-        {
+        if (character.inputController.leftStickInput.magnitude != 0)
             stateMachine.ChangeState(character.moving);
-        }
+
+        if (character.inputController.shootInput)
+            stateMachine.ChangeState(character.idleShooting);
     }
 
     public override void PhysicsUpdate()

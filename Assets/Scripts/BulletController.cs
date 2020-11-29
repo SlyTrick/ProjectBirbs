@@ -8,6 +8,7 @@ public class BulletController : MonoBehaviour
     public float timeToLive;
     Vector3 moveVector;
 
+    public GameObject particleEffect;
     // Start is called before the first frame update
     void Start()
     {
@@ -24,11 +25,13 @@ public class BulletController : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         Destroy(gameObject);
+        Instantiate(particleEffect, transform.position, transform.rotation);
     }
 
     IEnumerator DestroyBullet()
     {
         yield return new WaitForSeconds(timeToLive);
         Destroy(gameObject);
+        Instantiate(particleEffect, transform.position, transform.rotation);
     }
 }
