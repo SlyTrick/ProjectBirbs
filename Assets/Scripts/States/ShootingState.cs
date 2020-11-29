@@ -28,6 +28,9 @@ public class ShootingState : State
     public override void LogicUpdate()
     {
         base.LogicUpdate();
+        if (character.life <= 0)
+            stateMachine.ChangeState(character.dead);
+
 
     }
 

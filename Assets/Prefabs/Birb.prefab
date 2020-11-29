@@ -649,6 +649,9 @@ MonoBehaviour:
   bulletPrefab: {fileID: 3947266812711560087, guid: c18b05a6a419cd24f88126cbaf0b7ba0,
     type: 3}
   firePoint: {fileID: 4379360996716867954}
-  timeBetweenShots: 0.2
+  timeBetweenShots: 0.1
   teamId: 0
+  respawnTime: 4
+  life: 0
+  maxLife: 100
   inputController: {fileID: 7808323532440408334}

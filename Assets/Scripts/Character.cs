@@ -11,6 +11,7 @@ public class Character : MonoBehaviour
     public MovingState moving;
     public IdleShootingState idleShooting;
     public MovingShootingState movingShooting;
+    public DeadState dead;
 
     public Camera mainCamera;
     public float playerAcceleration;
@@ -23,7 +24,10 @@ public class Character : MonoBehaviour
     public float timeBetweenShots;
     public int teamId;
     private bool canShoot;
+    public float respawnTime;
 
+    public int life;
+    public int maxLife;
 
     public InputController inputController;
     
@@ -67,12 +71,29 @@ public class Character : MonoBehaviour
         canShoot = true;
     }
 
+    public void TakeDamage(int damage)
+    {
+        life -= damage;
+        Debug.Log("Ouch perdí " + damage + " puntos de vida");
+        Debug.Log("Tengo " + life + " puntos de vida");
+    }
+
+    public IEnumerator Respawn()
+    {
+        yield return new WaitForSeconds(respawnTime);
+        transform.position = new Vector3(0,0,0);
+        movementSM.ChangeState(idle);
+        life = maxLife;
+        GetComponent<CapsuleCollider>().enabled = true;
+    }
+
     #region MonoBehaviour Callbacks
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
         rb.drag = playerDeceleration;
 
+        life = maxLife;
         canShoot = true;
         teamId = GetComponentInChildren<PlayerInput>().playerIndex;
         movementSM = new StateMachine();
@@ -81,6 +102,7 @@ public class Character : MonoBehaviour
         moving = new MovingState(this, movementSM);
         idleShooting = new IdleShootingState(this, movementSM);
         movingShooting = new MovingShootingState(this, movementSM);
+        dead = new DeadState(this, movementSM);
         
         movementSM.Initialize(idle);
     }

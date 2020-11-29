@@ -157,6 +157,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9846f39eaa8c67f4187c8816e23dfa53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: 4
+  sameTeamDamage: 2
   speed: 15
   timeToLive: 3
   teamId: 0

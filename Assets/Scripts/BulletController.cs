@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class BulletController : MonoBehaviour
 {
+    public int damage;
+    public int sameTeamDamage;
     public float speed;
     public float timeToLive;
     Vector3 moveVector;
@@ -35,6 +37,8 @@ public class BulletController : MonoBehaviour
 
                 Destroy(gameObject);
                 Instantiate(particleEffect, transform.position, transform.rotation);
+
+                collided.TakeDamage(damage);
             }
             else
             {
@@ -43,6 +47,9 @@ public class BulletController : MonoBehaviour
                 // Podría haber daño aliado pero daño entre 2
                 Destroy(gameObject);
                 Instantiate(particleEffect, transform.position, transform.rotation);
+
+
+                collided.TakeDamage(damage / sameTeamDamage);
             }
             
         }
