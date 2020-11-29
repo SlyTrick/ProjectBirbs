@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4891377202264806011}
   - component: {fileID: 2554022726023566229}
   - component: {fileID: 1817928683248508556}
+  - component: {fileID: 1301242289120037422}
   m_Layer: 9
   m_Name: BulletParticle
   m_TagString: Untagged
@@ -4812,3 +4813,16 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
+--- !u!114 &1301242289120037422
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4256318742635070123}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a823e31784028f248888d4cafaa39726, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lifeTime: 1
