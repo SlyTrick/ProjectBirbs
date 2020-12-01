@@ -37,22 +37,6 @@ public class InputController : MonoBehaviour
             leftStickInput.Normalize();
         }
     }
-    private void OnMoveUp(InputValue value)
-    {
-        leftStickInput.y = value.Get<float>();
-    }
-    private void OnMoveDown(InputValue value)
-    {
-        leftStickInput.y = -value.Get<float>();
-    }
-    private void OnMoveLeft(InputValue value)
-    {
-        leftStickInput.x = -value.Get<float>();
-    }
-    private void OnMoveRight(InputValue value)
-    {
-        leftStickInput.x = value.Get<float>();
-    }
     private void OnShoot(InputValue value)
     {
         shootInput = value.Get<float>() == 1;
