@@ -20,10 +20,6 @@ public class GroundedState : State
         base.Exit();
     }
 
-    public override void HandleInput()
-    {
-        base.HandleInput();
-    }
 
     public override void LogicUpdate()
     {
@@ -38,5 +34,24 @@ public class GroundedState : State
         base.PhysicsUpdate();
         character.Move(character.inputController.leftStickInput, character.playerAcceleration);
         character.Rotate(character.inputController.rightStickInput);
+    }
+
+    public override void OnMove()
+    {
+        base.OnMove();
+    }
+
+    public override void OnShoot()
+    {
+        base.OnShoot();
+    }
+    public override void OnLook()
+    {
+        base.OnLook();
+    }
+    public override void OnDead()
+    {
+        base.OnLook();
+        stateMachine.ChangeState(character.dead);
     }
 }

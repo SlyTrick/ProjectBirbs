@@ -76,7 +76,10 @@ public class Character : MonoBehaviour
         life -= damage;
         Debug.Log("Ouch perdí " + damage + " puntos de vida");
         Debug.Log("Tengo " + life + " puntos de vida");
+        if (life <= 0)
+            movementSM.CurrentState.OnDead();
     }
+
 
     public IEnumerator Respawn()
     {
@@ -109,14 +112,33 @@ public class Character : MonoBehaviour
 
     private void Update()
     {
-        movementSM.CurrentState.HandleInput();
-
         movementSM.CurrentState.LogicUpdate();
     }
 
     private void FixedUpdate()
     {
         movementSM.CurrentState.PhysicsUpdate();
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        BulletController collided;
+        if (collision.gameObject.TryGetComponent<BulletController>(out collided))
+        {
+            if (collided.teamId != teamId)
+            {
+                Debug.Log("De otro equipo?");
+                TakeDamage(collided.damage);
+            }
+            else
+            {
+                Debug.Log("Del mismo equipo?");
+
+                // Podría haber daño aliado pero daño entre 2
+                TakeDamage(collided.damage / collided.sameTeamDamage);
+            }
+
+        }
     }
     #endregion
 }

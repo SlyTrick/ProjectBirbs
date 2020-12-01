@@ -20,18 +20,9 @@ public class ShootingState : State
         base.Exit();
     }
 
-    public override void HandleInput()
-    {
-        base.HandleInput();
-    }
-
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-        if (character.life <= 0)
-            stateMachine.ChangeState(character.dead);
-
-
     }
 
     public override void PhysicsUpdate()
@@ -40,5 +31,24 @@ public class ShootingState : State
         character.Move(character.inputController.leftStickInput, character.shootingAcceleration);
         character.Rotate(character.inputController.rightStickInput);
         character.Shoot(character.inputController.shootInput);
+    }
+
+    public override void OnMove()
+    {
+        base.OnMove();
+    }
+
+    public override void OnShoot()
+    {
+        base.OnShoot();
+    }
+    public override void OnLook()
+    {
+        base.OnLook();
+    }
+    public override void OnDead()
+    {
+        base.OnLook();
+        stateMachine.ChangeState(character.dead);
     }
 }

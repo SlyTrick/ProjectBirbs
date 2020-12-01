@@ -21,11 +21,6 @@ public class DeadState : GroundedState
         base.Exit();
     }
 
-    public override void HandleInput()
-    {
-        base.HandleInput();
-    }
-
     public override void LogicUpdate()
     {
         base.LogicUpdate();
@@ -34,5 +29,21 @@ public class DeadState : GroundedState
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();
+    }
+    public override void OnMove()
+    {
+        base.OnMove();
+    }
+    public override void OnShoot()
+    {
+        base.OnShoot();
+    }
+    public override void OnLook()
+    {
+        base.OnLook();
+    }
+    public override void OnDead()
+    {
+        base.OnDead();
     }
 }

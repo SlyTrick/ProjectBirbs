@@ -18,23 +18,35 @@ public class IdleShootingState : ShootingState
         base.Exit();
     }
 
-    public override void HandleInput()
-    {
-        base.HandleInput();
-    }
-
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-        if (character.inputController.leftStickInput.magnitude != 0)
-            stateMachine.ChangeState(character.movingShooting);
-
-        if (!character.inputController.shootInput)
-            stateMachine.ChangeState(character.idle);
     }
 
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();
+    }
+
+    public override void OnMove()
+    {
+        base.OnMove();
+        if (character.inputController.leftStickInput.magnitude != 0)
+            stateMachine.ChangeState(character.movingShooting);
+    }
+
+    public override void OnShoot()
+    {
+        base.OnShoot();
+        if (!character.inputController.shootInput)
+            stateMachine.ChangeState(character.idle);
+    }
+    public override void OnLook()
+    {
+        base.OnLook();
+    }
+    public override void OnDead()
+    {
+        base.OnDead();
     }
 }
