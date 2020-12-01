@@ -24,8 +24,6 @@ public class GroundedState : State
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-        if (character.life <= 0)
-            stateMachine.ChangeState(character.dead);
 
     }
 
@@ -51,7 +49,7 @@ public class GroundedState : State
     }
     public override void OnDead()
     {
-        base.OnLook();
+        base.OnDead();
         stateMachine.ChangeState(character.dead);
     }
 }

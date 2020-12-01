@@ -29,6 +29,8 @@ public class Character : MonoBehaviour
     public int life;
     public int maxLife;
 
+    private int score;
+
     public InputController inputController;
     
     #endregion
@@ -58,11 +60,11 @@ public class Character : MonoBehaviour
             canShoot = false;
             GameObject objBullet = Instantiate(bulletPrefab, firePoint.position, transform.rotation);
             objBullet.GetComponent<BulletController>().teamId = teamId;
+            objBullet.GetComponent<BulletController>().owner = this;
             Physics.IgnoreCollision(GetComponent<Collider>(), objBullet.GetComponentInChildren<Collider>());
             StartCoroutine(ShotCooldown());
 
         }
-
     }
 
     IEnumerator ShotCooldown()
@@ -71,15 +73,23 @@ public class Character : MonoBehaviour
         canShoot = true;
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(int damage, BulletController bullet)
     {
         life -= damage;
-        Debug.Log("Ouch perdí " + damage + " puntos de vida");
         Debug.Log("Tengo " + life + " puntos de vida");
+
         if (life <= 0)
+        {
+            bullet.owner.AddPoint();
             movementSM.CurrentState.OnDead();
+        }
     }
 
+    public void AddPoint()
+    {
+        score++;
+        Debug.Log(teamId + ": Tengo " + score + " puntos");
+    }
 
     public IEnumerator Respawn()
     {
@@ -128,14 +138,14 @@ public class Character : MonoBehaviour
             if (collided.teamId != teamId)
             {
                 Debug.Log("De otro equipo?");
-                TakeDamage(collided.damage);
+                TakeDamage(collided.damage, collided);
             }
             else
             {
                 Debug.Log("Del mismo equipo?");
 
                 // Podría haber daño aliado pero daño entre 2
-                TakeDamage(collided.damage / collided.sameTeamDamage);
+                TakeDamage(collided.damage / collided.sameTeamDamage, collided);
             }
 
         }

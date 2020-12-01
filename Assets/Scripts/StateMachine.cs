@@ -19,7 +19,7 @@ public class StateMachine
 
         CurrentState = newState;
         newState.Enter();
-        Debug.Log("Estado: " + newState);
+        // Debug.Log("Estado: " + newState);
     }
 
 }

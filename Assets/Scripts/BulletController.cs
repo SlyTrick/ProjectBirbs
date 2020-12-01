@@ -11,6 +11,7 @@ public class BulletController : MonoBehaviour
     Vector3 moveVector;
 
     public int teamId;
+    public Character owner;
 
     public GameObject particleEffect;
     // Start is called before the first frame update
@@ -28,38 +29,8 @@ public class BulletController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Character collided;
-        if (collision.gameObject.TryGetComponent<Character>(out collided))
-        {
-            if(collided.teamId != teamId)
-            {
-                Debug.Log("De otro equipo?");
-
-                Destroy(gameObject);
-                Instantiate(particleEffect, transform.position, transform.rotation);
-
-                collided.TakeDamage(damage);
-            }
-            else
-            {
-                Debug.Log("Del mismo equipo?");
-
-                // Podría haber daño aliado pero daño entre 2
-                Destroy(gameObject);
-                Instantiate(particleEffect, transform.position, transform.rotation);
-
-
-                collided.TakeDamage(damage / sameTeamDamage);
-            }
-            
-        }
-        else
-        {
-            Debug.Log("Pared?");
-            Destroy(gameObject);
-            Instantiate(particleEffect, transform.position, transform.rotation);
-        }
-        
+        Destroy(gameObject);
+        Instantiate(particleEffect, transform.position, transform.rotation);
     }
 
     IEnumerator DestroyBullet()

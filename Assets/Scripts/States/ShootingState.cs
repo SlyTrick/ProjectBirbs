@@ -48,7 +48,7 @@ public class ShootingState : State
     }
     public override void OnDead()
     {
-        base.OnLook();
+        base.OnDead();
         stateMachine.ChangeState(character.dead);
     }
 }

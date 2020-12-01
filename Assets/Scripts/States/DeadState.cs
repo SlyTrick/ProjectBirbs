@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DeadState : GroundedState
+public class DeadState : State
 {
     public DeadState(Character character, StateMachine stateMachine) : base(character, stateMachine)
     {
