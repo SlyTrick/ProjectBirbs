@@ -2,14 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShootingState : State
+public class IdleShieldState : ShieldState
 {
-
-    public ShootingState(Character character, StateMachine stateMachine) : base(character, stateMachine)
+    public IdleShieldState(Character character, StateMachine stateMachine) : base(character, stateMachine)
     {
 
     }
-
     public override void Enter()
     {
         base.Enter();
@@ -28,19 +26,24 @@ public class ShootingState : State
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();
-        character.Move(character.inputController.leftStickInput, character.shootingAcceleration);
-        character.Rotate(character.inputController.rightStickInput);
-        character.Shoot(character.inputController.shootInput);
     }
 
     public override void OnMove()
     {
         base.OnMove();
+        if (character.GetInputController().leftStickInput.magnitude != 0)
+            stateMachine.ChangeState(character.movingShield);
     }
 
     public override void OnShoot()
     {
         base.OnShoot();
+    }
+    public override void OnShield()
+    {
+        base.OnShield();
+        if (!character.GetInputController().shieldInput)
+            stateMachine.ChangeState(character.idle);
     }
     public override void OnLook()
     {
@@ -49,6 +52,9 @@ public class ShootingState : State
     public override void OnDead()
     {
         base.OnDead();
-        stateMachine.ChangeState(character.dead);
+    }
+    public override void OnStun()
+    {
+        base.OnStun();
     }
 }

@@ -2,20 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class IdleShootingState : ShootingState
+public class ShieldState : State
 {
-    public IdleShootingState(Character character, StateMachine stateMachine) : base(character, stateMachine)
+
+    public ShieldState(Character character, StateMachine stateMachine) : base(character, stateMachine)
     {
 
     }
+
     public override void Enter()
     {
         base.Enter();
+        character.CreateShield();
     }
 
     public override void Exit()
     {
         base.Exit();
+        character.RemoveShield();
     }
 
     public override void LogicUpdate()
@@ -26,20 +30,18 @@ public class IdleShootingState : ShootingState
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();
+        character.Move(character.GetInputController().leftStickInput, character.GetShootingAcceleration());
+        character.Rotate(character.GetInputController().rightStickInput);
     }
 
     public override void OnMove()
     {
         base.OnMove();
-        if (character.inputController.leftStickInput.magnitude != 0)
-            stateMachine.ChangeState(character.movingShooting);
     }
 
     public override void OnShoot()
     {
         base.OnShoot();
-        if (!character.inputController.shootInput)
-            stateMachine.ChangeState(character.idle);
     }
     public override void OnLook()
     {
@@ -48,5 +50,11 @@ public class IdleShootingState : ShootingState
     public override void OnDead()
     {
         base.OnDead();
+        stateMachine.ChangeState(character.dead);
+    }
+    public override void OnStun()
+    {
+        base.OnStun();
+        stateMachine.ChangeState(character.stun);
     }
 }

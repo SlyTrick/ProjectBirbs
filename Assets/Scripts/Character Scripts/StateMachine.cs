@@ -10,7 +10,7 @@ public class StateMachine
     {
         CurrentState = startingState;
         startingState.Enter();
-        Debug.Log("Estado: " + startingState);
+        //Debug.Log("Estado: " + startingState);
     }
 
     public void ChangeState(State newState)

@@ -9,6 +9,7 @@ public class InputController : MonoBehaviour
     public Vector2 rightStickInput;
     public Vector2 lastMousePosition;
     public bool shootInput;
+    public bool shieldInput;
     public Character character;
 
     public int playerNumber;
@@ -40,6 +41,15 @@ public class InputController : MonoBehaviour
             character.movementSM.CurrentState.OnShoot();
         }
     }
+    private void OnShield(InputValue value)
+    {
+        shieldInput = value.Get<float>() == 1;
+
+        if (character.movementSM != null)
+        {
+            character.movementSM.CurrentState.OnShield();
+        }
+    }
     private void OnLook(InputValue value)
     {
         rightStickInput = value.Get<Vector2>();
@@ -52,7 +62,7 @@ public class InputController : MonoBehaviour
     private void OnLookMouse(InputValue value)
     {
         lastMousePosition = value.Get<Vector2>();
-        Ray cameraRay = character.mainCamera.ScreenPointToRay(lastMousePosition);
+        Ray cameraRay = character.GetCamera().ScreenPointToRay(lastMousePosition);
         Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
         float rayLength;
         // Comprobar si se llega a cruzar

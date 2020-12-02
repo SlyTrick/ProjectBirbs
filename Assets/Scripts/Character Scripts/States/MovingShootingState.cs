@@ -32,15 +32,21 @@ public class MovingShootingState : ShootingState
     public override void OnMove()
     {
         base.OnMove();
-        if (character.inputController.leftStickInput.magnitude == 0)
+        if (character.GetInputController().leftStickInput.magnitude == 0)
             stateMachine.ChangeState(character.idleShooting);
     }
 
     public override void OnShoot()
     {
         base.OnShoot();
-        if (!character.inputController.shootInput)
+        if (!character.GetInputController().shootInput)
             stateMachine.ChangeState(character.moving);
+    }
+    public override void OnShield()
+    {
+        base.OnShield();
+        if (character.GetInputController().shieldInput && character.GetCanShield())
+            stateMachine.ChangeState(character.movingShield);
     }
     public override void OnLook()
     {
@@ -49,5 +55,9 @@ public class MovingShootingState : ShootingState
     public override void OnDead()
     {
         base.OnDead();
+    }
+    public override void OnStun()
+    {
+        base.OnStun();
     }
 }

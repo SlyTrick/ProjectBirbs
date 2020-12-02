@@ -15,19 +15,19 @@ public class BulletController : MonoBehaviour
 
     public GameObject particleEffect;
     // Start is called before the first frame update
-    void Start()
+    public virtual void Start()
     {
         moveVector = Vector3.forward * speed * Time.fixedDeltaTime;
         StartCoroutine(DestroyBullet());
     }
 
     // Update is called once per frame
-    private void FixedUpdate()
+    public virtual void FixedUpdate()
     {
         transform.Translate(moveVector);
     }
 
-    private void OnCollisionEnter(Collision collision)
+    public virtual void OnCollisionEnter(Collision collision)
     {
         Destroy(gameObject);
         Instantiate(particleEffect, transform.position, transform.rotation);

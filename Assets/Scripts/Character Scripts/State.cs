@@ -19,6 +19,8 @@ public abstract class State
     public virtual void Exit() { }
     public virtual void OnMove() { }
     public virtual void OnShoot() { }
+    public virtual void OnShield() { }
     public virtual void OnLook() { }
     public virtual void OnDead() { }
+    public virtual void OnStun() { }
 }

@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GroundedState : State
+public class DeadState : State
 {
-
-    public GroundedState(Character character, StateMachine stateMachine) : base(character, stateMachine)
+    public DeadState(Character character, StateMachine stateMachine) : base(character, stateMachine)
     {
 
     }
@@ -13,6 +12,8 @@ public class GroundedState : State
     public override void Enter()
     {
         base.Enter();
+        
+        character.Die();
     }
 
     public override void Exit()
@@ -20,25 +21,19 @@ public class GroundedState : State
         base.Exit();
     }
 
-
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-
     }
 
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();
-        character.Move(character.inputController.leftStickInput, character.playerAcceleration);
-        character.Rotate(character.inputController.rightStickInput);
     }
-
     public override void OnMove()
     {
         base.OnMove();
     }
-
     public override void OnShoot()
     {
         base.OnShoot();
@@ -50,6 +45,9 @@ public class GroundedState : State
     public override void OnDead()
     {
         base.OnDead();
-        stateMachine.ChangeState(character.dead);
+    }
+    public override void OnStun()
+    {
+        base.OnStun();
     }
 }

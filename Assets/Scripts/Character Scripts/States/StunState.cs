@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DeadState : State
+public class StunState : State
 {
-    public DeadState(Character character, StateMachine stateMachine) : base(character, stateMachine)
+    public StunState(Character character, StateMachine stateMachine) : base(character, stateMachine)
     {
 
     }
@@ -12,8 +12,7 @@ public class DeadState : State
     public override void Enter()
     {
         base.Enter();
-        character.GetComponent<CapsuleCollider>().enabled = false;
-        character.StartCoroutine(character.Respawn());
+        character.Stun();
     }
 
     public override void Exit()
@@ -29,11 +28,15 @@ public class DeadState : State
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();
+        character.Move(character.GetInputController().leftStickInput, character.GetStunnedAcceleration());
+        character.Rotate(character.GetInputController().rightStickInput);
     }
+
     public override void OnMove()
     {
         base.OnMove();
     }
+
     public override void OnShoot()
     {
         base.OnShoot();
@@ -45,5 +48,10 @@ public class DeadState : State
     public override void OnDead()
     {
         base.OnDead();
+        stateMachine.ChangeState(character.dead);
+    }
+    public override void OnStun()
+    {
+        base.OnStun();
     }
 }
