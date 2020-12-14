@@ -129,6 +129,7 @@ public class ShieldController : MonoBehaviour
                 objBullet.GetComponent<BulletController>().owner = birbCharacter;
                 objBullet.GetComponent<BulletController>().enabled = true;
                 Physics.IgnoreCollision(GetComponent<Collider>(), objBullet.GetComponentInChildren<Collider>());
+                Physics.IgnoreCollision(birb.GetComponent<Collider>(), objBullet.GetComponentInChildren<Collider>());
             }
             else
             {

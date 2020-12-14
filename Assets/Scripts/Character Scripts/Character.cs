@@ -76,6 +76,7 @@ public class Character : MonoBehaviour
             objBullet.GetComponent<BulletController>().teamId = teamId;
             objBullet.GetComponent<BulletController>().owner = this;
             Physics.IgnoreCollision(GetComponent<Collider>(), objBullet.GetComponentInChildren<Collider>());
+            Physics.IgnoreCollision(shield.GetComponent<Collider>(), objBullet.GetComponentInChildren<Collider>());
             StartCoroutine(ShotCooldown());
 
         }
