@@ -41,6 +41,14 @@ public class ShootingState : State
     public override void OnShoot()
     {
         base.OnShoot();
+        if (!character.GetInputController().shootInput)
+            stateMachine.ChangeState(character.groundedState);
+    }
+    public override void OnShield()
+    {
+        base.OnShield();
+        if (character.GetInputController().shieldInput && character.GetCanShield())
+            stateMachine.ChangeState(character.shieldState);
     }
     public override void OnLook()
     {
@@ -49,7 +57,7 @@ public class ShootingState : State
     public override void OnDead()
     {
         base.OnDead();
-        stateMachine.ChangeState(character.dead);
+        stateMachine.ChangeState(character.deadState);
     }
     public override void OnStun()
     {

@@ -48,7 +48,7 @@ public class StunState : State
     public override void OnDead()
     {
         base.OnDead();
-        stateMachine.ChangeState(character.dead);
+        stateMachine.ChangeState(character.deadState);
     }
     public override void OnStun()
     {

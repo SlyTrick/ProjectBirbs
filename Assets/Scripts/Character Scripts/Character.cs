@@ -8,14 +8,11 @@ public class Character : MonoBehaviour
 {
     #region Variables
     public StateMachine movementSM;
-    public IdleState idle;
-    public MovingState moving;
-    public IdleShootingState idleShooting;
-    public MovingShootingState movingShooting;
-    public IdleShieldState idleShield;
-    public MovingShieldState movingShield;
-    public DeadState dead;
-    public StunState stun;
+    public GroundedState groundedState;
+    public ShootingState shootingState;
+    public ShieldState shieldState;
+    public DeadState deadState;
+    public StunState stunState;
 
     [SerializeField] private float playerAcceleration;
     [SerializeField] private float playerDeceleration;
@@ -121,7 +118,7 @@ public class Character : MonoBehaviour
     {
         yield return new WaitForSeconds(respawnTime);
         transform.position = new Vector3(0,0,0);
-        movementSM.ChangeState(idle);
+        movementSM.ChangeState(groundedState);
 
         life = maxLife;
         lifeText.text = "Vida: " + life;
@@ -139,9 +136,15 @@ public class Character : MonoBehaviour
     public void RemoveShield()
     {
         shieldController.RemoveShield();
-        canShield = false;
-        StartCoroutine(ShieldCooldown());
-
+        if (!shieldController.parried)
+        {
+            canShield = false;
+            StartCoroutine(ShieldCooldown());
+        }
+        else
+        {
+            shieldController.parried = false;
+        }
     }
 
     IEnumerator ShieldCooldown()
@@ -158,7 +161,7 @@ public class Character : MonoBehaviour
     {
         yield return new WaitForSeconds(stunTime);
         shieldController.RestoreLife();
-        movementSM.ChangeState(idle);
+        movementSM.ChangeState(groundedState);
     }
 
     #region MonoBehaviour Callbacks
@@ -177,16 +180,13 @@ public class Character : MonoBehaviour
 
         movementSM = new StateMachine();
 
-        idle = new IdleState(this, movementSM);
-        moving = new MovingState(this, movementSM);
-        idleShooting = new IdleShootingState(this, movementSM);
-        movingShooting = new MovingShootingState(this, movementSM);
-        idleShield = new IdleShieldState(this, movementSM);
-        movingShield= new MovingShieldState(this, movementSM);
-        dead = new DeadState(this, movementSM);
-        stun = new StunState(this, movementSM);
+        groundedState = new GroundedState(this, movementSM);
+        shootingState = new ShootingState(this, movementSM);
+        shieldState = new ShieldState(this, movementSM);
+        deadState = new DeadState(this, movementSM);
+        stunState = new StunState(this, movementSM);
         
-        movementSM.Initialize(idle);
+        movementSM.Initialize(groundedState);
     }
 
     private void Update()

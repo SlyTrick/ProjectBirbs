@@ -43,6 +43,12 @@ public class ShieldState : State
     {
         base.OnShoot();
     }
+    public override void OnShield()
+    {
+        base.OnShield();
+        if (!character.GetInputController().shieldInput)
+            stateMachine.ChangeState(character.groundedState);
+    }
     public override void OnLook()
     {
         base.OnLook();
@@ -50,11 +56,11 @@ public class ShieldState : State
     public override void OnDead()
     {
         base.OnDead();
-        stateMachine.ChangeState(character.dead);
+        stateMachine.ChangeState(character.deadState);
     }
     public override void OnStun()
     {
         base.OnStun();
-        stateMachine.ChangeState(character.stun);
+        stateMachine.ChangeState(character.stunState);
     }
 }

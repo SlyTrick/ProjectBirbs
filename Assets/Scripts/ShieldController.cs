@@ -5,6 +5,7 @@ using UnityEngine;
 public class ShieldController : MonoBehaviour
 {
     public int life;
+    public bool parried;
     private int maxLife;
     private float shieldTime;
     private float damageRate;
@@ -121,14 +122,17 @@ public class ShieldController : MonoBehaviour
             // Si todavia no ha pasado el tiempo, rebota, si ha pasado se recibe daño
             if(elapsedTime < parryTime)
             {
+                parried = true;
                 GameObject objBullet = Instantiate(collision.gameObject, transform.position, transform.rotation);
                 objBullet.GetComponent<BulletController>().teamId = teamId;
+                objBullet.GetComponent<BulletController>().damage *= 2;
                 objBullet.GetComponent<BulletController>().owner = birbCharacter;
                 objBullet.GetComponent<BulletController>().enabled = true;
                 Physics.IgnoreCollision(GetComponent<Collider>(), objBullet.GetComponentInChildren<Collider>());
             }
             else
             {
+                parried = false;
                 if (collided.teamId != teamId)
                 {
                     //Debug.Log("De otro equipo?");
