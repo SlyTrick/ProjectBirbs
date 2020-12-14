@@ -27,6 +27,7 @@ public class Character : MonoBehaviour
     [SerializeField] private float stunTime;
     [SerializeField] private int maxLife;
     [SerializeField] private int shieldMaxLife;
+    [SerializeField] private float shieldTime;
 
     private int teamId;
     private int life;
@@ -229,6 +230,7 @@ public class Character : MonoBehaviour
     public float GetRespawnTime(){ return respawnTime; }
     public int GetMaxLife(){ return maxLife; }
     public int GetShieldMaxLife(){ return shieldMaxLife; }
+    public float GetShieldTime(){ return shieldTime; }
     public int GetTeamId(){ return teamId; }
     public int GetLife(){ return life; }
     public bool GetCanShoot(){ return canShoot; }

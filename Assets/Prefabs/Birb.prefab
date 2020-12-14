@@ -223,6 +223,7 @@ MonoBehaviour:
   rechargeRate: 0.1
   rechargeStart: 2
   recharge: 1
+  parryTime: 0.08
   destroyedParticleEffect: {fileID: 8378930425983463328, guid: c78be698dedf9e24cae612cd87ce7d1d,
     type: 3}
 --- !u!54 &5893343160618175007
@@ -1073,6 +1074,7 @@ MonoBehaviour:
   stunTime: 10
   maxLife: 100
   shieldMaxLife: 50
+  shieldTime: 10
   scoreText: {fileID: 7962173347040579900}
   lifeText: {fileID: 4817959473240350719}
   mainCamera: {fileID: 6213393340845118958}
