@@ -117,7 +117,7 @@ public class ShieldController : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         BulletController collided;
-        if (collision.gameObject.TryGetComponent<BulletController>(out collided))
+        if (collision.gameObject.TryGetComponent<BulletController>(out collided) && collided.speed != 0)
         {
             // Si todavia no ha pasado el tiempo, rebota, si ha pasado se recibe daño
             if(elapsedTime < parryTime)

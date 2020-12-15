@@ -4,12 +4,11 @@ using UnityEngine;
 
 public class DestroyOverTime : MonoBehaviour
 {
-    private float lifeTime;
+    [SerializeField]private float lifeTime;
 
     // Start is called before the first frame update
     void Start()
     {
-        lifeTime = 1;
         StartCoroutine(DestroyObject());
     }
 
