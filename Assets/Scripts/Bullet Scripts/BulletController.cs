@@ -8,7 +8,7 @@ public class BulletController : MonoBehaviour
     public int sameTeamDamage;
     public float speed;
     public float timeToLive;
-    Vector3 moveVector;
+    public Vector3 moveVector;
 
     public int teamId;
     public Character owner;

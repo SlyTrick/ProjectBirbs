@@ -214,6 +214,7 @@ public class Character : MonoBehaviour
         BulletController collided;
         if (collision.gameObject.TryGetComponent<BulletController>(out collided))
         {
+            Physics.IgnoreCollision(GetComponent<Collider>(), collided.GetComponentInChildren<Collider>());
             if (collided.teamId != teamId)
             {
                 //Debug.Log("De otro equipo?");
