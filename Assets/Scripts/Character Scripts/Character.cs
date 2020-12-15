@@ -95,7 +95,11 @@ public class Character : MonoBehaviour
 
         if (life <= 0)
         {
-            bullet.owner.AddPoint();
+            if (bullet.teamId == teamId)
+                bullet.owner.SubstractPoint();
+            else
+                bullet.owner.AddPoint();
+
             Instantiate(deathParticleEffect, transform.position, transform.rotation);
             movementSM.CurrentState.OnDead();
         }
@@ -104,6 +108,11 @@ public class Character : MonoBehaviour
     public void AddPoint()
     {
         score++;
+        scoreText.text = "Puntuación: " + score;
+    }
+    public void SubstractPoint()
+    {
+        score--;
         scoreText.text = "Puntuación: " + score;
     }
 
