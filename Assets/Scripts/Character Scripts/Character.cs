@@ -34,6 +34,7 @@ public class Character : MonoBehaviour
     private bool canShoot;
     private bool canShield;
     private int score;
+    private int feathers;
     private MatchController matchController;
     private BoxCollider spawnPoint;
 
@@ -192,7 +193,16 @@ public class Character : MonoBehaviour
         if (movementSM.CurrentState == feederState)
             movementSM.ChangeState(groundedState);
     }
-
+    public void AddFeather()
+    {
+        feathers++;
+    }
+    public int LoseFeathers()
+    {
+        int lostFeathers = feathers / 2;
+        feathers -= lostFeathers;
+        return lostFeathers;
+    }
     #region MonoBehaviour Callbacks
     private void Start()
     {
@@ -272,6 +282,7 @@ public class Character : MonoBehaviour
     public bool GetCanShoot(){ return canShoot; }
     public bool GetCanShield(){ return canShield; }
     public int GetScore(){ return score; }
+    public int GetFeathers(){ return feathers; }
     public Text GetScoreText(){ return scoreText; }
     public Text GetLifeText(){ return lifeText; }
     public Camera GetCamera(){ return mainCamera; }

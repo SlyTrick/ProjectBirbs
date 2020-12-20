@@ -2,18 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ModeController : MonoBehaviour
+public class ModeController
 {
     protected MatchController matchController;
     protected ModeController(MatchController matchController)
     {
         this.matchController = matchController;
     }
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+
+    public virtual void Update() { }
     public virtual void PlayerKilled(Character victim, Character killer) { }
     public virtual void UpdateFeederScore(Character target) { }
+    public virtual void AddFeather(Character target) { }
 }

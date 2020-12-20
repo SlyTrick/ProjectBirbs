@@ -8,17 +8,23 @@ public class KingOfTheFeederController : ModeController
     {
 
     }
-    // Start is called before the first frame update
-    void Start()
+    public override void Update()
     {
-        matchController = GetComponentInParent<MatchController>();
+        base.Update();
     }
     public override void PlayerKilled(Character victim, Character killer)
     {
+        base.PlayerKilled(victim, killer);
         // Asi no suma al matar en este modo
     }
     public override void UpdateFeederScore(Character target)
     {
-        matchController.AddPoint(target);
+        base.UpdateFeederScore(target);
+        matchController.AddPoints(target, 1);
+    }
+    public override void AddFeather(Character target)
+    {
+        base.AddFeather(target);
+        // Same
     }
 }

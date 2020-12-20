@@ -47,5 +47,13 @@ MonoBehaviour:
   spawn2: {fileID: 0}
   spawn3: {fileID: 0}
   spawn4: {fileID: 0}
+  featherSpawn1:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  featherSpawn2: {fileID: 0}
+  featherSpawn3: {fileID: 0}
+  featherPrefab: {fileID: 0}
   feeder: {fileID: 0}
+  featherRate: 4
   feederRate: 0.12

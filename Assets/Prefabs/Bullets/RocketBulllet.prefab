@@ -80,6 +80,7 @@ MonoBehaviour:
   sameTeamDamage: 2
   speed: 7
   timeToLive: 1
+  moveVector: {x: 0, y: 0, z: 0}
   teamId: 0
   owner: {fileID: 0}
   particleEffect: {fileID: 4256318742635070123, guid: 8e239c96296c9a545ae7b21bdd9beafa,

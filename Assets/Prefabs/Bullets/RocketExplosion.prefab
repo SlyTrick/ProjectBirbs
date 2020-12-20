@@ -76,10 +76,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9852da8eacecfb0468a22c70ced345ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 10
+  damage: 200
   sameTeamDamage: 2
   speed: 0
   timeToLive: 0.5
+  moveVector: {x: 0, y: 0, z: 0}
   teamId: 0
   owner: {fileID: 0}
   particleEffect: {fileID: 4256318742635070123, guid: 8e239c96296c9a545ae7b21bdd9beafa,

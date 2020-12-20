@@ -8,7 +8,7 @@ public class MatchController : MonoBehaviour
     {
         DEATHMATCH,
         KING_OF_THE_FEEDER,
-        CAPTURE_THE_FLAG
+        FEATHER_HOARDER
     }
     private int mode;
     private int numPlayers = 4;
@@ -17,12 +17,13 @@ public class MatchController : MonoBehaviour
     private List<Character> playerList = new List<Character>();
     private List<int> teamsPoints = new List<int>();
     
-    [SerializeField]private BoxCollider spawn1;
-    [SerializeField]private BoxCollider spawn2;
-    [SerializeField]private BoxCollider spawn3;
-    [SerializeField]private BoxCollider spawn4;
+    [SerializeField]private List<BoxCollider> teamSpawns;
+    [SerializeField]private List<GameObject> featherSpawns;
+    [SerializeField]public GameObject featherPrefab;
     [SerializeField]private GameObject feeder;
+    public float featherRate;   
     public float feederRate;
+    private int numFeatherSpawns = 3;
 
     public void AddPlayer(Character player)
     {
@@ -31,31 +32,21 @@ public class MatchController : MonoBehaviour
             teamsPoints.Add(0);
 
     }
-    
+
     public BoxCollider GetSpawnPoint(Character target)
     {
-        BoxCollider targetSpawn = null;
-        switch (target.GetTeamId())
-        {
-            case 0:
-                targetSpawn = spawn1;
-                break;
-            case 1:
-                targetSpawn = spawn2;
-                break;
-            case 2:
-                targetSpawn = spawn3;
-                break;
-            case 3:
-                targetSpawn = spawn4;
-                break;
-        }
-        return targetSpawn;
+        return teamSpawns[target.GetTeamId()];
     }
-    public void AddPoint(Character target)
+    public BoxCollider GetFeatherSpawn()
+    {
+        int random = Random.Range(0, featherSpawns.Count);
+
+        return featherSpawns[random].GetComponent<BoxCollider>();
+    }
+    public void AddPoints(Character target, int points)
     {
         int team = target.GetTeamId();
-        teamsPoints[team]++;
+        teamsPoints[team] += points;
         for(int i = 0; i < playerList.Count; i++)
         {
             if(playerList[i].GetTeamId() == team)
@@ -63,10 +54,10 @@ public class MatchController : MonoBehaviour
         }
         
     }
-    public void SubstractPoint(Character target)
+    public void SubstractPoints(Character target, int points)
     {
         int team = target.GetTeamId();
-        teamsPoints[team]--;
+        teamsPoints[team] -= points;
         for (int i = 0; i < playerList.Count; i++)
         {
             if (playerList[i].GetTeamId() == team)
@@ -81,9 +72,13 @@ public class MatchController : MonoBehaviour
     {
         modeController.UpdateFeederScore(target);
     }
+    public void AddFeather(Character target)
+    {
+        modeController.AddFeather(target);
+    }
     void Start()
     {
-        mode = (int)modes.KING_OF_THE_FEEDER;
+        mode = (int)modes.FEATHER_HOARDER;
         switch (mode)
         {
             case (int)modes.DEATHMATCH:
@@ -93,10 +88,17 @@ public class MatchController : MonoBehaviour
                 feeder.SetActive(true);
                 modeController = new KingOfTheFeederController(this);
                 break;
-            case (int)modes.CAPTURE_THE_FLAG:
-
+            case (int)modes.FEATHER_HOARDER:
+                for(int i = 0; i < featherSpawns.Count; i++)
+                {
+                    featherSpawns[i].SetActive(true);
+                }
+                modeController = new FeatherHoarderController(this);
                 break;
         }
     }
-
+    private void Update()
+    {
+        modeController.Update();
+    }
 }

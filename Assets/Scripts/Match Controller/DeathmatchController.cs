@@ -8,20 +8,27 @@ public class DeathmatchController : ModeController
     {
 
     }
-    // Start is called before the first frame update
-    void Start()
+
+    public override void Update()
     {
-        matchController = GetComponentInParent<MatchController>();
+        base.Update();
     }
     public override void PlayerKilled(Character victim, Character killer)
     {
+        base.PlayerKilled(victim, killer);
         if (victim.GetTeamId() == killer.GetTeamId())
-            matchController.SubstractPoint(killer);
+            matchController.SubstractPoints(killer, 1);
         else
-            matchController.AddPoint(killer);
+            matchController.AddPoints(killer, 1);
     }
     public override void UpdateFeederScore(Character target)
     {
+        base.UpdateFeederScore(target);
         // Si por alguna razon alguien acaba en un comedero en este modo pues no suma puntos
+    }
+    public override void AddFeather(Character target)
+    {
+        base.AddFeather(target);
+        // Same
     }
 }
