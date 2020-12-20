@@ -50,7 +50,7 @@ public class MenuManager : MonoBehaviour
         {
             return;
         }
-        jugador.setNombre(nombre.text);
+        //jugador.setNombre(nombre.text);
         OpenMenu("menuSalas");
     }
 }
