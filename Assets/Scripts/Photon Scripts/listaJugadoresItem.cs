@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using Photon.Realtime;
+using UnityEngine.UI;
 
 public class listaJugadoresItem : MonoBehaviourPunCallbacks
 {

@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class listaSalasItem : MonoBehaviour
 {
     [SerializeField] Text texto;
-    RoomInfo info;
+    public RoomInfo info;
 
     public void SetUp(RoomInfo _info)
     {
