@@ -259,6 +259,7 @@ MonoBehaviour:
   playerDeceleration: 15
   shootingAcceleration: 30
   stunnedAcceleration: 20
+  feederAcceleration: 10
   timeBetweenShots: 0.7
   shieldCooldown: 1
   respawnTime: 3
@@ -266,6 +267,7 @@ MonoBehaviour:
   maxLife: 100
   shieldMaxLife: 50
   shieldTime: 10
+  onFeeder: 0
   scoreText: {fileID: 3160461460404024153}
   lifeText: {fileID: 540344063466306970}
   mainCamera: {fileID: 1412174112306476939}

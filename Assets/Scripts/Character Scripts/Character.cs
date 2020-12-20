@@ -13,11 +13,13 @@ public class Character : MonoBehaviour
     public ShieldState shieldState;
     public DeadState deadState;
     public StunState stunState;
+    public FeederState feederState;
 
     [SerializeField] private float playerAcceleration;
     [SerializeField] private float playerDeceleration;
     [SerializeField] private float shootingAcceleration;
     [SerializeField] private float stunnedAcceleration;
+    [SerializeField] private float feederAcceleration;
     [SerializeField] private float timeBetweenShots;
     [SerializeField] private float shieldCooldown;
     [SerializeField] private float respawnTime;
@@ -26,11 +28,14 @@ public class Character : MonoBehaviour
     [SerializeField] private int shieldMaxLife;
     [SerializeField] private float shieldTime;
 
+    public bool onFeeder;
     private int teamId;
     private int life;
     private bool canShoot;
     private bool canShield;
     private int score;
+    private MatchController matchController;
+    private BoxCollider spawnPoint;
 
     [SerializeField] private Text scoreText;
     [SerializeField] private Text lifeText;
@@ -95,24 +100,16 @@ public class Character : MonoBehaviour
 
         if (life <= 0)
         {
-            if (bullet.teamId == teamId)
-                bullet.owner.SubstractPoint();
-            else
-                bullet.owner.AddPoint();
+            matchController.PlayerKilled(this, bullet.owner);
 
             Instantiate(deathParticleEffect, transform.position, transform.rotation);
             movementSM.CurrentState.OnDead();
         }
     }
 
-    public void AddPoint()
+    public void SetPoints(int newScore)
     {
-        score++;
-        scoreText.text = "Puntuación: " + score;
-    }
-    public void SubstractPoint()
-    {
-        score--;
+        score = newScore;
         scoreText.text = "Puntuación: " + score;
     }
 
@@ -127,7 +124,14 @@ public class Character : MonoBehaviour
     public IEnumerator Respawn()
     {
         yield return new WaitForSeconds(respawnTime);
-        transform.position = new Vector3(0,0,0);
+        Vector3 spawnPos = new Vector3(
+            Random.Range(spawnPoint.bounds.min.x, spawnPoint.bounds.max.x),
+            0,
+            Random.Range(spawnPoint.bounds.min.z, spawnPoint.bounds.max.z)
+        );
+        transform.position = spawnPos;
+        transform.forward = spawnPoint.transform.forward;
+
         movementSM.ChangeState(groundedState);
 
         life = maxLife;
@@ -171,7 +175,22 @@ public class Character : MonoBehaviour
     {
         yield return new WaitForSeconds(stunTime);
         shieldController.RestoreLife();
-        movementSM.ChangeState(groundedState);
+        if (!onFeeder)
+            movementSM.ChangeState(groundedState);
+        else
+            movementSM.ChangeState(feederState);
+    }
+    public void EnterFeeder()
+    {
+        onFeeder = true;
+        if (movementSM.CurrentState != stunState)
+            movementSM.ChangeState(feederState);
+    }
+    public void ExitFeeder()
+    {
+        onFeeder = false;
+        if (movementSM.CurrentState == feederState)
+            movementSM.ChangeState(groundedState);
     }
 
     #region MonoBehaviour Callbacks
@@ -188,6 +207,10 @@ public class Character : MonoBehaviour
         lifeText.text = "Vida: " + life;
         scoreText.text = "Puntuación: " + score;
 
+        matchController = FindObjectOfType<MatchController>();
+        matchController.AddPlayer(this);
+        spawnPoint = matchController.GetSpawnPoint(this);
+
         movementSM = new StateMachine();
 
         groundedState = new GroundedState(this, movementSM);
@@ -195,6 +218,7 @@ public class Character : MonoBehaviour
         shieldState = new ShieldState(this, movementSM);
         deadState = new DeadState(this, movementSM);
         stunState = new StunState(this, movementSM);
+        feederState = new FeederState(this, movementSM);
         
         movementSM.Initialize(groundedState);
     }
@@ -237,6 +261,7 @@ public class Character : MonoBehaviour
     public float GetPlayerDeceleration(){ return playerDeceleration; }
     public float GetShootingAcceleration(){ return shootingAcceleration; }
     public float GetStunnedAcceleration(){ return stunnedAcceleration; }
+    public float GetFeederAcceleration(){ return feederAcceleration; }
     public float GetTimeBetweenShots(){ return timeBetweenShots; }
     public float GetRespawnTime(){ return respawnTime; }
     public int GetMaxLife(){ return maxLife; }
@@ -258,5 +283,6 @@ public class Character : MonoBehaviour
     public GameObject GetDeathParticleEffect(){ return deathParticleEffect; }
     public GameObject GetShield(){ return shield; }
     public InputController GetInputController(){ return inputController; }
+    public MatchController GetMatchController(){ return matchController; }
     #endregion
 }
