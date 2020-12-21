@@ -30,10 +30,10 @@ public class Character : MonoBehaviour
 
     public bool onFeeder;
     private int teamId;
-    private int life;
+    public int life;
     private bool canShoot;
     private bool canShield;
-    private int score;
+    public int score;
     private int feathers;
     private MatchController matchController;
     private BoxCollider spawnPoint;
@@ -137,7 +137,7 @@ public class Character : MonoBehaviour
 
         life = maxLife;
         lifeText.text = "Vida: " + life;
-
+        
         GetComponent<CapsuleCollider>().enabled = true;
         sprite.SetActive(true);
         firingPoint.SetActive(true);
@@ -216,6 +216,7 @@ public class Character : MonoBehaviour
 
         lifeText.text = "Vida: " + life;
         scoreText.text = "Puntuación: " + score;
+
 
         matchController = FindObjectOfType<MatchController>();
         matchController.AddPlayer(this);

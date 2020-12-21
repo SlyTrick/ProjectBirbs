@@ -93,8 +93,10 @@ MonoBehaviour:
   shieldMaxLife: 50
   shieldTime: 10
   onFeeder: 0
-  scoreText: {fileID: 1483651529568917191}
-  lifeText: {fileID: 4050279575601305604}
+  life: 0
+  score: 0
+  scoreText: {fileID: 0}
+  lifeText: {fileID: 0}
   mainCamera: {fileID: 3230144293760766485}
   rigidBody: {fileID: 1505359539051568461}
   firePoint: {fileID: 5057316786106939017}
@@ -281,7 +283,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: New Text
+  m_Text: 'Life:'
 --- !u!1 &4751184628305098990
 GameObject:
   m_ObjectHideFlags: 0
