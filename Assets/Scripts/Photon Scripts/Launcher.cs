@@ -22,7 +22,7 @@ public class Launcher : MonoBehaviourPunCallbacks
     [SerializeField] GameObject startGameButton;
     [SerializeField] GameObject cambiarModoGameButton;
 
-    [SerializeField] GameObject[] lugares;
+    //[SerializeField] GameObject[] lugares;
 
     private int jugadoresEnSala;
 
@@ -52,12 +52,14 @@ public class Launcher : MonoBehaviourPunCallbacks
 
     public void CreateRoom()
     {
-        PhotonNetwork.NickName = nombre.text;
+        //PhotonNetwork.NickName = nombre.text;
+        PhotonNetwork.NickName = "Player " + Random.Range(0, 10000);
         if (string.IsNullOrEmpty(roomNameInputField.text))
         {
-            return;
+            //return;
         }
-        PhotonNetwork.CreateRoom(roomNameInputField.text);
+        //PhotonNetwork.CreateRoom(roomNameInputField.text);
+        PhotonNetwork.CreateRoom("sala test");
         MenuManager.Instance.OpenMenu("menuCargando");
     }
 
@@ -68,7 +70,8 @@ public class Launcher : MonoBehaviourPunCallbacks
         {
             return;
         }
-        PhotonNetwork.NickName = nombre.text;
+        //PhotonNetwork.NickName = nombre.text;
+        PhotonNetwork.NickName = "Player " + Random.Range(0, 10000);
         PhotonNetwork.JoinRoom(info.Name);
         MenuManager.Instance.OpenMenu("menuCargando");
     }
@@ -92,26 +95,26 @@ public class Launcher : MonoBehaviourPunCallbacks
 
         Player[] players = PhotonNetwork.PlayerList;
 
-        /*foreach(Transform child in listaJugadores)
+        foreach(Transform child in listaJugadores)
         {
             Destroy(child.gameObject);
-        }*/
+        }
 
-        jugadoresEnSala = players.Count();
-        object[] info = new object[2];
-        info[0] = PhotonNetwork.NickName;
-        info[1] = listaJugadores;
+        //jugadoresEnSala = players.Count();
+        //object[] info = new object[2];
+        //info[0] = PhotonNetwork.NickName;
+        //info[1] = listaJugadores;
 
-        PhotonNetwork.Instantiate(Path.Combine("Photon prefabs", "listaJugadoresItem"), 
-            lugares[jugadoresEnSala-1].transform.position, lugares[jugadoresEnSala-1].transform.rotation, 0, info);
+        //PhotonNetwork.Instantiate(Path.Combine("Photon prefabs", "listaJugadoresItem"), 
+        //lugares[jugadoresEnSala-1].transform.position, lugares[jugadoresEnSala-1].transform.rotation, 0, info);
         //PhotonNetwork.Instantiate(Path.Combine("Photon prefabs", "listaJugadoresItem"),
-          //  Vector3.zero, Quaternion.identity, 0, info);
+        //  Vector3.zero, Quaternion.identity, 0, info);
 
-        /*for (int i = 0; i < jugadoresEnSala; i++)
+        for (int i = 0; i < players.Count(); i++)
         {
-            //Instantiate(listaJugadoresItemPrefab, listaJugadores).GetComponent<listaJugadoresItem>().SetUp(players[i]);
-            PhotonNetwork.Instantiate(Path.Combine("Photon prefabs", "listaJugadores"), lugares[i].transform.position, lugares[i].transform.rotation);
-        }*/
+            Instantiate(listaJugadoresItemPrefab, listaJugadores).GetComponent<listaJugadoresItem>().SetUp(players[i]);
+            //PhotonNetwork.Instantiate(Path.Combine("Photon prefabs", "listaJugadores"), lugares[i].transform.position, lugares[i].transform.rotation);
+        }
     }
 
     public override void OnCreateRoomFailed(short returnCode, string message)
@@ -150,7 +153,7 @@ public class Launcher : MonoBehaviourPunCallbacks
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
-        //Instantiate(listaJugadoresItemPrefab, listaJugadores).GetComponent<listaJugadoresItem>().SetUp(newPlayer);
+        Instantiate(listaJugadoresItemPrefab, listaJugadores).GetComponent<listaJugadoresItem>().SetUp(newPlayer);
         //jugadoresEnSala++;
         //object[] info = new object[1];
         //info[0] = PhotonNetwork.NickName;

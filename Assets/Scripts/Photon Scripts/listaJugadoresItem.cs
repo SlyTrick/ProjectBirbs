@@ -8,7 +8,7 @@ using UnityEngine.UI;
 using Hastable = ExitGames.Client.Photon.Hashtable;
 using ExitGames.Client.Photon;
 
-public class listaJugadoresItem : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallback
+public class listaJugadoresItem : MonoBehaviourPunCallbacks
 {
     [SerializeField] TMP_Text nombreTexto;
     [SerializeField] TMP_Text pajaroTexto;
@@ -23,11 +23,11 @@ public class listaJugadoresItem : MonoBehaviourPunCallbacks, IPunInstantiateMagi
     public int pajaroIndex;
     public string pajaroActivo;
 
-    PhotonView PV;
+    //PhotonView PV;
 
     void Awake()
     {
-        PV = GetComponent<PhotonView>();
+        //PV = GetComponent<PhotonView>();
     }
 
     public void SetUp(Player _player)
@@ -36,11 +36,11 @@ public class listaJugadoresItem : MonoBehaviourPunCallbacks, IPunInstantiateMagi
         nombreTexto.text = _player.NickName;
         nombre = _player.NickName;
         pajaroIndex = 0;
-        if (!PV.IsMine)
+        /*if (!PV.IsMine)
         {
             botAnterior.SetActive(false);
             botSiguiente.SetActive(false);
-        }
+        }*/
     }
 
     public void CambiarPajaroSiguiente()
@@ -90,22 +90,22 @@ public class listaJugadoresItem : MonoBehaviourPunCallbacks, IPunInstantiateMagi
     public void NuevoPajaro(int index)
     {
         pajaroTexto.text = pajaros[index];
-        if (PV.IsMine)
+        /*if (PV.IsMine)
         {
             Hastable hash = new Hastable();
             hash.Add("pajaroIndex", index);
             PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
-        }
+        }*/
     }
 
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hastable changedProps)
     {
-        if(!PV.IsMine && targetPlayer == PV.Owner)
+        /*if(!PV.IsMine && targetPlayer == PV.Owner)
         {
             pajaroTexto.text = pajaros[(int)changedProps["pajarosIndex"]];
-        }
+        }*/
     }
-
+    /*
     public void OnPhotonInstantiate(PhotonMessageInfo info)
     {
         object[] jugadores = info.photonView.InstantiationData;
@@ -122,5 +122,5 @@ public class listaJugadoresItem : MonoBehaviourPunCallbacks, IPunInstantiateMagi
 
         this.gameObject.transform.SetParent((Transform) jugadores[1], false);
         
-    }
+    }*/
 }

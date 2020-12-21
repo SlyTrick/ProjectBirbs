@@ -772,7 +772,6 @@ GameObject:
   - component: {fileID: 1140064336089985471}
   - component: {fileID: 6608798378728152617}
   - component: {fileID: -8461658289638110455}
-  - component: {fileID: 1635746829325928574}
   m_Layer: 5
   m_Name: listaJugadoresItem
   m_TagString: Untagged
@@ -947,25 +946,3 @@ MonoBehaviour:
   - cuervo
   pajaroIndex: 0
   pajaroActivo: 
---- !u!114 &1635746829325928574
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8825540213082730114}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
-  Group: 0
-  prefixField: -1
-  observableSearch: 2
-  Synchronization: 3
-  OwnershipTransfer: 0
-  ObservedComponents: []
-  viewIdField: 0
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
