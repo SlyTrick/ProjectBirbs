@@ -12,7 +12,11 @@ public class listaSalasItem : MonoBehaviour
     public void SetUp(RoomInfo _info)
     {
         info = _info;
-        texto.text = _info.Name;
+        if (_info.PlayerCount == 4)
+        {
+            texto.text = _info.Name + "  (" + _info.PlayerCount + "/4) Llena";
+        }
+        texto.text = _info.Name + "  (" + _info.PlayerCount + "/4)";
     }
 
     public void OnClick()
