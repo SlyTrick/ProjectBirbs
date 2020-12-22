@@ -95,8 +95,8 @@ MonoBehaviour:
   onFeeder: 0
   life: 0
   score: 0
-  scoreText: {fileID: 0}
-  lifeText: {fileID: 0}
+  scoreText: {fileID: 1483651529568917191}
+  lifeText: {fileID: 4050279575601305604}
   mainCamera: {fileID: 3230144293760766485}
   rigidBody: {fileID: 1505359539051568461}
   firePoint: {fileID: 5057316786106939017}
