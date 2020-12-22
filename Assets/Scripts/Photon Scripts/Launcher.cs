@@ -28,7 +28,7 @@ public class Launcher : MonoBehaviourPunCallbacks
 
     [SerializeField] TMP_InputField nombre;
     JugadorInfo Jugador;
-
+    
 
     void Awake()
     {
