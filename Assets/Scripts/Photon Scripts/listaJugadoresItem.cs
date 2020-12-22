@@ -8,39 +8,41 @@ using UnityEngine.UI;
 using Hastable = ExitGames.Client.Photon.Hashtable;
 using ExitGames.Client.Photon;
 
-public class listaJugadoresItem : MonoBehaviourPunCallbacks
+public class listaJugadoresItem : MonoBehaviour
 {
     [SerializeField] TMP_Text nombreTexto;
     [SerializeField] TMP_Text pajaroTexto;
     [SerializeField] GameObject botAnterior;
     [SerializeField] GameObject botSiguiente;
-    Player player;
+    [SerializeField] Image imagenPajaro;
+    [HideInInspector] Player player;
+    [SerializeField] Sprite[] sprites;
+    
 
-    public string nombre;
+    [HideInInspector] public string nombre;
+    public int ownerId;
+
     public int gamemodeIndex; //1: deathmatch, 2: rey del comedero, 3: acaparaplumas
+    [HideInInspector] public string[] pajaros = new string[5] { "paloma", "pato", "agapornis", "kiwi", "cuervo" };
+    [HideInInspector] public int pajaroIndex;
+    [HideInInspector] public string pajaroActivo;
 
-    public string[] pajaros = new string[5] { "paloma", "pato", "agapornis", "kiwi", "cuervo" };
-    public int pajaroIndex;
-    public string pajaroActivo;
-
-    //PhotonView PV;
-
-    void Awake()
-    {
-        //PV = GetComponent<PhotonView>();
-    }
+    [HideInInspector] public string indiceHashtable = "indexPajaro";
+    
 
     public void SetUp(Player _player)
     {
+        ownerId = _player.ActorNumber;
         player = _player;
         nombreTexto.text = _player.NickName;
         nombre = _player.NickName;
         pajaroIndex = 0;
-        /*if (!PV.IsMine)
+        ActualizarPajaro(pajaroIndex);
+        if (PhotonNetwork.LocalPlayer.ActorNumber != ownerId)
         {
             botAnterior.SetActive(false);
             botSiguiente.SetActive(false);
-        }*/
+        }
     }
 
     public void CambiarPajaroSiguiente()
@@ -48,13 +50,12 @@ public class listaJugadoresItem : MonoBehaviourPunCallbacks
         if (pajaroIndex == 4)
         {
             pajaroIndex = 0;
-            pajaroActivo = pajaros[pajaroIndex];
         }
         else
         {
             pajaroIndex++;
-            pajaroActivo = pajaros[pajaroIndex];
         }
+        pajaroActivo = pajaros[pajaroIndex];
         NuevoPajaro(pajaroIndex);
     }
 
@@ -63,64 +64,27 @@ public class listaJugadoresItem : MonoBehaviourPunCallbacks
         if (pajaroIndex == 0)
         {
             pajaroIndex = 4;
-            pajaroActivo = pajaros[pajaroIndex];
         }
         else
         {
             pajaroIndex--;
-            pajaroActivo = pajaros[pajaroIndex];
         }
+        pajaroActivo = pajaros[pajaroIndex];
         NuevoPajaro(pajaroIndex);
     }
-
-
-    public override void OnPlayerLeftRoom(Player otherPlayer)
-    {
-        if (player == otherPlayer)
-        {
-            Destroy(gameObject);
-        }
-    }
-
-    public override void OnLeftRoom()
-    {
-        Destroy(gameObject);
-    }
-
+    
     public void NuevoPajaro(int index)
     {
+        ActualizarPajaro(index);
+        Hastable hash = new Hastable() { {indiceHashtable, index } };
+        PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
+    }
+
+    public void ActualizarPajaro(int index)
+    {
         pajaroTexto.text = pajaros[index];
-        /*if (PV.IsMine)
-        {
-            Hastable hash = new Hastable();
-            hash.Add("pajaroIndex", index);
-            PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
-        }*/
+        imagenPajaro.sprite = sprites[index];
     }
 
-    public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hastable changedProps)
-    {
-        /*if(!PV.IsMine && targetPlayer == PV.Owner)
-        {
-            pajaroTexto.text = pajaros[(int)changedProps["pajarosIndex"]];
-        }*/
-    }
-    /*
-    public void OnPhotonInstantiate(PhotonMessageInfo info)
-    {
-        object[] jugadores = info.photonView.InstantiationData;
-        string _player = (string) jugadores[0];
-        //player = _player;
-        nombreTexto.text = _player;
-        nombre = _player;
-        pajaroIndex = 0;
-        if (!PV.IsMine)
-        {
-            botAnterior.SetActive(false);
-            botSiguiente.SetActive(false);
-        }
-
-        this.gameObject.transform.SetParent((Transform) jugadores[1], false);
-        
-    }*/
+    
 }
