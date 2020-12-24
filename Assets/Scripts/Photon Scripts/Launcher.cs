@@ -8,6 +8,7 @@ using UnityEngine.UI;
 using System.Linq;
 using System.IO;
 using ExitGames.Client.Photon;
+using Hastable = ExitGames.Client.Photon.Hashtable;
 
 public class Launcher : MonoBehaviourPunCallbacks
 {
@@ -22,7 +23,10 @@ public class Launcher : MonoBehaviourPunCallbacks
     [SerializeField] GameObject listaJugadoresItemPrefab;
     [SerializeField] GameObject startGameButton;
     [SerializeField] GameObject cambiarModoGameButton;
+    [SerializeField] TMP_Text textoBotonCambiarModo;
+    [SerializeField] TMP_Text textoModoDeJuegoActual;
 
+    [HideInInspector] public string[] modosDeJuego = new string[3] { "Deathmatch", "Rey del comedero", "Acaparaplumas"};
     private Dictionary<int, GameObject> listaJugadoresItems;
 
     private int jugadoresEnSala;
@@ -100,13 +104,14 @@ public class Launcher : MonoBehaviourPunCallbacks
             MenuManager.Instance.OpenMenu("menuSeleccionModo");
             startGameButton.SetActive(true);
             cambiarModoGameButton.SetActive(true);
-            //MenuManager.Instance.OpenMenu("menuSala");
+            textoModoDeJuegoActual.gameObject.SetActive(false);
         }
         else
         {
             MenuManager.Instance.OpenMenu("menuSala");
             startGameButton.SetActive(false);
             cambiarModoGameButton.SetActive(false);
+            textoModoDeJuegoActual.gameObject.SetActive(true);
         }
         roomName.text = PhotonNetwork.CurrentRoom.Name;
 
@@ -133,6 +138,17 @@ public class Launcher : MonoBehaviourPunCallbacks
             if(p.CustomProperties.TryGetValue("indexPajaro", out pajaroActivo))
             {
                 entry.GetComponent<listaJugadoresItem>().ActualizarPajaro((int)pajaroActivo);
+            }
+
+            object indiceModo;
+            if (p.CustomProperties.TryGetValue("indiceModo", out indiceModo))
+            {
+                if (!PhotonNetwork.IsMasterClient)
+                {
+                    textoModoDeJuegoActual.text = "Modo de Juego actual: " + modosDeJuego[(int)indiceModo];
+                }
+                textoBotonCambiarModo.text = "Cambiar Modo de Juego. Actual (" + modosDeJuego[(int)indiceModo] + ")";
+                entry.GetComponent<listaJugadoresItem>().CambiarModoDeJuego((int)indiceModo);
             }
 
             listaJugadoresItems.Add(p.ActorNumber, entry);
@@ -176,7 +192,10 @@ public class Launcher : MonoBehaviourPunCallbacks
             if (roomList[i].RemovedFromList)
                 continue;
             Instantiate(listaSalasItemPrefab, listaSalas).GetComponent<listaSalasItem>().SetUp(roomList[i]);
-            
+            if(i >= 5)
+            {
+                break;
+            }
         }
     }
 
@@ -217,13 +236,32 @@ public class Launcher : MonoBehaviourPunCallbacks
             {
                 entry.GetComponent<listaJugadoresItem>().ActualizarPajaro((int)indicePajaro);
             }
-        }
 
+            object indiceModo;
+            if(changedProps.TryGetValue("indiceModo", out indiceModo))
+            {
+                if (!PhotonNetwork.IsMasterClient)
+                {
+                    textoModoDeJuegoActual.text = "Modo de Juego actual: " + modosDeJuego[(int)indiceModo];
+                }
+                textoBotonCambiarModo.text = "Cambiar Modo de Juego. Actual (" + modosDeJuego[(int)indiceModo] + ")";
+                entry.GetComponent<listaJugadoresItem>().CambiarModoDeJuego((int)indiceModo);
+            }
+        }
     }
 
     public override void OnMasterClientSwitched(Player newMasterClient)
     {
         startGameButton.SetActive(PhotonNetwork.IsMasterClient);
         cambiarModoGameButton.SetActive(PhotonNetwork.IsMasterClient);
+        textoModoDeJuegoActual.gameObject.SetActive(!PhotonNetwork.IsMasterClient);
+    }
+
+    public void CambiarModoDeJuego(int indiceModo)
+    {
+        textoBotonCambiarModo.text = "Cambiar Modo de Juego. Actual (" + modosDeJuego[indiceModo] + ")";
+        Hastable hash = new Hastable() { { "indiceModo", indiceModo } };
+        PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
+        MenuManager.Instance.OpenMenu("menuSala");
     }
 }

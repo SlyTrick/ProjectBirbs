@@ -22,7 +22,7 @@ public class listaJugadoresItem : MonoBehaviour
     [HideInInspector] public string nombre;
     public int ownerId;
 
-    public int gamemodeIndex; //1: deathmatch, 2: rey del comedero, 3: acaparaplumas
+    public int gamemodeIndex; //0: deathmatch, 1: rey del comedero, 2: acaparaplumas
     [HideInInspector] public string[] pajaros = new string[5] { "paloma", "pato", "agapornis", "kiwi", "cuervo" };
     [HideInInspector] public int pajaroIndex;
     [HideInInspector] public string pajaroActivo;
@@ -86,5 +86,9 @@ public class listaJugadoresItem : MonoBehaviour
         imagenPajaro.sprite = sprites[index];
     }
 
+    public void CambiarModoDeJuego(int indiceNuevo)
+    {
+        gamemodeIndex = indiceNuevo;
+    }
     
 }
