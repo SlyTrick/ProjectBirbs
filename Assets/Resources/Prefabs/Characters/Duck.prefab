@@ -544,6 +544,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2193414823619280139}
+  - component: {fileID: -1632429577696317339}
   m_Layer: 8
   m_Name: Duck
   m_TagString: Untagged
@@ -567,6 +568,28 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-1632429577696317339
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2193414823619280133}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  observableSearch: 2
+  Synchronization: 3
+  OwnershipTransfer: 0
+  ObservedComponents: []
+  viewIdField: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &2549777970149933586
 GameObject:
   m_ObjectHideFlags: 0
@@ -601,7 +624,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 93.3, y: -61.300003}
+  m_AnchoredPosition: {x: 93.29999, y: -61.299988}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7257144630346346128
@@ -627,6 +650,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -850,7 +874,7 @@ Camera:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5166134943532198281}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_ClearFlags: 1
   m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
@@ -992,6 +1016,7 @@ MonoBehaviour:
   playerDeceleration: 15
   shootingAcceleration: 20
   stunnedAcceleration: 10
+  feederAcceleration: 0
   timeBetweenShots: 0.5
   shieldCooldown: 1
   respawnTime: 3
@@ -999,6 +1024,9 @@ MonoBehaviour:
   maxLife: 100
   shieldMaxLife: 50
   shieldTime: 10
+  onFeeder: 0
+  life: 0
+  score: 0
   scoreText: {fileID: 5533055664763793438}
   lifeText: {fileID: 6947605256786329309}
   mainCamera: {fileID: 8398200536054330572}
@@ -1013,6 +1041,8 @@ MonoBehaviour:
   shield: {fileID: 4331398727622728788}
   shieldController: {fileID: 3264438539187067214}
   inputController: {fileID: 5686553567863091244}
+  playerInput: {fileID: 4267394266250618946}
+  PV: {fileID: -1632429577696317339}
 --- !u!1 &7057162395499024008
 GameObject:
   m_ObjectHideFlags: 0
@@ -1047,7 +1077,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 93.3, y: -27.099998}
+  m_AnchoredPosition: {x: 93.29999, y: -27.099976}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2388655021125002341
@@ -1073,6 +1103,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []

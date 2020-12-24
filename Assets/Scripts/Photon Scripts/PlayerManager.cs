@@ -8,6 +8,7 @@ using UnityEngine.SceneManagement;
 public class PlayerManager : MonoBehaviour
 {
     PhotonView PV;
+    [HideInInspector] public string[] pajaros = new string[5] { "Pigeon", "Duck", "Dori", "Kiwi", "RocketBirb" };
 
     void Awake()
     {
@@ -25,7 +26,8 @@ public class PlayerManager : MonoBehaviour
 
     void CrearControlador()
     {
-        
-        //PhotonNetwork.Instantiate(Path.Combine("Photon prefabs", "JugadorInfo"), Vector3.zero, Quaternion.identity);
+        object indexPajaro;
+        PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("indexPajaro", out indexPajaro);
+        PhotonNetwork.Instantiate(Path.Combine("Prefabs/Characters", pajaros[(int)indexPajaro]), Vector3.zero, Quaternion.identity);
     }
 }

@@ -11,6 +11,8 @@ public class RoomManager : MonoBehaviourPunCallbacks
 {
     public static RoomManager Instance;
 
+    public int gamemodeIndex;
+
     void Awake()
     {
         if (Instance)
@@ -36,24 +38,19 @@ public class RoomManager : MonoBehaviourPunCallbacks
 
     void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
     {
-        if(scene.buildIndex == 0) //Estamos en el menu principal
+
+        if(scene.buildIndex == 2) //Estamos en el juego Online
         {
-            //PhotonNetwork.Instantiate(Path.Combine("Photon prefabs", "PlayerManager"), Vector3.zero, Quaternion.identity);
+            PhotonNetwork.Instantiate(Path.Combine("Photon prefabs", "PlayerManager"), Vector3.zero, Quaternion.identity);
+            if (PhotonNetwork.IsMasterClient)
+            {
+                PhotonNetwork.Instantiate(Path.Combine("Prefabs/Match Elements", "Online Match Controller"), Vector3.zero, Quaternion.identity);
+            }
         }
-        else if(scene.buildIndex == 1) //Estamos en el juego (¿Creo?)
-        {
-            //PhotonNetwork.Instantiate(Path.Combine("Photon prefabs", "PlayerManager"), Vector3.zero, Quaternion.identity);
-        }
     }
 
-    public override void OnJoinedRoom()
+    public void ChangeGamemode(int index)
     {
-        //PhotonNetwork.Instantiate(Path.Combine("Photon prefabs", "JugadorInfo"), Vector3.zero, Quaternion.identity);
+        gamemodeIndex = index;
     }
-
-    public override void OnPlayerEnteredRoom(Player newPlayer)
-    {
-        //PhotonNetwork.Instantiate(Path.Combine("Photon prefabs", "PlayerManager"), Vector3.zero, Quaternion.identity);
-    }
-
 }

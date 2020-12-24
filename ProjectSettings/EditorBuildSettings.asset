@@ -8,6 +8,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Menu.unity
     guid: f089f19f5e344a04482b4163fe1017a2
+  - enabled: 1
+    path: Assets/Scenes/PRUEBA.unity
+    guid: da38911826ee2ca4d93ff118de7c5b66
+  - enabled: 1
+    path: Assets/Scenes/PRUEBA_ONLINE.unity
+    guid: 3278c26c143993c47b5364fe2d4fe27e
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: 0018089026698db40b155e8b752542d8,
       type: 2}

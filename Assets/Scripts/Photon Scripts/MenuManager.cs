@@ -43,14 +43,5 @@ public class MenuManager : MonoBehaviour
     {
         menu.Close();
     }
-
-    public void comprobarNombre()
-    {
-        if (string.IsNullOrEmpty(nombre.text))
-        {
-            //return;
-        }
-        //jugador.setNombre(nombre.text);
-        OpenMenu("menuSalas");
-    }
+    
 }

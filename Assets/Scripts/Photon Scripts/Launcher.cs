@@ -25,6 +25,7 @@ public class Launcher : MonoBehaviourPunCallbacks
     [SerializeField] GameObject cambiarModoGameButton;
     [SerializeField] TMP_Text textoBotonCambiarModo;
     [SerializeField] TMP_Text textoModoDeJuegoActual;
+    [SerializeField] RoomManager roomManager;
 
     [HideInInspector] public string[] modosDeJuego = new string[3] { "Deathmatch", "Rey del comedero", "Acaparaplumas"};
     private Dictionary<int, GameObject> listaJugadoresItems;
@@ -40,19 +41,21 @@ public class Launcher : MonoBehaviourPunCallbacks
         Instance = this;
     }
 
-    void Start()
+    public void ConnectOnline()
     {
+        MenuManager.Instance.OpenMenu("menuCargando");
         PhotonNetwork.ConnectUsingSettings();
     }
 
     public override void OnConnectedToMaster()
     {
         PhotonNetwork.JoinLobby();
+        PhotonNetwork.AutomaticallySyncScene = true;
     }
 
     public override void OnJoinedLobby()
     {
-        MenuManager.Instance.OpenMenu("menuPrincipal");
+        MenuManager.Instance.OpenMenu("menuSalas");
     }
 
     public void CreateRoom()
@@ -240,6 +243,7 @@ public class Launcher : MonoBehaviourPunCallbacks
             object indiceModo;
             if(changedProps.TryGetValue("indiceModo", out indiceModo))
             {
+                roomManager.ChangeGamemode((int)indiceModo);
                 if (!PhotonNetwork.IsMasterClient)
                 {
                     textoModoDeJuegoActual.text = "Modo de Juego actual: " + modosDeJuego[(int)indiceModo];
@@ -263,5 +267,10 @@ public class Launcher : MonoBehaviourPunCallbacks
         Hastable hash = new Hastable() { { "indiceModo", indiceModo } };
         PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
         MenuManager.Instance.OpenMenu("menuSala");
+    }
+
+    public void StartGame()
+    {
+        PhotonNetwork.LoadLevel(2);
     }
 }

@@ -23,7 +23,7 @@ public class listaJugadoresItem : MonoBehaviour
     public int ownerId;
 
     public int gamemodeIndex; //0: deathmatch, 1: rey del comedero, 2: acaparaplumas
-    [HideInInspector] public string[] pajaros = new string[5] { "paloma", "pato", "agapornis", "kiwi", "cuervo" };
+    [HideInInspector] public string[] pajaros = new string[5] { "Pigeon", "Duck", "Dori", "Kiwi", "RocketBirb" };
     [HideInInspector] public int pajaroIndex;
     [HideInInspector] public string pajaroActivo;
 
@@ -38,6 +38,8 @@ public class listaJugadoresItem : MonoBehaviour
         nombre = _player.NickName;
         pajaroIndex = 0;
         ActualizarPajaro(pajaroIndex);
+        Hastable hash = new Hastable() { { indiceHashtable, pajaroIndex } };
+        PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
         if (PhotonNetwork.LocalPlayer.ActorNumber != ownerId)
         {
             botAnterior.SetActive(false);

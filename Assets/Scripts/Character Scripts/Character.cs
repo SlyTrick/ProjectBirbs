@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using Photon.Pun;
+using Photon.Realtime;
 
-public class Character : MonoBehaviour
+public class Character : MonoBehaviourPunCallbacks
 {
     #region Variables
     public StateMachine movementSM;
@@ -52,6 +54,9 @@ public class Character : MonoBehaviour
     [SerializeField] private ShieldController shieldController;
 
     [SerializeField] private InputController inputController;
+    [SerializeField] private PlayerInput playerInput;
+
+    [SerializeField] private PhotonView PV;
     
     #endregion
 
@@ -206,6 +211,21 @@ public class Character : MonoBehaviour
     #region MonoBehaviour Callbacks
     private void Start()
     {
+        if(PhotonNetwork.IsConnected && PV.IsMine)
+        {
+            mainCamera.enabled = true;
+            playerInput.enabled = true;
+            matchController = FindObjectOfType<MatchControllerOnline>();
+            matchController.AddPlayer(this);
+            spawnPoint = matchController.GetSpawnPoint(this);
+        }
+        else if(!PhotonNetwork.IsConnected)
+        {
+            matchController = FindObjectOfType<MatchController>();
+            matchController.AddPlayer(this);
+            spawnPoint = matchController.GetSpawnPoint(this);
+        }
+
         rigidBody.drag = playerDeceleration;
 
         life = maxLife;
@@ -216,11 +236,6 @@ public class Character : MonoBehaviour
 
         lifeText.text = "Vida: " + life;
         scoreText.text = "Puntuación: " + score;
-
-
-        matchController = FindObjectOfType<MatchController>();
-        matchController.AddPlayer(this);
-        spawnPoint = matchController.GetSpawnPoint(this);
 
         movementSM = new StateMachine();
 

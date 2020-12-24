@@ -66,3 +66,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d43d98ffbd1a07f48b3876596d8fe4a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pajaros:
+  - Pigeon
+  - Duck
+  - Dori
+  - Kiwi
+  - RocketBirb
