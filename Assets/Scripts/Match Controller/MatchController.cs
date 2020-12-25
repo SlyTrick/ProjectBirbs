@@ -102,6 +102,13 @@ public class MatchController : MonoBehaviourPunCallbacks
 
     public void Update()
     {
+        if (PhotonNetwork.IsConnected)
+        {
+            if (!PhotonNetwork.IsMasterClient)
+            {
+                return;
+            }
+        }
         modeController.Update();
     }
 }

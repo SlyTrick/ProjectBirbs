@@ -88,13 +88,15 @@ public class Character : MonoBehaviourPunCallbacks
             {
                 PV.RPC("Shoot_RPC", RpcTarget.All);
             }
-            GameObject objBullet = Instantiate(bulletPrefab, firePoint.position, transform.rotation);
-            objBullet.GetComponent<BulletController>().teamId = teamId;
-            objBullet.GetComponent<BulletController>().owner = this;
-            Physics.IgnoreCollision(GetComponent<Collider>(), objBullet.GetComponentInChildren<Collider>());
-            Physics.IgnoreCollision(shield.GetComponent<Collider>(), objBullet.GetComponentInChildren<Collider>());
+            else
+            {
+                GameObject objBullet = Instantiate(bulletPrefab, firePoint.position, transform.rotation);
+                objBullet.GetComponent<BulletController>().teamId = teamId;
+                objBullet.GetComponent<BulletController>().owner = this;
+                Physics.IgnoreCollision(GetComponent<Collider>(), objBullet.GetComponentInChildren<Collider>());
+                Physics.IgnoreCollision(shield.GetComponent<Collider>(), objBullet.GetComponentInChildren<Collider>());
+            }
             StartCoroutine(ShotCooldown());
-
         }
     }
 
@@ -113,15 +115,17 @@ public class Character : MonoBehaviourPunCallbacks
         {
             if (PhotonNetwork.IsConnected)
             {
-                matchControllerOnline.PlayerKilled(this, bullet.owner);
+                if (PV.IsMine)
+                {
+                    PV.RPC("PlayerKilled_RPC", RpcTarget.All);
+                }
             }
             else
             {
                 matchController.PlayerKilled(this, bullet.owner);
+                Instantiate(deathParticleEffect, transform.position, transform.rotation);
+                movementSM.CurrentState.OnDead();
             }
-            
-            Instantiate(deathParticleEffect, transform.position, transform.rotation);
-            movementSM.CurrentState.OnDead();
         }
     }
 
@@ -133,10 +137,20 @@ public class Character : MonoBehaviourPunCallbacks
 
     public void Die()
     {
-        GetComponent<CapsuleCollider>().enabled = false;
-        firingPoint.SetActive(false);
-        sprite.SetActive(false);
-        StartCoroutine(Respawn());
+        if (PhotonNetwork.IsConnected)
+        {
+            if (PV.IsMine)
+            {
+                PV.RPC("Die_RPC", RpcTarget.All);
+            }
+        }
+        else
+        {
+            GetComponent<CapsuleCollider>().enabled = false;
+            firingPoint.SetActive(false);
+            sprite.SetActive(false);
+            StartCoroutine(Respawn());
+        }
     }
 
     public IEnumerator Respawn()
@@ -151,14 +165,22 @@ public class Character : MonoBehaviourPunCallbacks
         transform.forward = spawnPoint.transform.forward;
 
         movementSM.ChangeState(groundedState);
+        if (PhotonNetwork.IsConnected)
+        {
+            if (PV.IsMine)
+            {
+                PV.RPC("Respawn_RPC", RpcTarget.All);
+            }
+        }
+        else
+        {
+            life = maxLife;
+            lifeText.text = "Vida: " + life;
 
-        life = maxLife;
-        lifeText.text = "Vida: " + life;
-        
-        GetComponent<CapsuleCollider>().enabled = true;
-        sprite.SetActive(true);
-        firingPoint.SetActive(true);
-
+            GetComponent<CapsuleCollider>().enabled = true;
+            sprite.SetActive(true);
+            firingPoint.SetActive(true);
+        }
     }
 
     public void CreateShield()
@@ -233,6 +255,59 @@ public class Character : MonoBehaviourPunCallbacks
         Physics.IgnoreCollision(shield.GetComponent<Collider>(), objBullet.GetComponentInChildren<Collider>());
     }
 
+    [PunRPC]
+    public void PlayerKilled_RPC()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            //matchControllerOnline.PlayerKilled(this, bullet.owner);
+        }
+        Instantiate(deathParticleEffect, transform.position, transform.rotation);
+        if (PV.IsMine)
+        {
+            movementSM.CurrentState.OnDead();
+        }
+    }
+
+    [PunRPC]
+    public void Die_RPC()
+    {
+        GetComponent<CapsuleCollider>().enabled = false;
+        firingPoint.SetActive(false);
+        sprite.SetActive(false);
+
+        if (PV.IsMine)
+        {
+            StartCoroutine(Respawn());
+        }
+    }
+
+    [PunRPC]
+    public void Respawn_RPC()
+    {
+        if (PV.IsMine)
+        {
+            life = maxLife;
+            lifeText.text = "Vida: " + life;
+        }
+        GetComponent<CapsuleCollider>().enabled = true;
+        sprite.SetActive(true);
+        firingPoint.SetActive(true);
+    }
+
+    [PunRPC]
+    public void GetSpawnpoint_RPC()
+    {
+        if (PV.IsMine)
+        {
+            if (!PhotonNetwork.IsMasterClient)
+            {
+                matchControllerOnline = FindObjectOfType<MatchControllerOnline>();
+            }
+            spawnPoint = matchControllerOnline.GetSpawnPoint(this);
+        }
+    }
+
     #endregion
 
     #region MonoBehaviour Callbacks
@@ -258,7 +333,7 @@ public class Character : MonoBehaviourPunCallbacks
         {
             matchControllerOnline = FindObjectOfType<MatchControllerOnline>();
             matchControllerOnline.AddPlayer(this);
-            spawnPoint = matchControllerOnline.GetSpawnPoint(this);
+            PV.RPC("GetSpawnpoint_RPC", RpcTarget.All);
         }
         else if (!PhotonNetwork.IsConnected)
         {
@@ -303,6 +378,11 @@ public class Character : MonoBehaviourPunCallbacks
 
     private void OnCollisionEnter(Collision collision)
     {
+        if (PhotonNetwork.IsConnected)
+        {
+            if (!PV.IsMine)
+                return;
+        }
         BulletController collided;
         if (collision.gameObject.TryGetComponent<BulletController>(out collided))
         {

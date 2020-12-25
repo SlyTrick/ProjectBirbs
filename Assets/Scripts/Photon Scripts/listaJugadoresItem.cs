@@ -28,7 +28,9 @@ public class listaJugadoresItem : MonoBehaviour
     [HideInInspector] public string pajaroActivo;
 
     [HideInInspector] public string indiceHashtable = "indexPajaro";
-    
+    [HideInInspector] public string indiceModoHastable = "indiceModo";
+
+
 
     public void SetUp(Player _player)
     {
@@ -37,13 +39,17 @@ public class listaJugadoresItem : MonoBehaviour
         nombreTexto.text = _player.NickName;
         nombre = _player.NickName;
         pajaroIndex = 0;
+        gamemodeIndex = 0;
         ActualizarPajaro(pajaroIndex);
-        Hastable hash = new Hastable() { { indiceHashtable, pajaroIndex } };
-        PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
         if (PhotonNetwork.LocalPlayer.ActorNumber != ownerId)
         {
             botAnterior.SetActive(false);
             botSiguiente.SetActive(false);
+        }
+        if (PhotonNetwork.LocalPlayer.ActorNumber == ownerId)
+        {
+            Hastable hash = new Hastable() { { indiceHashtable, pajaroIndex } };
+            PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
         }
     }
 
@@ -78,7 +84,7 @@ public class listaJugadoresItem : MonoBehaviour
     public void NuevoPajaro(int index)
     {
         ActualizarPajaro(index);
-        Hastable hash = new Hastable() { {indiceHashtable, index } };
+        Hastable hash = new Hastable() { { indiceHashtable, index }};
         PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
     }
 
