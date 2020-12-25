@@ -37,6 +37,7 @@ public class Character : MonoBehaviourPunCallbacks
     private bool canShield;
     public int score;
     private int feathers;
+    private MatchControllerOnline matchControllerOnline;
     private MatchController matchController;
     private BoxCollider spawnPoint;
 
@@ -83,6 +84,10 @@ public class Character : MonoBehaviourPunCallbacks
         if(canShoot)
         {
             canShoot = false;
+            if(PhotonNetwork.IsConnected && PV.IsMine)
+            {
+                PV.RPC("Shoot_RPC", RpcTarget.All);
+            }
             GameObject objBullet = Instantiate(bulletPrefab, firePoint.position, transform.rotation);
             objBullet.GetComponent<BulletController>().teamId = teamId;
             objBullet.GetComponent<BulletController>().owner = this;
@@ -106,8 +111,15 @@ public class Character : MonoBehaviourPunCallbacks
 
         if (life <= 0)
         {
-            matchController.PlayerKilled(this, bullet.owner);
-
+            if (PhotonNetwork.IsConnected)
+            {
+                matchControllerOnline.PlayerKilled(this, bullet.owner);
+            }
+            else
+            {
+                matchController.PlayerKilled(this, bullet.owner);
+            }
+            
             Instantiate(deathParticleEffect, transform.position, transform.rotation);
             movementSM.CurrentState.OnDead();
         }
@@ -208,24 +220,24 @@ public class Character : MonoBehaviourPunCallbacks
         feathers -= lostFeathers;
         return lostFeathers;
     }
+
+    #region RPCs
+
+    [PunRPC]
+    public void Shoot_RPC()
+    {
+        GameObject objBullet = Instantiate(bulletPrefab, firePoint.position, transform.rotation);
+        objBullet.GetComponent<BulletController>().teamId = teamId;
+        objBullet.GetComponent<BulletController>().owner = this;
+        Physics.IgnoreCollision(GetComponent<Collider>(), objBullet.GetComponentInChildren<Collider>());
+        Physics.IgnoreCollision(shield.GetComponent<Collider>(), objBullet.GetComponentInChildren<Collider>());
+    }
+
+    #endregion
+
     #region MonoBehaviour Callbacks
     private void Start()
     {
-        if(PhotonNetwork.IsConnected && PV.IsMine)
-        {
-            mainCamera.enabled = true;
-            playerInput.enabled = true;
-            matchController = FindObjectOfType<MatchControllerOnline>();
-            matchController.AddPlayer(this);
-            spawnPoint = matchController.GetSpawnPoint(this);
-        }
-        else if(!PhotonNetwork.IsConnected)
-        {
-            matchController = FindObjectOfType<MatchController>();
-            matchController.AddPlayer(this);
-            spawnPoint = matchController.GetSpawnPoint(this);
-        }
-
         rigidBody.drag = playerDeceleration;
 
         life = maxLife;
@@ -236,6 +248,26 @@ public class Character : MonoBehaviourPunCallbacks
 
         lifeText.text = "Vida: " + life;
         scoreText.text = "Puntuación: " + score;
+
+        if(PhotonNetwork.IsConnected && PV.IsMine)
+        {
+            mainCamera.enabled = true;
+            playerInput.enabled = true;
+        }
+        if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient)
+        {
+            matchControllerOnline = FindObjectOfType<MatchControllerOnline>();
+            matchControllerOnline.AddPlayer(this);
+            spawnPoint = matchControllerOnline.GetSpawnPoint(this);
+        }
+        else if (!PhotonNetwork.IsConnected)
+        {
+            mainCamera.enabled = true;
+            playerInput.enabled = true;
+            matchController = FindObjectOfType<MatchController>();
+            matchController.AddPlayer(this);
+            spawnPoint = matchController.GetSpawnPoint(this);
+        }
 
         movementSM = new StateMachine();
 
@@ -251,11 +283,21 @@ public class Character : MonoBehaviourPunCallbacks
 
     private void Update()
     {
+        if (PhotonNetwork.IsConnected)
+        {
+            if (!PV.IsMine)
+                return;
+        }
         movementSM.CurrentState.LogicUpdate();
     }
 
     private void FixedUpdate()
     {
+        if (PhotonNetwork.IsConnected)
+        {
+            if (!PV.IsMine)
+                return;
+        }
         movementSM.CurrentState.PhysicsUpdate();
     }
 
