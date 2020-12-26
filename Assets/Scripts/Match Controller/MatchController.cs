@@ -27,11 +27,14 @@ public class MatchController : MonoBehaviourPunCallbacks
     public float feederRate;
     public int numFeatherSpawns = 3;
 
-    public void AddPlayer(Character player)
+    [SerializeField] PhotonView PV;
+
+    public int AddPlayer(Character player)
     {
         playerList.Add(player);
         if(teamsPoints.Count != player.GetTeamId() + 1)
             teamsPoints.Add(0);
+        return playerList.Count-1;
 
     }
 
@@ -80,7 +83,15 @@ public class MatchController : MonoBehaviourPunCallbacks
     }
     public virtual void Start()
     {
-        mode = (int)modes.FEATHER_HOARDER;
+        if (PhotonNetwork.IsConnected)
+        {
+            RoomManager roomManager = FindObjectOfType<RoomManager>();
+            mode = roomManager.gamemodeIndex;
+        }
+        else
+        {
+            mode = (int)modes.FEATHER_HOARDER;
+        }
         switch (mode)
         {
             case (int)modes.DEATHMATCH:

@@ -8,6 +8,7 @@ public class LaserController : BulletController
     private int numRicochet;
     public override void Start()
     {
+        
         base.Start();
     }
     public override void FixedUpdate()

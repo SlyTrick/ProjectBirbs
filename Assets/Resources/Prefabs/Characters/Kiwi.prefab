@@ -286,6 +286,14 @@ MonoBehaviour:
     type: 3}
   shield: {fileID: 6559864537050046227}
   shieldController: {fileID: 5357304117315492361}
+  bulletPrefabs:
+  - {fileID: 3614976613900344981, guid: 9714c7069534d5e419aa9144f2fac3a5, type: 3}
+  - {fileID: 2171660552106004524, guid: 700e1b9e1a3977d469c9791944583b57, type: 3}
+  - {fileID: 5121197064375372632, guid: 9b0a57575713a2a42aea30cd2b115555, type: 3}
+  - {fileID: 6145597801665356793, guid: d032d2b790839fe4888a49175e662874, type: 3}
+  - {fileID: 6828559746837479016, guid: 19445aa202a93f24496eba69ec6865c9, type: 3}
+  destroyedParticleEffect: {fileID: 8378930425983463328, guid: c78be698dedf9e24cae612cd87ce7d1d,
+    type: 3}
   inputController: {fileID: 3026375436166853483}
   playerInput: {fileID: 6642174217752996613}
   PV: {fileID: 7883565003543203720}
@@ -556,6 +564,7 @@ MonoBehaviour:
   parryTime: 0.08
   destroyedParticleEffect: {fileID: 8378930425983463328, guid: c78be698dedf9e24cae612cd87ce7d1d,
     type: 3}
+  PV: {fileID: 7883565003543203720}
 --- !u!54 &1471050814750566522
 Rigidbody:
   m_ObjectHideFlags: 0

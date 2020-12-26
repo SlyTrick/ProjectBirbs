@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
+using Photon.Realtime;
 
 public class ShieldController : MonoBehaviour
 {
@@ -24,6 +26,9 @@ public class ShieldController : MonoBehaviour
     [SerializeField] private float parryTime;
     private Character birbCharacter;
     [SerializeField] private GameObject destroyedParticleEffect;
+
+    [SerializeField] private PhotonView PV;
+
     private void TakeDamage(int damage)
     {
         life -= damage;
@@ -32,7 +37,14 @@ public class ShieldController : MonoBehaviour
 
         if (life <= 0)
         {
-            DestroyShield();
+            if (PhotonNetwork.IsConnected)
+            {
+                PV.RPC("DestroyShield_RPC", RpcTarget.All);
+            }
+            else
+            {
+                DestroyShield();
+            }
         }
     }
 
@@ -116,6 +128,13 @@ public class ShieldController : MonoBehaviour
     
     private void OnCollisionEnter(Collision collision)
     {
+        if (PhotonNetwork.IsConnected)
+        {
+            if (!PV.IsMine)
+            {
+                return;
+            }
+        }
         BulletController collided;
         if (collision.gameObject.TryGetComponent<BulletController>(out collided) && collided.speed != 0)
         {
@@ -123,13 +142,29 @@ public class ShieldController : MonoBehaviour
             if(elapsedTime < parryTime)
             {
                 parried = true;
-                GameObject objBullet = Instantiate(collision.gameObject, transform.position, transform.rotation);
-                objBullet.GetComponent<BulletController>().teamId = teamId;
-                objBullet.GetComponent<BulletController>().damage *= 2;
-                objBullet.GetComponent<BulletController>().owner = birbCharacter;
-                objBullet.GetComponent<BulletController>().enabled = true;
-                Physics.IgnoreCollision(GetComponent<Collider>(), objBullet.GetComponentInChildren<Collider>());
-                Physics.IgnoreCollision(birb.GetComponent<Collider>(), objBullet.GetComponentInChildren<Collider>());
+                if (PhotonNetwork.IsConnected)
+                {
+                    int indicePrefabBala = 0;
+                    for(int i = 0; i < birbCharacter.bulletPrefabs.Length; i++)
+                    {
+                        if(birbCharacter.bulletPrefabs[i].GetComponent<BulletController>().nombre == collided.nombre)
+                        {
+                            indicePrefabBala = i;
+                            break;
+                        }
+                    }
+                    PV.RPC("Parry_RPC", RpcTarget.All, indicePrefabBala);
+                }
+                else
+                {
+                    GameObject objBullet = Instantiate(collision.gameObject, transform.position, transform.rotation);
+                    objBullet.GetComponent<BulletController>().teamId = teamId;
+                    objBullet.GetComponent<BulletController>().damage *= 2;
+                    objBullet.GetComponent<BulletController>().owner = birbCharacter;
+                    objBullet.GetComponent<BulletController>().enabled = true;
+                    Physics.IgnoreCollision(GetComponent<Collider>(), objBullet.GetComponentInChildren<Collider>());
+                    Physics.IgnoreCollision(birb.GetComponent<Collider>(), objBullet.GetComponentInChildren<Collider>());
+                }
             }
             else
             {
@@ -149,4 +184,5 @@ public class ShieldController : MonoBehaviour
             }
         }
     }
+    
 }

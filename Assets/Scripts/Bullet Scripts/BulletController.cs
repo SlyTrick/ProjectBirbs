@@ -9,6 +9,7 @@ public class BulletController : MonoBehaviour
     public float speed;
     public float timeToLive;
     public Vector3 moveVector;
+    [SerializeField] public string nombre;
 
     public int teamId;
     public Character owner;

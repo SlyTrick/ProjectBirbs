@@ -37,7 +37,6 @@ public class Character : MonoBehaviourPunCallbacks
     private bool canShield;
     public int score;
     private int feathers;
-    private MatchControllerOnline matchControllerOnline;
     private MatchController matchController;
     private BoxCollider spawnPoint;
 
@@ -53,6 +52,8 @@ public class Character : MonoBehaviourPunCallbacks
     [SerializeField] private GameObject deathParticleEffect;
     [SerializeField] private GameObject shield;
     [SerializeField] private ShieldController shieldController;
+    [SerializeField] public GameObject[] bulletPrefabs;
+    [SerializeField] private GameObject destroyedParticleEffect;
 
     [SerializeField] private InputController inputController;
     [SerializeField] private PlayerInput playerInput;
@@ -185,20 +186,41 @@ public class Character : MonoBehaviourPunCallbacks
 
     public void CreateShield()
     {
-        shieldController.CreateShield();
-    }
-    public void RemoveShield()
-    {
-        shieldController.RemoveShield();
-        if (!shieldController.parried)
+        if (PhotonNetwork.IsConnected)
         {
-            canShield = false;
-            StartCoroutine(ShieldCooldown());
+            if (PV.IsMine)
+            {
+                PV.RPC("CreateShield_RPC", RpcTarget.All);
+            }
         }
         else
         {
-            shieldController.parried = false;
+            shieldController.CreateShield();
         }
+    }
+    public void RemoveShield()
+    {
+        if (PhotonNetwork.IsConnected)
+        {
+            if (PV.IsMine)
+            {
+                PV.RPC("RemoveShield_RPC", RpcTarget.All);
+            }
+        }
+        else
+        {
+            shieldController.RemoveShield();
+            if (!shieldController.parried)
+            {
+                canShield = false;
+                StartCoroutine(ShieldCooldown());
+            }
+            else
+            {
+                shieldController.parried = false;
+            }
+        }
+        
     }
 
     IEnumerator ShieldCooldown()
@@ -296,15 +318,63 @@ public class Character : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    public void GetSpawnpoint_RPC()
+    public void GetSpawnpoint_RPC(int team)
     {
         if (PV.IsMine)
         {
             if (!PhotonNetwork.IsMasterClient)
             {
-                matchControllerOnline = FindObjectOfType<MatchControllerOnline>();
+                matchController = FindObjectOfType<MatchController>();
             }
-            spawnPoint = matchControllerOnline.GetSpawnPoint(this);
+            teamId = team;
+            spawnPoint = matchController.GetSpawnPoint(this);
+        }
+    }
+
+    [PunRPC]
+    public void CreateShield_RPC()
+    {
+        shieldController.CreateShield();
+    }
+
+    [PunRPC]
+    public void RemoveShield_RPC()
+    {
+        shieldController.RemoveShield();
+        if (PV.IsMine)
+        {
+            if (!shieldController.parried)
+            {
+                canShield = false;
+                StartCoroutine(ShieldCooldown());
+            }
+            else
+            {
+                shieldController.parried = false;
+            }
+        }
+    }
+
+    [PunRPC]
+    public void Parry_RPC(int indicePrefab)
+    {
+        
+        GameObject objBullet = Instantiate(bulletPrefabs[indicePrefab], shieldController.transform.position, shieldController.transform.rotation);
+        objBullet.GetComponent<BulletController>().teamId = teamId;
+        objBullet.GetComponent<BulletController>().damage *= 2;
+        objBullet.GetComponent<BulletController>().owner = this;
+        objBullet.GetComponent<BulletController>().enabled = true;
+        Physics.IgnoreCollision(GetComponent<Collider>(), objBullet.GetComponentInChildren<Collider>());
+        Physics.IgnoreCollision(this.GetComponent<Collider>(), objBullet.GetComponentInChildren<Collider>());
+    }
+
+    [PunRPC]
+    public void DestroyShield_RPC()
+    {
+        Instantiate(destroyedParticleEffect, shieldController.transform.position, shieldController.transform.rotation);
+        if (PV.IsMine)
+        {
+            movementSM.CurrentState.OnStun();
         }
     }
 
@@ -331,9 +401,9 @@ public class Character : MonoBehaviourPunCallbacks
         }
         if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient)
         {
-            matchControllerOnline = FindObjectOfType<MatchControllerOnline>();
-            matchControllerOnline.AddPlayer(this);
-            PV.RPC("GetSpawnpoint_RPC", RpcTarget.All);
+            matchController = FindObjectOfType<MatchController>();
+            teamId = matchController.AddPlayer(this);
+            PV.RPC("GetSpawnpoint_RPC", RpcTarget.All, teamId);
         }
         else if (!PhotonNetwork.IsConnected)
         {
