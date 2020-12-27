@@ -31,7 +31,7 @@ public class Character : MonoBehaviourPunCallbacks
     [SerializeField] private float shieldTime;
 
     public bool onFeeder;
-    private int teamId;
+    public int teamId;
     public int life;
     private bool canShoot;
     private bool canShield;
@@ -39,6 +39,7 @@ public class Character : MonoBehaviourPunCallbacks
     private int feathers;
     private MatchController matchController;
     private BoxCollider spawnPoint;
+    public bool damageable;
 
     [SerializeField] private Text scoreText;
     [SerializeField] private Text lifeText;
@@ -111,21 +112,24 @@ public class Character : MonoBehaviourPunCallbacks
     {
         life -= damage;
         lifeText.text = "Vida: " + life;
-
-        if (life <= 0)
+        if (damageable)
         {
-            if (PhotonNetwork.IsConnected)
+            if (life <= 0)
             {
-                if (PV.IsMine)
+                damageable = false;
+                if (PhotonNetwork.IsConnected)
                 {
-                    PV.RPC("PlayerKilled_RPC", RpcTarget.All);
+                    if (PV.IsMine)
+                    {
+                        PV.RPC("PlayerKilled_RPC", RpcTarget.All, bullet.owner.PV.Owner.ActorNumber);
+                    }
                 }
-            }
-            else
-            {
-                matchController.PlayerKilled(this, bullet.owner);
-                Instantiate(deathParticleEffect, transform.position, transform.rotation);
-                movementSM.CurrentState.OnDead();
+                else
+                {
+                    matchController.PlayerKilled(this, bullet.owner);
+                    Instantiate(deathParticleEffect, transform.position, transform.rotation);
+                    movementSM.CurrentState.OnDead();
+                }
             }
         }
     }
@@ -136,8 +140,11 @@ public class Character : MonoBehaviourPunCallbacks
         {
             PV.RPC("UpdateScore_RPC", RpcTarget.All, newScore);
         }
-        score = newScore;
-        scoreText.text = "Puntuación: " + score;
+        else
+        {
+            score = newScore;
+            scoreText.text = "Puntuación: " + score;
+        }
     }
 
     public void Die()
@@ -181,6 +188,7 @@ public class Character : MonoBehaviourPunCallbacks
         {
             life = maxLife;
             lifeText.text = "Vida: " + life;
+            damageable = true;
 
             GetComponent<CapsuleCollider>().enabled = true;
             sprite.SetActive(true);
@@ -224,7 +232,6 @@ public class Character : MonoBehaviourPunCallbacks
                 shieldController.parried = false;
             }
         }
-        
     }
 
     IEnumerator ShieldCooldown()
@@ -286,15 +293,22 @@ public class Character : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    public void PlayerKilled_RPC()
+    public void PlayerKilled_RPC(int killerActorNumber)
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            if(matchController.mode == 2)
+            switch (matchController.mode)
             {
-                matchController.PlayerKilled(this, null);
+                case 0:
+                    Character killer = matchController.findByActorNumber(killerActorNumber);
+                    matchController.PlayerKilled(this, killer);
+                    break;
+                case 1:
+                    break;
+                case 2:
+                    matchController.PlayerKilled(this, null);
+                    break;
             }
-            //matchControllerOnline.PlayerKilled(this, bullet.owner);
         }
         Instantiate(deathParticleEffect, transform.position, transform.rotation);
         if (PV.IsMine)
@@ -324,6 +338,7 @@ public class Character : MonoBehaviourPunCallbacks
             life = maxLife;
             lifeText.text = "Vida: " + life;
         }
+        damageable = true;
         GetComponent<CapsuleCollider>().enabled = true;
         sprite.SetActive(true);
         firingPoint.SetActive(true);
@@ -340,6 +355,7 @@ public class Character : MonoBehaviourPunCallbacks
             }
             teamId = team;
             spawnPoint = matchController.GetSpawnPoint(this);
+            GetComponent<Transform>().position = spawnPoint.transform.position;
         }
     }
 
@@ -418,6 +434,15 @@ public class Character : MonoBehaviourPunCallbacks
         }
     }
 
+    [PunRPC]
+    public void UpdateFeederScore_RPC()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            matchController.UpdateFeederScore(this);
+        }
+    }
+
     #endregion
 
     #region MonoBehaviour Callbacks
@@ -430,6 +455,7 @@ public class Character : MonoBehaviourPunCallbacks
         canShoot = true;
         canShield = true;
         teamId = GetComponentInChildren<PlayerInput>().playerIndex;
+        damageable = true;
 
         lifeText.text = "Vida: " + life;
         scoreText.text = "Puntuación: " + score;

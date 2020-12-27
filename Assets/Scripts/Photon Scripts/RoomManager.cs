@@ -11,6 +11,8 @@ public class RoomManager : MonoBehaviourPunCallbacks
 {
     public static RoomManager Instance;
 
+    public MatchController matchController;
+
     public int gamemodeIndex;
 
     void Awake()
@@ -52,5 +54,13 @@ public class RoomManager : MonoBehaviourPunCallbacks
     public void ChangeGamemode(int index)
     {
         gamemodeIndex = index;
+    }
+
+    public override void OnPlayerLeftRoom(Player otherPlayer)
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            matchController = FindObjectOfType<MatchController>();
+        }
     }
 }

@@ -95,8 +95,10 @@ MonoBehaviour:
   shieldMaxLife: 50
   shieldTime: 10
   onFeeder: 0
+  teamId: 0
   life: 0
   score: 0
+  damageable: 0
   scoreText: {fileID: 1483651529568917191}
   lifeText: {fileID: 4050279575601305604}
   mainCamera: {fileID: 3230144293760766485}

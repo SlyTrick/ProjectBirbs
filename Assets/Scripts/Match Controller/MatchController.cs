@@ -22,7 +22,8 @@ public class MatchController : MonoBehaviourPunCallbacks
     [SerializeField] public List<BoxCollider> teamSpawns;
     [SerializeField] public List<GameObject> featherSpawns;
     [SerializeField] public GameObject featherPrefab;
-    [SerializeField] public GameObject feeder;
+    [SerializeField] public GameObject feederPrefab;
+    [SerializeField] public GameObject feederPos;
     public float featherRate;   
     public float feederRate;
     public int numFeatherSpawns = 3;
@@ -81,6 +82,17 @@ public class MatchController : MonoBehaviourPunCallbacks
     {
         modeController.AddFeather(target);
     }
+    public Character findByActorNumber(int AN)
+    {
+        for(int i = 0; i < playerList.Count; i++)
+        {
+            if(playerList[i].PV.Owner.ActorNumber == AN)
+            {
+                return playerList[i];
+            }
+        }
+        return null;
+    }
     public virtual void Start()
     {
         if (PhotonNetwork.IsConnected)
@@ -98,7 +110,14 @@ public class MatchController : MonoBehaviourPunCallbacks
                 modeController = new DeathmatchController(this);
                 break;
             case (int)modes.KING_OF_THE_FEEDER:
-                feeder.SetActive(true);
+                if (PhotonNetwork.IsConnected)
+                {
+                    PV.RPC("SpawnFeeder_RPC", RpcTarget.All);
+                }
+                else
+                {
+                    Object.Instantiate(feederPrefab, feederPos.transform.position, Quaternion.identity);
+                }
                 modeController = new KingOfTheFeederController(this);
                 break;
             case (int)modes.FEATHER_HOARDER:
@@ -139,6 +158,15 @@ public class MatchController : MonoBehaviourPunCallbacks
         Vector3 spawnPos = new Vector3(x, 0, z);
         FeatherController feather = Object.Instantiate(featherPrefab, spawnPos, Quaternion.Euler(spawnDir)).GetComponent<FeatherController>();
         feather.rigidBody.AddForce(spawnDir * feather.acceleration * Time.fixedDeltaTime, ForceMode.Impulse);
+    }
+    #endregion
+
+    #region RPCs_KingOfTheFeeder
+
+    [PunRPC]
+    public void SpawnFeeder_RPC()
+    {
+        Object.Instantiate(feederPrefab, feederPos.transform.position, Quaternion.identity);
     }
 
     #endregion
