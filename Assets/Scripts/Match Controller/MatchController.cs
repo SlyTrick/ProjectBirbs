@@ -27,7 +27,7 @@ public class MatchController : MonoBehaviourPunCallbacks
     public float feederRate;
     public int numFeatherSpawns = 3;
 
-    [SerializeField] PhotonView PV;
+    [SerializeField] public PhotonView PV;
 
     public int AddPlayer(Character player)
     {
@@ -122,4 +122,24 @@ public class MatchController : MonoBehaviourPunCallbacks
         }
         modeController.Update();
     }
+
+    #region RPCs_FeatherHoarded
+
+    [PunRPC]
+    public void SpawnFeather_RPC(float x, float z)
+    {
+        Vector3 spawnPos = new Vector3(x, 0, z);
+        Object.Instantiate(featherPrefab, spawnPos, Quaternion.identity);
+    }
+
+    [PunRPC]
+    public void SpawnLostFeather_RPC(float x, float z, float dx, float dz)
+    {
+        Vector3 spawnDir = new Vector3(dx, 0, dz);
+        Vector3 spawnPos = new Vector3(x, 0, z);
+        FeatherController feather = Object.Instantiate(featherPrefab, spawnPos, Quaternion.Euler(spawnDir)).GetComponent<FeatherController>();
+        feather.rigidBody.AddForce(spawnDir * feather.acceleration * Time.fixedDeltaTime, ForceMode.Impulse);
+    }
+
+    #endregion
 }

@@ -58,7 +58,7 @@ public class Character : MonoBehaviourPunCallbacks
     [SerializeField] private InputController inputController;
     [SerializeField] private PlayerInput playerInput;
 
-    [SerializeField] private PhotonView PV;
+    [SerializeField] public PhotonView PV;
     
     #endregion
 
@@ -132,6 +132,10 @@ public class Character : MonoBehaviourPunCallbacks
 
     public void SetPoints(int newScore)
     {
+        if (PhotonNetwork.IsConnected)
+        {
+            PV.RPC("UpdateScore_RPC", RpcTarget.All, newScore);
+        }
         score = newScore;
         scoreText.text = "Puntuación: " + score;
     }
@@ -262,6 +266,10 @@ public class Character : MonoBehaviourPunCallbacks
     {
         int lostFeathers = feathers / 2;
         feathers -= lostFeathers;
+        if (PhotonNetwork.IsConnected)
+        {
+            PV.RPC("LoseFeathers_RPC", RpcTarget.All, feathers);
+        }
         return lostFeathers;
     }
 
@@ -282,6 +290,10 @@ public class Character : MonoBehaviourPunCallbacks
     {
         if (PhotonNetwork.IsMasterClient)
         {
+            if(matchController.mode == 2)
+            {
+                matchController.PlayerKilled(this, null);
+            }
             //matchControllerOnline.PlayerKilled(this, bullet.owner);
         }
         Instantiate(deathParticleEffect, transform.position, transform.rotation);
@@ -375,6 +387,34 @@ public class Character : MonoBehaviourPunCallbacks
         if (PV.IsMine)
         {
             movementSM.CurrentState.OnStun();
+        }
+    }
+
+    [PunRPC]
+    public void AddFeather_RPC()
+    {
+        if(PhotonNetwork.IsMasterClient || PV.IsMine)
+        {
+            feathers++;
+        }
+    }
+
+    [PunRPC]
+    public void LoseFeathers_RPC(int newFeathers)
+    {
+        if (PV.IsMine)
+        {
+            feathers = newFeathers;
+        }
+    }
+
+    [PunRPC]
+    public void UpdateScore_RPC(int newScore)
+    {
+        if (PV.IsMine)
+        {
+            score = newScore;
+            scoreText.text = "Puntuación: " + score;
         }
     }
 

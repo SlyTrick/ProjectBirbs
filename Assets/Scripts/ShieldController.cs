@@ -54,8 +54,16 @@ public class ShieldController : MonoBehaviour
         transform.localScale = new Vector3(shieldSize * ((float)life / maxLife), transform.localScale.y, transform.localScale.z);
         if (life <= 0)
         {
-            DestroyShield();
-            CancelInvoke();
+            if (PhotonNetwork.IsConnected)
+            {
+                PV.RPC("DestroyShield_RPC", RpcTarget.All);
+                CancelInvoke();
+            }
+            else
+            {
+                DestroyShield();
+                CancelInvoke();
+            }
         }
     }
     
