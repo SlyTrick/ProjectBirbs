@@ -347,16 +347,13 @@ public class Character : MonoBehaviourPunCallbacks
     [PunRPC]
     public void GetSpawnpoint_RPC(int team)
     {
-        if (PV.IsMine)
+        if (!PhotonNetwork.IsMasterClient)
         {
-            if (!PhotonNetwork.IsMasterClient)
-            {
-                matchController = FindObjectOfType<MatchController>();
-            }
-            teamId = team;
-            spawnPoint = matchController.GetSpawnPoint(this);
-            GetComponent<Transform>().position = spawnPoint.transform.position;
+            matchController = FindObjectOfType<MatchController>();
         }
+        teamId = team;
+        spawnPoint = matchController.GetSpawnPoint(this);
+        GetComponent<Transform>().position = spawnPoint.transform.position;
     }
 
     [PunRPC]

@@ -10,6 +10,8 @@ public class PlayerManager : MonoBehaviour
     PhotonView PV;
     [HideInInspector] public string[] pajaros = new string[5] { "Pigeon", "Duck", "Dori", "Kiwi", "RocketBirb" };
 
+    GameObject myCharacter;
+
     void Awake()
     {
         PV = GetComponent<PhotonView>();
@@ -28,6 +30,11 @@ public class PlayerManager : MonoBehaviour
     {
         object indexPajaro;
         PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("indexPajaro", out indexPajaro);
-        PhotonNetwork.Instantiate(Path.Combine("Prefabs/Characters", pajaros[(int)indexPajaro]), Vector3.zero, Quaternion.identity);
+        myCharacter = PhotonNetwork.Instantiate(Path.Combine("Prefabs/Characters", pajaros[(int)indexPajaro]), Vector3.zero, Quaternion.identity);
+    }
+
+    public void DestroyController()
+    {
+        PhotonNetwork.Destroy(myCharacter);
     }
 }

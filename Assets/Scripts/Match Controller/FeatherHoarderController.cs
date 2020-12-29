@@ -84,12 +84,15 @@ public class FeatherHoarderController : ModeController
     }
     public override void AddFeather(Character target)
     {
-        if (PhotonNetwork.IsConnected && PVMatchController.IsMine)
+        if (PhotonNetwork.IsConnected )
         {
-            generatedFeathers--;
+            if (PVMatchController.IsMine)
+            {
+                generatedFeathers--;
 
-            target.PV.RPC("AddFeather_RPC", RpcTarget.All);
-            matchController.AddPoints(target, 1);
+                target.PV.RPC("AddFeather_RPC", RpcTarget.All);
+                matchController.AddPoints(target, 1);
+            }
         }
         else
         {

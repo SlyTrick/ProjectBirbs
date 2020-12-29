@@ -29,6 +29,7 @@ public class MatchController : MonoBehaviourPunCallbacks
     public int numFeatherSpawns = 3;
 
     [SerializeField] public PhotonView PV;
+    public RoomManager roomManager;
 
     public int AddPlayer(Character player)
     {
@@ -58,8 +59,16 @@ public class MatchController : MonoBehaviourPunCallbacks
             if(playerList[i].GetTeamId() == team)
                 playerList[i].SetPoints(teamsPoints[team]);
         }
-        
+        if(teamsPoints[team] >= 10)
+        {
+            if (PhotonNetwork.IsConnected)
+            {
+                PV.RPC("EndGame_RPC", RpcTarget.All, teamsPoints[team], team);
+            }
+            
+        }
     }
+
     public virtual void SubstractPoints(Character target, int points)
     {
         int team = target.GetTeamId();
@@ -70,18 +79,22 @@ public class MatchController : MonoBehaviourPunCallbacks
                 playerList[i].SetPoints(teamsPoints[team]);
         }
     }
+
     public virtual void PlayerKilled(Character victim, Character killer)
     {
         modeController.PlayerKilled(victim, killer);
     }
+
     public virtual void UpdateFeederScore(Character target)
     {
         modeController.UpdateFeederScore(target);
     }
+
     public virtual void AddFeather(Character target)
     {
         modeController.AddFeather(target);
     }
+
     public Character findByActorNumber(int AN)
     {
         for(int i = 0; i < playerList.Count; i++)
@@ -93,11 +106,12 @@ public class MatchController : MonoBehaviourPunCallbacks
         }
         return null;
     }
+
     public virtual void Start()
     {
         if (PhotonNetwork.IsConnected)
         {
-            RoomManager roomManager = FindObjectOfType<RoomManager>();
+            roomManager = FindObjectOfType<RoomManager>();
             mode = roomManager.gamemodeIndex;
         }
         else
@@ -170,4 +184,10 @@ public class MatchController : MonoBehaviourPunCallbacks
     }
 
     #endregion
+
+    [PunRPC]
+    public void EndGame_RPC(int pointsWinner, int indexWinnerTeam)
+    {
+        roomManager.TerminarPartida(pointsWinner, indexWinnerTeam);
+    }
 }
