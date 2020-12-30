@@ -73,7 +73,7 @@ public class Character : MonoBehaviour
         }
     }
 
-    public void Shoot(bool shootInput)
+    public void Shoot()
     {
         if(canShoot)
         {

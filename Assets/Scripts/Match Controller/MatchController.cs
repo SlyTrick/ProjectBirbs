@@ -20,7 +20,8 @@ public class MatchController : MonoBehaviour
     [SerializeField]private List<BoxCollider> teamSpawns;
     [SerializeField]private List<GameObject> featherSpawns;
     [SerializeField]public GameObject featherPrefab;
-    [SerializeField]private GameObject feeder;
+    [SerializeField]private GameObject feederPrefab;
+    [SerializeField]private GameObject cloudPrefab;
     public float featherRate;   
     public float feederRate;
     private int numFeatherSpawns = 3;
@@ -78,6 +79,17 @@ public class MatchController : MonoBehaviour
     }
     void Start()
     {
+        Vector3 cloudDir = new Vector3(
+                Random.Range(-1.0f, 1.0f),
+                0,
+                Random.Range(-1.0f, 1.0f)
+            );
+        Vector3 cloudPos = new Vector3(
+            Random.Range(GetFeatherSpawn().bounds.min.x, GetFeatherSpawn().bounds.max.x),
+            0,
+            Random.Range(GetFeatherSpawn().bounds.min.z, GetFeatherSpawn().bounds.max.z)
+        );
+        Instantiate(cloudPrefab, cloudPos, Quaternion.LookRotation(cloudDir));
         mode = (int)modes.FEATHER_HOARDER;
         switch (mode)
         {
@@ -85,7 +97,7 @@ public class MatchController : MonoBehaviour
                 modeController = new DeathmatchController(this);
                 break;
             case (int)modes.KING_OF_THE_FEEDER:
-                feeder.SetActive(true);
+                feederPrefab.SetActive(true);
                 modeController = new KingOfTheFeederController(this);
                 break;
             case (int)modes.FEATHER_HOARDER:

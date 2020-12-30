@@ -25,7 +25,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2866969608192
-    m_Localized: "\u30E9\u30A4\u30D5: {value}"
+    m_Localized: 'Life: {value}'
     m_Metadata:
       m_Items:
       - id: 1

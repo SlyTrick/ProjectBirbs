@@ -43,17 +43,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cfabc60d6e700041a69825cb5660cab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawn1: {fileID: 0}
-  spawn2: {fileID: 0}
-  spawn3: {fileID: 0}
-  spawn4: {fileID: 0}
-  featherSpawn1:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  featherSpawn2: {fileID: 0}
-  featherSpawn3: {fileID: 0}
-  featherPrefab: {fileID: 0}
-  feeder: {fileID: 0}
+  teamSpawns: []
+  featherSpawns: []
+  featherPrefab: {fileID: 8701338519183190173, guid: c0215e734f2c6a948b4e1a715d6f584b,
+    type: 3}
+  feederPrefab: {fileID: 6799254953508197364, guid: 4e32a366e4ad7f24e9af77593341b4a5,
+    type: 3}
+  cloudPrefab: {fileID: 1981603040011339153, guid: 5bfc88ffcb0e797498dcd31076254df7,
+    type: 3}
   featherRate: 4
   feederRate: 0.12

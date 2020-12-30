@@ -267,6 +267,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -750,8 +751,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7087467725907307109}
-  - component: {fileID: 1636235670054459125}
   - component: {fileID: 7162822937433001627}
+  - component: {fileID: 1636235670054459125}
   m_Layer: 8
   m_Name: InputController
   m_TagString: Untagged
@@ -773,25 +774,6 @@ Transform:
   m_Father: {fileID: 3454873281461406588}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1636235670054459125
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5921260644926567059}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0a0c8dbdd6baf7a47b2dafe464c55210, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  leftStickInput: {x: 0, y: 0}
-  rightStickInput: {x: 0, y: 0}
-  lastMousePosition: {x: 0, y: 0}
-  shootInput: 0
-  shieldInput: 0
-  character: {fileID: 1287833790848432782}
-  playerNumber: 0
 --- !u!114 &7162822937433001627
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -851,6 +833,25 @@ MonoBehaviour:
   m_DefaultActionMap: Birb
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 3230144293760766485}
+--- !u!114 &1636235670054459125
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5921260644926567059}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a0c8dbdd6baf7a47b2dafe464c55210, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  leftStickInput: {x: 0, y: 0}
+  rightStickInput: {x: 0, y: 0}
+  lastMousePosition: {x: 0, y: 0}
+  shootInput: 0
+  shieldInput: 0
+  character: {fileID: 1287833790848432782}
+  playerNumber: 0
 --- !u!1 &7224787324227746445
 GameObject:
   m_ObjectHideFlags: 0
@@ -1077,6 +1078,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []

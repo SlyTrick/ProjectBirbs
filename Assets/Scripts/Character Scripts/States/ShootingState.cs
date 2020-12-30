@@ -30,7 +30,7 @@ public class ShootingState : State
         base.PhysicsUpdate();
         character.Move(character.GetInputController().leftStickInput, character.GetShootingAcceleration());
         character.Rotate(character.GetInputController().rightStickInput);
-        character.Shoot(character.GetInputController().shootInput);
+        character.Shoot();
     }
 
     public override void OnMove()
