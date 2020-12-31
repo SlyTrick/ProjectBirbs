@@ -12,8 +12,10 @@ public class listaJugadoresItem : MonoBehaviour
 {
     [SerializeField] TMP_Text nombreTexto;
     [SerializeField] TMP_Text pajaroTexto;
-    [SerializeField] GameObject botAnterior;
-    [SerializeField] GameObject botSiguiente;
+    [SerializeField] GameObject botAnteriorPajaro;
+    [SerializeField] GameObject botSiguientePajaro;
+    [SerializeField] GameObject botAnteriorTeam;
+    [SerializeField] GameObject botSiguienteTeam;
     [SerializeField] Image imagenPajaro;
     [HideInInspector] Player player;
     [SerializeField] Sprite[] sprites;
@@ -64,8 +66,10 @@ public class listaJugadoresItem : MonoBehaviour
 
         if (PhotonNetwork.LocalPlayer.ActorNumber != ownerId)
         {
-            botAnterior.SetActive(false);
-            botSiguiente.SetActive(false);
+            botAnteriorPajaro.SetActive(false);
+            botSiguientePajaro.SetActive(false);
+            botAnteriorTeam.SetActive(false);
+            botSiguienteTeam.SetActive(false);
         }
     }
 
@@ -95,6 +99,16 @@ public class listaJugadoresItem : MonoBehaviour
         }
         pajaroActivo = pajaros[pajaroIndex];
         NuevoPajaro(pajaroIndex);
+    }
+
+    public void CambiarTeamSiguiente()
+    {
+
+    }
+
+    public void CambiarTeamAnterior()
+    {
+
     }
     
     public void NuevoPajaro(int index)

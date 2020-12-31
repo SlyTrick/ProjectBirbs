@@ -60,6 +60,10 @@ public class Launcher : MonoBehaviourPunCallbacks
         {
             PhotonNetwork.NickName = "Player " + Random.Range(0, 10000);
         }
+        else
+        {
+            PhotonNetwork.NickName = nombre.text;
+        }
         PhotonNetwork.AutomaticallySyncScene = true;
     }
 
@@ -74,15 +78,6 @@ public class Launcher : MonoBehaviourPunCallbacks
 
     public void CreateRoom()
     {
-        if (string.IsNullOrEmpty(nombre.text))
-        {
-            PhotonNetwork.NickName = "Player " + Random.Range(0, 10000);
-        }
-        else
-        {
-            PhotonNetwork.NickName = nombre.text;
-        }
-
         if (string.IsNullOrEmpty(roomNameInputField.text))
         {
             PhotonNetwork.CreateRoom("Sala " + Random.Range(0, 10000));
@@ -101,10 +96,6 @@ public class Launcher : MonoBehaviourPunCallbacks
         if(jugadoresEnSala > 3)
         {
             return;
-        }
-        else
-        {
-            PhotonNetwork.NickName = nombre.text;
         }
         PhotonNetwork.JoinRoom(info.Name);
         MenuManager.Instance.OpenMenu("menuCargando");

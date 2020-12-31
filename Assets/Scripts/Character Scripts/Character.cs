@@ -451,7 +451,6 @@ public class Character : MonoBehaviourPunCallbacks
         score= 0;
         canShoot = true;
         canShield = true;
-        teamId = GetComponentInChildren<PlayerInput>().playerIndex;
         damageable = true;
 
         lifeText.text = "Vida: " + life;
@@ -472,6 +471,7 @@ public class Character : MonoBehaviourPunCallbacks
         {
             mainCamera.enabled = true;
             playerInput.enabled = true;
+            teamId = GetComponentInChildren<PlayerInput>().playerIndex;
             matchController = FindObjectOfType<MatchController>();
             matchController.AddPlayer(this);
             spawnPoint = matchController.GetSpawnPoint(this);
