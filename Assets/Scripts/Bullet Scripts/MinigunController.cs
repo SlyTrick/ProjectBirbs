@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class MinigunController : BulletController
 {
+    
     public override void Start()
     {
+        
         base.Start();
     }
     public override void FixedUpdate()

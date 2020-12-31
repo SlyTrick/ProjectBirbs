@@ -1,12 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
+using Photon.Realtime;
 
 public class DeathmatchController : ModeController
 {
+    public PhotonView PVMatchController;
+
     public DeathmatchController(MatchController matchController) : base(matchController)
     {
-
+        PVMatchController = matchController.PV;
     }
 
     public override void Update()

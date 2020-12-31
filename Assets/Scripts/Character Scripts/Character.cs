@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using Photon.Pun;
+using Photon.Realtime;
 
-public class Character : MonoBehaviour
+public class Character : MonoBehaviourPunCallbacks
 {
     #region Variables
     public StateMachine movementSM;
@@ -29,7 +31,7 @@ public class Character : MonoBehaviour
     [SerializeField] private float shieldTime;
 
     public bool onFeeder;
-    private int teamId;
+    public int teamId;
     public int life;
     private bool canShoot;
     private bool canShield;
@@ -37,6 +39,7 @@ public class Character : MonoBehaviour
     private int feathers;
     private MatchController matchController;
     private BoxCollider spawnPoint;
+    public bool damageable;
 
     [SerializeField] private Text scoreText;
     [SerializeField] private Text lifeText;
@@ -50,8 +53,13 @@ public class Character : MonoBehaviour
     [SerializeField] private GameObject deathParticleEffect;
     [SerializeField] private GameObject shield;
     [SerializeField] private ShieldController shieldController;
+    [SerializeField] public GameObject[] bulletPrefabs;
+    [SerializeField] private GameObject destroyedParticleEffect;
 
     [SerializeField] private InputController inputController;
+    [SerializeField] private PlayerInput playerInput;
+
+    [SerializeField] public PhotonView PV;
     
     #endregion
 
@@ -78,13 +86,19 @@ public class Character : MonoBehaviour
         if(canShoot)
         {
             canShoot = false;
-            GameObject objBullet = Instantiate(bulletPrefab, firePoint.position, transform.rotation);
-            objBullet.GetComponent<BulletController>().teamId = teamId;
-            objBullet.GetComponent<BulletController>().owner = this;
-            Physics.IgnoreCollision(GetComponent<Collider>(), objBullet.GetComponentInChildren<Collider>());
-            Physics.IgnoreCollision(shield.GetComponent<Collider>(), objBullet.GetComponentInChildren<Collider>());
+            if(PhotonNetwork.IsConnected && PV.IsMine)
+            {
+                PV.RPC("Shoot_RPC", RpcTarget.All);
+            }
+            else
+            {
+                GameObject objBullet = Instantiate(bulletPrefab, firePoint.position, transform.rotation);
+                objBullet.GetComponent<BulletController>().teamId = teamId;
+                objBullet.GetComponent<BulletController>().owner = this;
+                Physics.IgnoreCollision(GetComponent<Collider>(), objBullet.GetComponentInChildren<Collider>());
+                Physics.IgnoreCollision(shield.GetComponent<Collider>(), objBullet.GetComponentInChildren<Collider>());
+            }
             StartCoroutine(ShotCooldown());
-
         }
     }
 
@@ -98,28 +112,57 @@ public class Character : MonoBehaviour
     {
         life -= damage;
         lifeText.text = "Vida: " + life;
-
-        if (life <= 0)
+        if (damageable)
         {
-            matchController.PlayerKilled(this, bullet.owner);
-
-            Instantiate(deathParticleEffect, transform.position, transform.rotation);
-            movementSM.CurrentState.OnDead();
+            if (life <= 0)
+            {
+                damageable = false;
+                if (PhotonNetwork.IsConnected)
+                {
+                    if (PV.IsMine)
+                    {
+                        PV.RPC("PlayerKilled_RPC", RpcTarget.All, bullet.owner.PV.Owner.ActorNumber);
+                    }
+                }
+                else
+                {
+                    matchController.PlayerKilled(this, bullet.owner);
+                    Instantiate(deathParticleEffect, transform.position, transform.rotation);
+                    movementSM.CurrentState.OnDead();
+                }
+            }
         }
     }
 
     public void SetPoints(int newScore)
     {
-        score = newScore;
-        scoreText.text = "Puntuación: " + score;
+        if (PhotonNetwork.IsConnected)
+        {
+            PV.RPC("UpdateScore_RPC", RpcTarget.All, newScore);
+        }
+        else
+        {
+            score = newScore;
+            scoreText.text = "Puntuación: " + score;
+        }
     }
 
     public void Die()
     {
-        GetComponent<CapsuleCollider>().enabled = false;
-        firingPoint.SetActive(false);
-        sprite.SetActive(false);
-        StartCoroutine(Respawn());
+        if (PhotonNetwork.IsConnected)
+        {
+            if (PV.IsMine)
+            {
+                PV.RPC("Die_RPC", RpcTarget.All);
+            }
+        }
+        else
+        {
+            GetComponent<CapsuleCollider>().enabled = false;
+            firingPoint.SetActive(false);
+            sprite.SetActive(false);
+            StartCoroutine(Respawn());
+        }
     }
 
     public IEnumerator Respawn()
@@ -134,31 +177,60 @@ public class Character : MonoBehaviour
         transform.forward = spawnPoint.transform.forward;
 
         movementSM.ChangeState(groundedState);
+        if (PhotonNetwork.IsConnected)
+        {
+            if (PV.IsMine)
+            {
+                PV.RPC("Respawn_RPC", RpcTarget.All);
+            }
+        }
+        else
+        {
+            life = maxLife;
+            lifeText.text = "Vida: " + life;
+            damageable = true;
 
-        life = maxLife;
-        lifeText.text = "Vida: " + life;
-        
-        GetComponent<CapsuleCollider>().enabled = true;
-        sprite.SetActive(true);
-        firingPoint.SetActive(true);
-
+            GetComponent<CapsuleCollider>().enabled = true;
+            sprite.SetActive(true);
+            firingPoint.SetActive(true);
+        }
     }
 
     public void CreateShield()
     {
-        shieldController.CreateShield();
-    }
-    public void RemoveShield()
-    {
-        shieldController.RemoveShield();
-        if (!shieldController.parried)
+        if (PhotonNetwork.IsConnected)
         {
-            canShield = false;
-            StartCoroutine(ShieldCooldown());
+            if (PV.IsMine)
+            {
+                PV.RPC("CreateShield_RPC", RpcTarget.All);
+            }
         }
         else
         {
-            shieldController.parried = false;
+            shieldController.CreateShield();
+        }
+    }
+    public void RemoveShield()
+    {
+        if (PhotonNetwork.IsConnected)
+        {
+            if (PV.IsMine)
+            {
+                PV.RPC("RemoveShield_RPC", RpcTarget.All);
+            }
+        }
+        else
+        {
+            shieldController.RemoveShield();
+            if (!shieldController.parried)
+            {
+                canShield = false;
+                StartCoroutine(ShieldCooldown());
+            }
+            else
+            {
+                shieldController.parried = false;
+            }
         }
     }
 
@@ -201,8 +273,175 @@ public class Character : MonoBehaviour
     {
         int lostFeathers = feathers / 2;
         feathers -= lostFeathers;
+        if (PhotonNetwork.IsConnected)
+        {
+            PV.RPC("LoseFeathers_RPC", RpcTarget.All, feathers);
+        }
         return lostFeathers;
     }
+
+    #region RPCs
+
+    [PunRPC]
+    public void Shoot_RPC()
+    {
+        GameObject objBullet = Instantiate(bulletPrefab, firePoint.position, transform.rotation);
+        objBullet.GetComponent<BulletController>().teamId = teamId;
+        objBullet.GetComponent<BulletController>().owner = this;
+        Physics.IgnoreCollision(GetComponent<Collider>(), objBullet.GetComponentInChildren<Collider>());
+        Physics.IgnoreCollision(shield.GetComponent<Collider>(), objBullet.GetComponentInChildren<Collider>());
+    }
+
+    [PunRPC]
+    public void PlayerKilled_RPC(int killerActorNumber)
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            switch (matchController.mode)
+            {
+                case 0:
+                    Character killer = matchController.findByActorNumber(killerActorNumber);
+                    matchController.PlayerKilled(this, killer);
+                    break;
+                case 1:
+                    break;
+                case 2:
+                    matchController.PlayerKilled(this, null);
+                    break;
+            }
+        }
+        Instantiate(deathParticleEffect, transform.position, transform.rotation);
+        if (PV.IsMine)
+        {
+            movementSM.CurrentState.OnDead();
+        }
+    }
+
+    [PunRPC]
+    public void Die_RPC()
+    {
+        GetComponent<CapsuleCollider>().enabled = false;
+        firingPoint.SetActive(false);
+        sprite.SetActive(false);
+
+        if (PV.IsMine)
+        {
+            StartCoroutine(Respawn());
+        }
+    }
+
+    [PunRPC]
+    public void Respawn_RPC()
+    {
+        if (PV.IsMine)
+        {
+            life = maxLife;
+            lifeText.text = "Vida: " + life;
+        }
+        damageable = true;
+        GetComponent<CapsuleCollider>().enabled = true;
+        sprite.SetActive(true);
+        firingPoint.SetActive(true);
+    }
+
+    [PunRPC]
+    public void GetSpawnpoint_RPC(int team)
+    {
+        if (!PhotonNetwork.IsMasterClient)
+        {
+            matchController = FindObjectOfType<MatchController>();
+        }
+        teamId = team;
+        spawnPoint = matchController.GetSpawnPoint(this);
+        GetComponent<Transform>().position = spawnPoint.transform.position;
+    }
+
+    [PunRPC]
+    public void CreateShield_RPC()
+    {
+        shieldController.CreateShield();
+    }
+
+    [PunRPC]
+    public void RemoveShield_RPC()
+    {
+        shieldController.RemoveShield();
+        if (PV.IsMine)
+        {
+            if (!shieldController.parried)
+            {
+                canShield = false;
+                StartCoroutine(ShieldCooldown());
+            }
+            else
+            {
+                shieldController.parried = false;
+            }
+        }
+    }
+
+    [PunRPC]
+    public void Parry_RPC(int indicePrefab)
+    {
+        
+        GameObject objBullet = Instantiate(bulletPrefabs[indicePrefab], shieldController.transform.position, shieldController.transform.rotation);
+        objBullet.GetComponent<BulletController>().teamId = teamId;
+        objBullet.GetComponent<BulletController>().damage *= 2;
+        objBullet.GetComponent<BulletController>().owner = this;
+        objBullet.GetComponent<BulletController>().enabled = true;
+        Physics.IgnoreCollision(GetComponent<Collider>(), objBullet.GetComponentInChildren<Collider>());
+        Physics.IgnoreCollision(this.GetComponent<Collider>(), objBullet.GetComponentInChildren<Collider>());
+    }
+
+    [PunRPC]
+    public void DestroyShield_RPC()
+    {
+        Instantiate(destroyedParticleEffect, shieldController.transform.position, shieldController.transform.rotation);
+        if (PV.IsMine)
+        {
+            movementSM.CurrentState.OnStun();
+        }
+    }
+
+    [PunRPC]
+    public void AddFeather_RPC()
+    {
+        if(PhotonNetwork.IsMasterClient || PV.IsMine)
+        {
+            feathers++;
+        }
+    }
+
+    [PunRPC]
+    public void LoseFeathers_RPC(int newFeathers)
+    {
+        if (PV.IsMine)
+        {
+            feathers = newFeathers;
+        }
+    }
+
+    [PunRPC]
+    public void UpdateScore_RPC(int newScore)
+    {
+        if (PV.IsMine)
+        {
+            score = newScore;
+            scoreText.text = "Puntuación: " + score;
+        }
+    }
+
+    [PunRPC]
+    public void UpdateFeederScore_RPC()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            matchController.UpdateFeederScore(this);
+        }
+    }
+
+    #endregion
+
     #region MonoBehaviour Callbacks
     private void Start()
     {
@@ -212,15 +451,31 @@ public class Character : MonoBehaviour
         score= 0;
         canShoot = true;
         canShield = true;
-        teamId = GetComponentInChildren<PlayerInput>().playerIndex;
+        damageable = true;
 
         lifeText.text = "Vida: " + life;
         scoreText.text = "Puntuación: " + score;
 
-
-        matchController = FindObjectOfType<MatchController>();
-        matchController.AddPlayer(this);
-        spawnPoint = matchController.GetSpawnPoint(this);
+        if(PhotonNetwork.IsConnected && PV.IsMine)
+        {
+            mainCamera.enabled = true;
+            playerInput.enabled = true;
+        }
+        if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient)
+        {
+            matchController = FindObjectOfType<MatchController>();
+            teamId = matchController.AddPlayer(this);
+            PV.RPC("GetSpawnpoint_RPC", RpcTarget.All, teamId);
+        }
+        else if (!PhotonNetwork.IsConnected)
+        {
+            mainCamera.enabled = true;
+            playerInput.enabled = true;
+            teamId = GetComponentInChildren<PlayerInput>().playerIndex;
+            matchController = FindObjectOfType<MatchController>();
+            matchController.AddPlayer(this);
+            spawnPoint = matchController.GetSpawnPoint(this);
+        }
 
         movementSM = new StateMachine();
 
@@ -236,16 +491,31 @@ public class Character : MonoBehaviour
 
     private void Update()
     {
+        if (PhotonNetwork.IsConnected)
+        {
+            if (!PV.IsMine)
+                return;
+        }
         movementSM.CurrentState.LogicUpdate();
     }
 
     private void FixedUpdate()
     {
+        if (PhotonNetwork.IsConnected)
+        {
+            if (!PV.IsMine)
+                return;
+        }
         movementSM.CurrentState.PhysicsUpdate();
     }
 
     private void OnCollisionEnter(Collision collision)
     {
+        if (PhotonNetwork.IsConnected)
+        {
+            if (!PV.IsMine)
+                return;
+        }
         BulletController collided;
         if (collision.gameObject.TryGetComponent<BulletController>(out collided))
         {

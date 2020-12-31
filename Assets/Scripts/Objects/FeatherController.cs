@@ -12,11 +12,13 @@ public class FeatherController : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
+        
         Character collided;
         if(collision.gameObject.TryGetComponent<Character>(out collided))
         {
             matchController = FindObjectOfType<MatchController>();
             matchController.AddFeather(collided);
+            
             Destroy(gameObject);
         }
     }

@@ -6,9 +6,11 @@ public class BoomerangController : BulletController
 {
     private Rigidbody rigidBody;
     [SerializeField] private float changeDirectionTime;
+    
 
     public override void Start()
     {
+        
         base.Start();
         rigidBody = GetComponent<Rigidbody>();
         StartCoroutine(ChangeDirection());

@@ -12,8 +12,10 @@ public class listaJugadoresItem : MonoBehaviour
 {
     [SerializeField] TMP_Text nombreTexto;
     [SerializeField] TMP_Text pajaroTexto;
-    [SerializeField] GameObject botAnterior;
-    [SerializeField] GameObject botSiguiente;
+    [SerializeField] GameObject botAnteriorPajaro;
+    [SerializeField] GameObject botSiguientePajaro;
+    [SerializeField] GameObject botAnteriorTeam;
+    [SerializeField] GameObject botSiguienteTeam;
     [SerializeField] Image imagenPajaro;
     [HideInInspector] Player player;
     [SerializeField] Sprite[] sprites;
@@ -23,12 +25,13 @@ public class listaJugadoresItem : MonoBehaviour
     public int ownerId;
 
     public int gamemodeIndex; //0: deathmatch, 1: rey del comedero, 2: acaparaplumas
-    [HideInInspector] public string[] pajaros = new string[5] { "paloma", "pato", "agapornis", "kiwi", "cuervo" };
+    [HideInInspector] public string[] pajaros = new string[5] { "Pigeon", "Duck", "Dori", "Kiwi", "RocketBirb" };
     [HideInInspector] public int pajaroIndex;
     [HideInInspector] public string pajaroActivo;
 
     [HideInInspector] public string indiceHashtable = "indexPajaro";
-    
+    [HideInInspector] public string indiceModoHastable = "indiceModo";
+
 
     public void SetUp(Player _player)
     {
@@ -37,11 +40,36 @@ public class listaJugadoresItem : MonoBehaviour
         nombreTexto.text = _player.NickName;
         nombre = _player.NickName;
         pajaroIndex = 0;
-        ActualizarPajaro(pajaroIndex);
+        gamemodeIndex = 0;
+
+        object pajaroActivo;
+        if (_player.CustomProperties.TryGetValue("indexPajaro", out pajaroActivo))
+        {
+            pajaroIndex = (int)pajaroActivo;
+            ActualizarPajaro((int)pajaroActivo);
+        }
+        else
+        {
+            if (PhotonNetwork.LocalPlayer.ActorNumber == ownerId)
+            {
+                Hastable hash = new Hastable() { { indiceHashtable, pajaroIndex } };
+                PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
+            }
+            ActualizarPajaro(pajaroIndex);
+        }
+
+        object indiceModo;
+        if (_player.CustomProperties.TryGetValue("indiceModo", out indiceModo))
+        {
+            CambiarModoDeJuego((int)indiceModo);
+        }
+
         if (PhotonNetwork.LocalPlayer.ActorNumber != ownerId)
         {
-            botAnterior.SetActive(false);
-            botSiguiente.SetActive(false);
+            botAnteriorPajaro.SetActive(false);
+            botSiguientePajaro.SetActive(false);
+            botAnteriorTeam.SetActive(false);
+            botSiguienteTeam.SetActive(false);
         }
     }
 
@@ -72,11 +100,21 @@ public class listaJugadoresItem : MonoBehaviour
         pajaroActivo = pajaros[pajaroIndex];
         NuevoPajaro(pajaroIndex);
     }
+
+    public void CambiarTeamSiguiente()
+    {
+
+    }
+
+    public void CambiarTeamAnterior()
+    {
+
+    }
     
     public void NuevoPajaro(int index)
     {
         ActualizarPajaro(index);
-        Hastable hash = new Hastable() { {indiceHashtable, index } };
+        Hastable hash = new Hastable() { { indiceHashtable, index }};
         PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
     }
 

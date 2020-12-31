@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
+using Photon.Realtime;
 
 public class FeederController : MonoBehaviour
 {
@@ -25,7 +27,6 @@ public class FeederController : MonoBehaviour
         if (other.gameObject.TryGetComponent<Character>(out target))
         {
             target.ExitFeeder();
-
         }
     }
 }

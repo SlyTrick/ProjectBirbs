@@ -25,11 +25,14 @@ public class Launcher : MonoBehaviourPunCallbacks
     [SerializeField] GameObject cambiarModoGameButton;
     [SerializeField] TMP_Text textoBotonCambiarModo;
     [SerializeField] TMP_Text textoModoDeJuegoActual;
+    RoomManager roomManager;
 
     [HideInInspector] public string[] modosDeJuego = new string[3] { "Deathmatch", "Rey del comedero", "Acaparaplumas"};
     private Dictionary<int, GameObject> listaJugadoresItems;
 
     private int jugadoresEnSala;
+    public bool inMenus;
+    private bool comingFromMainMenu;
 
     [SerializeField] TMP_InputField nombre;
     JugadorInfo Jugador;
@@ -38,25 +41,21 @@ public class Launcher : MonoBehaviourPunCallbacks
     void Awake()
     {
         Instance = this;
+        inMenus = false;
+        comingFromMainMenu = false;
+        roomManager = FindObjectOfType<RoomManager>();
     }
 
-    void Start()
+    public void ConnectOnline()
     {
+        MenuManager.Instance.OpenMenu("menuCargando");
         PhotonNetwork.ConnectUsingSettings();
+        comingFromMainMenu = true;
     }
 
     public override void OnConnectedToMaster()
     {
         PhotonNetwork.JoinLobby();
-    }
-
-    public override void OnJoinedLobby()
-    {
-        MenuManager.Instance.OpenMenu("menuPrincipal");
-    }
-
-    public void CreateRoom()
-    {
         if (string.IsNullOrEmpty(nombre.text))
         {
             PhotonNetwork.NickName = "Player " + Random.Range(0, 10000);
@@ -65,7 +64,20 @@ public class Launcher : MonoBehaviourPunCallbacks
         {
             PhotonNetwork.NickName = nombre.text;
         }
+        PhotonNetwork.AutomaticallySyncScene = true;
+    }
 
+    public override void OnJoinedLobby()
+    {
+        if (comingFromMainMenu)
+        {
+            comingFromMainMenu = false;
+            MenuManager.Instance.OpenMenu("menuSalas");
+        }
+    }
+
+    public void CreateRoom()
+    {
         if (string.IsNullOrEmpty(roomNameInputField.text))
         {
             PhotonNetwork.CreateRoom("Sala " + Random.Range(0, 10000));
@@ -85,19 +97,16 @@ public class Launcher : MonoBehaviourPunCallbacks
         {
             return;
         }
-        if (string.IsNullOrEmpty(nombre.text))
-        {
-            PhotonNetwork.NickName = "Player " + Random.Range(0, 10000);
-        }
-        else
-        {
-            PhotonNetwork.NickName = nombre.text;
-        }
         PhotonNetwork.JoinRoom(info.Name);
         MenuManager.Instance.OpenMenu("menuCargando");
     }
 
     public override void OnJoinedRoom()
+    {
+        SetUpRoom();
+    }
+
+    public void SetUpRoom()
     {
         if (PhotonNetwork.IsMasterClient)
         {
@@ -113,16 +122,17 @@ public class Launcher : MonoBehaviourPunCallbacks
             cambiarModoGameButton.SetActive(false);
             textoModoDeJuegoActual.gameObject.SetActive(true);
         }
+
         roomName.text = PhotonNetwork.CurrentRoom.Name;
 
         Player[] players = PhotonNetwork.PlayerList;
 
-        foreach(Transform child in listaJugadores)
+        foreach (Transform child in listaJugadores)
         {
             Destroy(child.gameObject);
         }
 
-        if(listaJugadoresItems == null)
+        if (listaJugadoresItems == null)
         {
             listaJugadoresItems = new Dictionary<int, GameObject>();
         }
@@ -133,13 +143,14 @@ public class Launcher : MonoBehaviourPunCallbacks
             entry.transform.SetParent(listaJugadores);
             entry.transform.localScale = Vector3.one;
             entry.GetComponent<listaJugadoresItem>().SetUp(p);
-
+            
+            /*
             object pajaroActivo;
-            if(p.CustomProperties.TryGetValue("indexPajaro", out pajaroActivo))
+            if (p.CustomProperties.TryGetValue("indexPajaro", out pajaroActivo))
             {
                 entry.GetComponent<listaJugadoresItem>().ActualizarPajaro((int)pajaroActivo);
             }
-
+            */
             object indiceModo;
             if (p.CustomProperties.TryGetValue("indiceModo", out indiceModo))
             {
@@ -148,11 +159,8 @@ public class Launcher : MonoBehaviourPunCallbacks
                     textoModoDeJuegoActual.text = "Modo de Juego actual: " + modosDeJuego[(int)indiceModo];
                 }
                 textoBotonCambiarModo.text = "Cambiar Modo de Juego. Actual (" + modosDeJuego[(int)indiceModo] + ")";
-                entry.GetComponent<listaJugadoresItem>().CambiarModoDeJuego((int)indiceModo);
             }
-
             listaJugadoresItems.Add(p.ActorNumber, entry);
-            
         }
     }
 
@@ -165,20 +173,24 @@ public class Launcher : MonoBehaviourPunCallbacks
     public void LeaveRoom()
     {
         PhotonNetwork.LeaveRoom();
-        
+        inMenus = true;
         MenuManager.Instance.OpenMenu("menuCargando");
     }
 
     public override void OnLeftRoom()
     {
-        MenuManager.Instance.OpenMenu("menuPrincipal");
-        foreach(GameObject entry in listaJugadoresItems.Values)
+        if (inMenus)
         {
-            Destroy(entry.gameObject);
-        }
+            inMenus = false;
+            MenuManager.Instance.OpenMenu("menuSalas");
+            foreach (GameObject entry in listaJugadoresItems.Values)
+            {
+                Destroy(entry.gameObject);
+            }
 
-        listaJugadoresItems.Clear();
-        listaJugadoresItems = null;
+            listaJugadoresItems.Clear();
+            listaJugadoresItems = null;
+        }
     }
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
@@ -217,6 +229,8 @@ public class Launcher : MonoBehaviourPunCallbacks
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
+        if (listaJugadoresItems[otherPlayer.ActorNumber].gameObject == null)
+            return;
         Destroy(listaJugadoresItems[otherPlayer.ActorNumber].gameObject);
         listaJugadoresItems.Remove(otherPlayer.ActorNumber);
     }
@@ -240,6 +254,7 @@ public class Launcher : MonoBehaviourPunCallbacks
             object indiceModo;
             if(changedProps.TryGetValue("indiceModo", out indiceModo))
             {
+                roomManager.ChangeGamemode((int)indiceModo);
                 if (!PhotonNetwork.IsMasterClient)
                 {
                     textoModoDeJuegoActual.text = "Modo de Juego actual: " + modosDeJuego[(int)indiceModo];
@@ -263,5 +278,21 @@ public class Launcher : MonoBehaviourPunCallbacks
         Hastable hash = new Hastable() { { "indiceModo", indiceModo } };
         PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
         MenuManager.Instance.OpenMenu("menuSala");
+    }
+
+    public void StartGame()
+    {
+        PhotonNetwork.LoadLevel(2);
+    }
+
+    public void VolverAlMenuPrincipal()
+    {
+        PhotonNetwork.Disconnect();
+        MenuManager.Instance.OpenMenu("menuCargando");
+    }
+
+    public override void OnDisconnected(DisconnectCause cause)
+    {
+        MenuManager.Instance.OpenMenu("menuPrincipal");
     }
 }

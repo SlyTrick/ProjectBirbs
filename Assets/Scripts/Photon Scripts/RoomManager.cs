@@ -10,6 +10,18 @@ using System.IO;
 public class RoomManager : MonoBehaviourPunCallbacks
 {
     public static RoomManager Instance;
+    [HideInInspector] public string[] pajaros = new string[5] { "Pigeon", "Duck", "Dori", "Kiwi", "RocketBirb" };
+
+    public MatchController matchController;
+    private Scene actualScene;
+
+    public int gamemodeIndex;
+    private bool hostLeft;
+    private float timerAmount = 5;
+    private bool gameEnded = false;
+
+    GameObject myCharacter;
+    GameObject myMatchController;
 
     void Awake()
     {
@@ -36,24 +48,76 @@ public class RoomManager : MonoBehaviourPunCallbacks
 
     void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
     {
-        if(scene.buildIndex == 0) //Estamos en el menu principal
+        //DontDestroyOnLoad(gameObject);
+        actualScene = scene;
+        if(scene.buildIndex == 2) //Estamos en el juego Online
         {
-            //PhotonNetwork.Instantiate(Path.Combine("Photon prefabs", "PlayerManager"), Vector3.zero, Quaternion.identity);
-        }
-        else if(scene.buildIndex == 1) //Estamos en el juego (¿Creo?)
+            if (PhotonNetwork.IsMasterClient)
+            {
+                myMatchController = PhotonNetwork.Instantiate(Path.Combine("Prefabs/Match Elements", "Match Controller"), Vector3.zero, Quaternion.identity);
+            }
+            CreateCharacter();
+        }else if(scene.buildIndex == 0) //Estamos en el menu principal
         {
-            //PhotonNetwork.Instantiate(Path.Combine("Photon prefabs", "PlayerManager"), Vector3.zero, Quaternion.identity);
+            if (hostLeft)
+            {
+                MenuManager.Instance.OpenMenu("menuHostDesconectado");
+                PhotonNetwork.LeaveRoom();
+                StartCoroutine(HostLeftTimer());
+            }
+            if(gameEnded)
+            {
+                gameEnded = false;
+                FindObjectOfType<Launcher>().SetUpRoom();
+            }
         }
     }
 
-    public override void OnJoinedRoom()
+    public void ChangeGamemode(int index)
     {
-        //PhotonNetwork.Instantiate(Path.Combine("Photon prefabs", "JugadorInfo"), Vector3.zero, Quaternion.identity);
+        gamemodeIndex = index;
     }
 
-    public override void OnPlayerEnteredRoom(Player newPlayer)
+    public override void OnPlayerLeftRoom(Player otherPlayer)
     {
-        //PhotonNetwork.Instantiate(Path.Combine("Photon prefabs", "PlayerManager"), Vector3.zero, Quaternion.identity);
+        if (PhotonNetwork.IsMasterClient && actualScene.buildIndex == 2)
+        {
+            matchController = FindObjectOfType<MatchController>();
+        }
     }
 
+    public override void OnMasterClientSwitched(Player newMasterClient)
+    {
+        if(actualScene.buildIndex == 2)
+        {
+            hostLeft = true;
+            PhotonNetwork.Destroy(myCharacter);
+            PhotonNetwork.LoadLevel(0);
+        }
+    }
+
+    public void TerminarPartida(int puntos, int equipoGanadorIndex)
+    {
+        gameEnded = true;
+        PhotonNetwork.Destroy(myCharacter);
+        if (PhotonNetwork.LocalPlayer.IsMasterClient)
+        {
+            PhotonNetwork.Destroy(myMatchController);
+            PhotonNetwork.LoadLevel(0);
+        }
+    }
+
+    IEnumerator HostLeftTimer()
+    {
+        yield return new WaitForSeconds(timerAmount);
+        MenuManager.Instance.OpenMenu("menuSalas");
+    }
+
+    public void CreateCharacter()
+    {
+        object indexPajaro;
+        PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("indexPajaro", out indexPajaro);
+        myCharacter = PhotonNetwork.Instantiate(Path.Combine("Prefabs/Characters", pajaros[(int)indexPajaro]), Vector3.zero, Quaternion.identity);
+    }
+    
 }
