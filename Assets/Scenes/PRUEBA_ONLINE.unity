@@ -504,6 +504,31 @@ PrefabInstance:
       propertyPath: m_Name
       value: StageBarrier
       objectReference: {fileID: 0}
+    - target: {fileID: 7055808535302026576, guid: 5247da2cf0c081c4880c87fb0547f8ab,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 7055808535302026576, guid: 5247da2cf0c081c4880c87fb0547f8ab,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7055808535302026576, guid: 5247da2cf0c081c4880c87fb0547f8ab,
+        type: 3}
+      propertyPath: m_Size.z
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 7055808535302026576, guid: 5247da2cf0c081c4880c87fb0547f8ab,
+        type: 3}
+      propertyPath: m_Center.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7055808535302026576, guid: 5247da2cf0c081c4880c87fb0547f8ab,
+        type: 3}
+      propertyPath: m_Center.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7538160787486132410, guid: 5247da2cf0c081c4880c87fb0547f8ab,
         type: 3}
       propertyPath: m_RootOrder
@@ -512,17 +537,17 @@ PrefabInstance:
     - target: {fileID: 7538160787486132410, guid: 5247da2cf0c081c4880c87fb0547f8ab,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 223.87402
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7538160787486132410, guid: 5247da2cf0c081c4880c87fb0547f8ab,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 87.24512
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7538160787486132410, guid: 5247da2cf0c081c4880c87fb0547f8ab,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 59.765625
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7538160787486132410, guid: 5247da2cf0c081c4880c87fb0547f8ab,
         type: 3}

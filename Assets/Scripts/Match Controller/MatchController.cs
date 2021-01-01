@@ -116,22 +116,30 @@ public class MatchController : MonoBehaviourPunCallbacks
         {
             roomManager = FindObjectOfType<RoomManager>();
             mode = roomManager.gamemodeIndex;
+            if (PhotonNetwork.IsMasterClient)
+            {
+                float dirX = Random.Range(-1.0f, 1.0f);
+                float dirZ = Random.Range(-1.0f, 1.0f);
+                float posX = Random.Range(GetFeatherSpawn().bounds.min.x, GetFeatherSpawn().bounds.max.x);
+                float posZ = Random.Range(GetFeatherSpawn().bounds.min.z, GetFeatherSpawn().bounds.max.z);
+                PV.RPC("SpawnCloud_RPC", RpcTarget.All, dirX, dirZ, posX, posZ);
+            }
         }
         else
         {
             mode = (int)modes.FEATHER_HOARDER;
-        }
-        Vector3 cloudDir = new Vector3(
+            Vector3 cloudDir = new Vector3(
                 Random.Range(-1.0f, 1.0f),
                 0,
                 Random.Range(-1.0f, 1.0f)
             );
-        Vector3 cloudPos = new Vector3(
-            Random.Range(GetFeatherSpawn().bounds.min.x, GetFeatherSpawn().bounds.max.x),
-            0,
-            Random.Range(GetFeatherSpawn().bounds.min.z, GetFeatherSpawn().bounds.max.z)
-        );
-        Instantiate(cloudPrefab, cloudPos, Quaternion.LookRotation(cloudDir));
+            Vector3 cloudPos = new Vector3(
+                Random.Range(GetFeatherSpawn().bounds.min.x, GetFeatherSpawn().bounds.max.x),
+                0,
+                Random.Range(GetFeatherSpawn().bounds.min.z, GetFeatherSpawn().bounds.max.z)
+            );
+            Instantiate(cloudPrefab, cloudPos, Quaternion.LookRotation(cloudDir));
+        }
         switch (mode)
         {
             case (int)modes.DEATHMATCH:
@@ -203,5 +211,13 @@ public class MatchController : MonoBehaviourPunCallbacks
     public void EndGame_RPC(int pointsWinner, int indexWinnerTeam)
     {
         roomManager.TerminarPartida(pointsWinner, indexWinnerTeam);
+    }
+
+    [PunRPC]
+    public void SpawnCloud_RPC(float dx, float dz, float px, float pz)
+    {
+        Vector3 cloudPos = new Vector3(px, 0, pz);
+        Vector3 cloudDir = new Vector3(dx, 0, dz);
+        Instantiate(cloudPrefab, cloudPos, Quaternion.LookRotation(cloudDir));
     }
 }
