@@ -18,14 +18,14 @@ public class MatchController : MonoBehaviourPunCallbacks
     public ModeController modeController;
     public List<Character> playerList = new List<Character>();
     public List<int> teamsPoints = new List<int>();
-    
+
     [SerializeField] public List<BoxCollider> teamSpawns;
     [SerializeField] public List<GameObject> featherSpawns;
     [SerializeField] public GameObject featherPrefab;
     [SerializeField] public GameObject feederPrefab;
     [SerializeField] public GameObject cloudPrefab;
     [SerializeField] public GameObject feederPos;
-    public float featherRate;   
+    public float featherRate;
     public float feederRate;
     public int numFeatherSpawns = 3;
 
@@ -57,18 +57,18 @@ public class MatchController : MonoBehaviourPunCallbacks
     {
         int team = target.GetTeamId();
         teamsPoints[team] += points;
-        for(int i = 0; i < playerList.Count; i++)
+        for (int i = 0; i < playerList.Count; i++)
         {
-            if(playerList[i].GetTeamId() == team)
+            if (playerList[i].GetTeamId() == team)
                 playerList[i].SetPoints(teamsPoints[team]);
         }
-        if(teamsPoints[team] >= 10)
+        if (teamsPoints[team] >= 10)
         {
             if (PhotonNetwork.IsConnected)
             {
                 PV.RPC("EndGame_RPC", RpcTarget.All, teamsPoints[team], team);
             }
-            
+
         }
     }
 
@@ -100,9 +100,9 @@ public class MatchController : MonoBehaviourPunCallbacks
 
     public Character findByActorNumber(int AN)
     {
-        for(int i = 0; i < playerList.Count; i++)
+        for (int i = 0; i < playerList.Count; i++)
         {
-            if(playerList[i].PV.Owner.ActorNumber == AN)
+            if (playerList[i].PV.Owner.ActorNumber == AN)
             {
                 return playerList[i];
             }
@@ -157,7 +157,7 @@ public class MatchController : MonoBehaviourPunCallbacks
                 modeController = new KingOfTheFeederController(this);
                 break;
             case (int)modes.FEATHER_HOARDER:
-                for(int i = 0; i < featherSpawns.Count; i++)
+                for (int i = 0; i < featherSpawns.Count; i++)
                 {
                     featherSpawns[i].SetActive(true);
                 }
@@ -216,8 +216,8 @@ public class MatchController : MonoBehaviourPunCallbacks
     [PunRPC]
     public void SpawnCloud_RPC(float dx, float dz, float px, float pz)
     {
-        Vector3 cloudPos = new Vector3(px, 0, pz);
         Vector3 cloudDir = new Vector3(dx, 0, dz);
+        Vector3 cloudPos = new Vector3(px, 0, pz);
         Instantiate(cloudPrefab, cloudPos, Quaternion.LookRotation(cloudDir));
     }
 }
