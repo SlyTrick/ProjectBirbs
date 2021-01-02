@@ -17,20 +17,24 @@ public class listaJugadoresItem : MonoBehaviour
     [SerializeField] GameObject botAnteriorTeam;
     [SerializeField] GameObject botSiguienteTeam;
     [SerializeField] Image imagenPajaro;
+    [SerializeField] Image marcoTeam;
     [HideInInspector] Player player;
     [SerializeField] Sprite[] sprites;
     
 
     [HideInInspector] public string nombre;
     public int ownerId;
+    public int teamId;
 
     public int gamemodeIndex; //0: deathmatch, 1: rey del comedero, 2: acaparaplumas
     [HideInInspector] public string[] pajaros = new string[5] { "Pigeon", "Duck", "Dori", "Kiwi", "RocketBirb" };
+    [HideInInspector] public Color[] coloresTeam = new Color[5] { Color.blue, Color.red, Color.yellow, Color.green, Color.gray };
     [HideInInspector] public int pajaroIndex;
     [HideInInspector] public string pajaroActivo;
 
     [HideInInspector] public string indiceHashtable = "indexPajaro";
     [HideInInspector] public string indiceModoHastable = "indiceModo";
+    [HideInInspector] public string indiceTeamHashtable = "indiceTeam";
 
 
     public void SetUp(Player _player)
@@ -52,10 +56,17 @@ public class listaJugadoresItem : MonoBehaviour
         {
             if (PhotonNetwork.LocalPlayer.ActorNumber == ownerId)
             {
+                
                 Hastable hash = new Hastable() { { indiceHashtable, pajaroIndex } };
                 PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
             }
             ActualizarPajaro(pajaroIndex);
+        }
+        if (PhotonNetwork.LocalPlayer.ActorNumber == ownerId)
+        {
+            teamId = -1;
+            Hastable hash = new Hastable() { { indiceTeamHashtable, teamId } };
+            PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
         }
 
         object indiceModo;
@@ -103,12 +114,28 @@ public class listaJugadoresItem : MonoBehaviour
 
     public void CambiarTeamSiguiente()
     {
-
+        if(teamId == 3 || teamId == -1)
+        {
+            teamId = 0;
+        }
+        else
+        {
+            teamId++;
+        }
+        CambiarTeam(teamId);
     }
 
     public void CambiarTeamAnterior()
     {
-
+        if(teamId == 0 || teamId == -1)
+        {
+            teamId = 3;
+        }
+        else
+        {
+            teamId--;
+        }
+        CambiarTeam(teamId);
     }
     
     public void NuevoPajaro(int index)
@@ -127,6 +154,25 @@ public class listaJugadoresItem : MonoBehaviour
     public void CambiarModoDeJuego(int indiceNuevo)
     {
         gamemodeIndex = indiceNuevo;
+    }
+
+    public void CambiarTeam(int newTeamId)
+    {
+        ActualizarTeam(newTeamId);
+        Hastable hash = new Hastable() { { indiceTeamHashtable, newTeamId } };
+        PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
+    }
+
+    public void ActualizarTeam(int newTeamId)
+    {
+        if(newTeamId == -1)
+        {
+            marcoTeam.color = coloresTeam[4];
+        }
+        else
+        {
+            marcoTeam.color = coloresTeam[newTeamId];
+        }
     }
     
 }

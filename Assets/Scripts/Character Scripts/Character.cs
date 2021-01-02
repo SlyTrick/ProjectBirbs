@@ -464,7 +464,13 @@ public class Character : MonoBehaviourPunCallbacks
         if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient)
         {
             matchController = FindObjectOfType<MatchController>();
-            teamId = matchController.AddPlayer(this);
+            matchController.AddPlayer(this);
+            teamId = FindObjectOfType<RoomManager>().FindTeamIdByPlayer(PV.Owner);
+            if(teamId == -1)
+            {
+                teamId = 0;
+                Debug.Log("No se ha encontrado el teamId, se le ha añadido al equipo 0");
+            }
             PV.RPC("GetSpawnpoint_RPC", RpcTarget.All, teamId);
         }
         else if (!PhotonNetwork.IsConnected)

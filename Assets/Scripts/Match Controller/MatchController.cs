@@ -17,7 +17,8 @@ public class MatchController : MonoBehaviourPunCallbacks
     public int numTeams = 4;
     public ModeController modeController;
     public List<Character> playerList = new List<Character>();
-    public List<int> teamsPoints = new List<int>();
+    //public List<int> teamsPoints = new List<int>();
+    public Dictionary<int, int> teamsPoints;
 
     [SerializeField] public List<BoxCollider> teamSpawns;
     [SerializeField] public List<GameObject> featherSpawns;
@@ -32,15 +33,14 @@ public class MatchController : MonoBehaviourPunCallbacks
     [SerializeField] public PhotonView PV;
     public RoomManager roomManager;
 
-    public int AddPlayer(Character player)
+    public void AddPlayer(Character player)
     {
         playerList.Add(player);
-        int playerteamId = playerList.Count - 1;
+        //int playerteamId = playerList.Count - 1;
         //if(teamsPoints.Count != player.GetTeamId() + 1)
-        if (teamsPoints.Count != playerteamId + 1)
-            teamsPoints.Add(0);
-        return playerList.Count - 1;
-
+        //if (teamsPoints.Count != playerteamId + 1)
+          //  teamsPoints.Add(0);
+        //return playerList.Count - 1;
     }
 
     public virtual BoxCollider GetSpawnPoint(Character target)
@@ -112,6 +112,11 @@ public class MatchController : MonoBehaviourPunCallbacks
 
     public virtual void Start()
     {
+        teamsPoints = new Dictionary<int, int>();
+        teamsPoints.Add(0, 0);
+        teamsPoints.Add(1, 0);
+        teamsPoints.Add(2, 0);
+        teamsPoints.Add(3, 0);
         if (PhotonNetwork.IsConnected)
         {
             roomManager = FindObjectOfType<RoomManager>();

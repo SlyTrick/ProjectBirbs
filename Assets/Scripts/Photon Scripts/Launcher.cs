@@ -36,6 +36,7 @@ public class Launcher : MonoBehaviourPunCallbacks
 
     [SerializeField] TMP_InputField nombre;
     JugadorInfo Jugador;
+    [SerializeField] RoomManager roomManagerLocal;
     
     
     void Awake()
@@ -160,6 +161,11 @@ public class Launcher : MonoBehaviourPunCallbacks
                 }
                 textoBotonCambiarModo.text = "Cambiar Modo de Juego. Actual (" + modosDeJuego[(int)indiceModo] + ")";
             }
+            object teamIdCambiado;
+            if (p.CustomProperties.TryGetValue("indiceTeam", out teamIdCambiado))
+            {
+                entry.GetComponent<listaJugadoresItem>().ActualizarTeam((int)teamIdCambiado);
+            }
             listaJugadoresItems.Add(p.ActorNumber, entry);
         }
     }
@@ -262,6 +268,12 @@ public class Launcher : MonoBehaviourPunCallbacks
                 textoBotonCambiarModo.text = "Cambiar Modo de Juego. Actual (" + modosDeJuego[(int)indiceModo] + ")";
                 entry.GetComponent<listaJugadoresItem>().CambiarModoDeJuego((int)indiceModo);
             }
+
+            object teamIdCambiado;
+            if(changedProps.TryGetValue("indiceTeam", out teamIdCambiado))
+            {
+                entry.GetComponent<listaJugadoresItem>().ActualizarTeam((int)teamIdCambiado);
+            }
         }
     }
 
@@ -282,7 +294,16 @@ public class Launcher : MonoBehaviourPunCallbacks
 
     public void StartGame()
     {
-        PhotonNetwork.LoadLevel(2);
+        if (CheckTeams())
+        {
+            Debug.Log("All good, comenzando la partida");
+            roomManagerLocal.players = PhotonNetwork.PlayerList;
+            PhotonNetwork.LoadLevel(2);
+        }
+        else
+        {
+            Debug.Log("O un jugador no tiene equipo, o solo hay un equipo");
+        }
     }
 
     public void VolverAlMenuPrincipal()
@@ -294,5 +315,63 @@ public class Launcher : MonoBehaviourPunCallbacks
     public override void OnDisconnected(DisconnectCause cause)
     {
         MenuManager.Instance.OpenMenu("menuPrincipal");
+    }
+
+    public bool CheckTeams()
+    {
+        Player[] players = PhotonNetwork.PlayerList;
+        int cantEquipo1 = 0, cantEquipo2 = 0, cantEquipo3 = 0, cantEquipo4 = 0;
+        foreach(Player p in players)
+        {
+            object teamId;
+            if (p.CustomProperties.TryGetValue("indiceTeam", out teamId))
+            {
+                if((int)teamId == -1)
+                {
+                    return false;
+                }
+                else
+                {
+                    switch ((int)teamId)
+                    {
+                        case 0:
+                            cantEquipo1++;
+                            if(cantEquipo1 == players.Length)
+                            {
+                                return false;
+                            }
+                            break;
+                        case 1:
+                            cantEquipo2++;
+                            if (cantEquipo2 == players.Length)
+                            {
+                                return false;
+                            }
+                            break;
+                        case 2:
+                            cantEquipo3++;
+                            if (cantEquipo3 == players.Length)
+                            {
+                                return false;
+                            }
+                            break;
+                        case 3:
+                            cantEquipo4++;
+                            if (cantEquipo4 == players.Length)
+                            {
+                                return false;
+                            }
+                            break;
+                    }
+                    
+                }
+            }
+            else
+            {
+                Debug.Log("No se ha encontrado el teamId en las custom properties");
+                return false;
+            }
+        }
+        return true;
     }
 }

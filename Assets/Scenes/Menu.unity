@@ -407,6 +407,7 @@ MonoBehaviour:
   - Acaparaplumas
   inMenus: 0
   nombre: {fileID: 513809027}
+  roomManagerLocal: {fileID: 814460392}
 --- !u!114 &277867994
 MonoBehaviour:
   m_ObjectHideFlags: 0

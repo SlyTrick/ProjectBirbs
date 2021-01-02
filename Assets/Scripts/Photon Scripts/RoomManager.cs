@@ -11,6 +11,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
 {
     public static RoomManager Instance;
     [HideInInspector] public string[] pajaros = new string[5] { "Pigeon", "Duck", "Dori", "Kiwi", "RocketBirb" };
+    public Player[] players;
 
     public MatchController matchController;
     private Scene actualScene;
@@ -118,6 +119,22 @@ public class RoomManager : MonoBehaviourPunCallbacks
         object indexPajaro;
         PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("indexPajaro", out indexPajaro);
         myCharacter = PhotonNetwork.Instantiate(Path.Combine("Prefabs/Characters", pajaros[(int)indexPajaro]), Vector3.zero, Quaternion.identity);
+    }
+
+    public int FindTeamIdByPlayer(Player p)
+    {
+        foreach(Player j in players)
+        {
+            if(p.ActorNumber == j.ActorNumber)
+            {
+                object teamId;
+                if(j.CustomProperties.TryGetValue("indiceTeam", out teamId))
+                {
+                    return (int)teamId;
+                }
+            }
+        }
+        return -1;
     }
     
 }
