@@ -10,25 +10,33 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
-  m_Name: Buttons Shared Data
+  m_Name: Menu Buttons Shared Data
   m_EditorClassIdentifier: 
-  m_TableCollectionName: UI
-  m_TableCollectionNameGuidString: c7410d7bf955cd04aac7ca82053b6f8a
+  m_TableCollectionName: Menu Buttons
+  m_TableCollectionNameGuidString: 486f88b95f79e884b8520805cabf2f07
   m_Entries:
-  - m_Id: 21469888512
-    m_Key: Login
-    m_Metadata:
-      m_Items: []
-  - m_Id: 2866969608192
-    m_Key: Life
-    m_Metadata:
-      m_Items: []
-  - m_Id: 3099208220672
-    m_Key: Score
-    m_Metadata:
-      m_Items: []
-  - m_Id: 4734358295707648
+  - m_Id: 22350692352
     m_Key: Local
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2493689135104
+    m_Key: Online
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4306932891648
+    m_Key: Training
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5555136790528
+    m_Key: Settings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5689073500160
+    m_Key: Credits
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6212711383040
+    m_Key: Name
     m_Metadata:
       m_Items: []
   m_Metadata:
@@ -41,4 +49,4 @@ MonoBehaviour:
       type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables,
         asm: Unity.Localization}
       data:
-        m_CustomEpoch: 1608571295980
+        m_CustomEpoch: 1609700117531
