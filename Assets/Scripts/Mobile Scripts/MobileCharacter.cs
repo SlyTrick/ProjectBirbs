@@ -42,7 +42,7 @@ public class MobileCharacter : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.touchCount > 0)
+        /*if(Input.touchCount > 0)
         {
             foreach(Touch touch in Input.touches)
             {
@@ -59,7 +59,7 @@ public class MobileCharacter : MonoBehaviour
                     moveJoystick.gameObject.SetActive(true);
                 }
             }
-        }
+        }*/
         
 
         verticalMove = moveJoystick.Vertical * speed;
@@ -71,7 +71,7 @@ public class MobileCharacter : MonoBehaviour
         characterComplete.transform.LookAt(characterComplete.transform.position + joystickRotation);
         characterComplete.transform.position += new Vector3(horizontalMove, 0, verticalMove) * Time.deltaTime;
 
-        foreach(Touch t in Input.touches)
+        /*foreach(Touch t in Input.touches)
         {
             if(t.phase == TouchPhase.Ended || t.phase == TouchPhase.Canceled)
             {
@@ -84,6 +84,6 @@ public class MobileCharacter : MonoBehaviour
                     moveJoystick.gameObject.SetActive(false);
                 }
             }
-        }
+        }*/
     }
 }
