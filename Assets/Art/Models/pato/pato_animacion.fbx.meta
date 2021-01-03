@@ -1,11 +1,23 @@
 fileFormatVersion: 2
-guid: 5f2ac36e24ebb4e4eba0510b617ad153
+guid: 39d7390c45931f04dbc9025c446b11d7
 ModelImporter:
   serializedVersion: 19301
   internalIDToNameTable:
   - first:
-      74: -623603649343465320
-    second: Scene
+      74: 8703281487470158019
+    second: Duck|ArmatureAction
+  - first:
+      74: 9094345353195851743
+    second: Duck|Camera.001Action
+  - first:
+      74: -2056212774040073378
+    second: Duck|EmptyAction
+  - first:
+      74: 4950862595846666188
+    second: Duck|LightAction
+  - first:
+      74: -5438798292475158157
+    second: Duck|Plane.003Action
   externalObjects: {}
   materials:
     materialImportMode: 1
