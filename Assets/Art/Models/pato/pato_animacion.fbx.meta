@@ -5,7 +5,7 @@ ModelImporter:
   internalIDToNameTable:
   - first:
       74: 8703281487470158019
-    second: Duck|ArmatureAction
+    second: Duck|Idle
   - first:
       74: 9094345353195851743
     second: Duck|Camera.001Action
@@ -18,12 +18,52 @@ ModelImporter:
   - first:
       74: -5438798292475158157
     second: Duck|Plane.003Action
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: alas
+    second: {fileID: 2100000, guid: c1ba9ceeb63e6f044a661dc892c762eb, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: bata
+    second: {fileID: 2100000, guid: a2364f97fab2884449482682369ca15c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: cabeza pato
+    second: {fileID: 2100000, guid: f5d22e347cb9a9c4eb4312553342b1be, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: centro gafas
+    second: {fileID: 2100000, guid: 27b61452747dbe54db1bd1dae278ced1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: cola
+    second: {fileID: 2100000, guid: 822b5ad874af49c408c83c36409ddefd, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: cristales gafas
+    second: {fileID: 2100000, guid: 6e86197b891ae8a41b3e0867496826d6, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: patillas gafas
+    second: {fileID: 2100000, guid: 3fbbd712123a400439e3b6ea0fdb79f0, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: pico
+    second: {fileID: 2100000, guid: abf5bcb490b2ab54fb9eb1ef10b05b91, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0
     materialSearch: 1
-    materialLocation: 1
+    materialLocation: 0
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
@@ -45,7 +85,36 @@ ModelImporter:
     animationWrapMode: 0
     extraExposedTransformPaths: []
     extraUserProperties: []
-    clipAnimations: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Duck|Idle
+      takeName: Duck|ArmatureAction
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 27
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
     isReadable: 0
   meshes:
     lODScreenPercentages: []
