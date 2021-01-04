@@ -140,18 +140,11 @@ public class Launcher : MonoBehaviourPunCallbacks
 
         foreach (Player p in players)
         {
-            GameObject entry = Instantiate(listaJugadoresItemPrefab);
-            entry.transform.SetParent(listaJugadores);
+            GameObject entry = Instantiate(listaJugadoresItemPrefab, listaJugadores);
+            //entry.transform.SetParent(listaJugadores);
             entry.transform.localScale = Vector3.one;
             entry.GetComponent<listaJugadoresItem>().SetUp(p);
-            
-            /*
-            object pajaroActivo;
-            if (p.CustomProperties.TryGetValue("indexPajaro", out pajaroActivo))
-            {
-                entry.GetComponent<listaJugadoresItem>().ActualizarPajaro((int)pajaroActivo);
-            }
-            */
+
             object indiceModo;
             if (p.CustomProperties.TryGetValue("indiceModo", out indiceModo))
             {
