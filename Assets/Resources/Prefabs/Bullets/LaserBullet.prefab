@@ -166,4 +166,5 @@ MonoBehaviour:
   owner: {fileID: 0}
   particleEffect: {fileID: 4256318742635070123, guid: 8e239c96296c9a545ae7b21bdd9beafa,
     type: 3}
+  bulletGraphics: {fileID: 2171660551807482958}
   maxRicochet: 3

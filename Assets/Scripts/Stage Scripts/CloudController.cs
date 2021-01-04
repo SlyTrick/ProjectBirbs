@@ -23,18 +23,16 @@ public class CloudController : MonoBehaviour
     {
         if (other.TryGetComponent<Character>(out Character birb))
         {
-            SpriteRenderer birbGraphics = birb.GetComponentInChildren<SpriteRenderer>();
-            birbGraphics.enabled = false;
+            birb.SetInvisible();
+            
         }
         else if (other.TryGetComponent<BulletController>(out BulletController bullet))
         {
-            SpriteRenderer bulletGraphics = bullet.GetComponentInChildren<SpriteRenderer>();
-            bulletGraphics.enabled = false;
+            bullet.SetInvisible();
         }
         else if (other.TryGetComponent<ShieldController>(out ShieldController shield))
         {
-            SpriteRenderer shieldGraphics = shield.GetComponentInChildren<SpriteRenderer>();
-            shieldGraphics.enabled = false;
+            shield.SetInvisible();
         }
         else if(other.TryGetComponent<StageBarrierController>(out StageBarrierController stageBarrier))
         {
@@ -45,18 +43,15 @@ public class CloudController : MonoBehaviour
     {
         if (other.TryGetComponent<Character>(out Character birb))
         {
-            SpriteRenderer birbGraphics = birb.GetComponentInChildren<SpriteRenderer>();
-            birbGraphics.enabled = true;
+            birb.SetVisible();
         }
         else if (other.TryGetComponent<BulletController>(out BulletController bullet))
         {
-            SpriteRenderer bulletGraphics = bullet.GetComponentInChildren<SpriteRenderer>();
-            bulletGraphics.enabled = true;
+            bullet.SetVisible();
         }
         else if (other.TryGetComponent<ShieldController>(out ShieldController shield))
         {
-            SpriteRenderer shieldGraphics = shield.GetComponentInChildren<SpriteRenderer>();
-            shieldGraphics.enabled = true;
+            shield.SetVisible();
         }
     }
 }

@@ -34,6 +34,10 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - id: 0
+  - m_Id: 4734358295707648
+    m_Localized: 
+    m_Metadata:
+      m_Items: []
   references:
     version: 1
     00000000:

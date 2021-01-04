@@ -48,7 +48,7 @@ public class Character : MonoBehaviourPunCallbacks
     [SerializeField] private Rigidbody rigidBody;
     [SerializeField] private Transform firePoint;
     [SerializeField] private GameObject bulletPrefab;
-    [SerializeField] private GameObject sprite;
+    [SerializeField] private GameObject birbGraphics;
     [SerializeField] private GameObject firingPoint;
     [SerializeField] private GameObject deathParticleEffect;
     [SerializeField] private GameObject shield;
@@ -160,7 +160,7 @@ public class Character : MonoBehaviourPunCallbacks
         {
             GetComponent<CapsuleCollider>().enabled = false;
             firingPoint.SetActive(false);
-            sprite.SetActive(false);
+            birbGraphics.SetActive(false);
             StartCoroutine(Respawn());
         }
     }
@@ -191,7 +191,7 @@ public class Character : MonoBehaviourPunCallbacks
             damageable = true;
 
             GetComponent<CapsuleCollider>().enabled = true;
-            sprite.SetActive(true);
+            birbGraphics.SetActive(true);
             firingPoint.SetActive(true);
         }
     }
@@ -280,6 +280,15 @@ public class Character : MonoBehaviourPunCallbacks
         return lostFeathers;
     }
 
+    public void SetVisible()
+    {
+        birbGraphics.SetActive(true);
+    }
+    public void SetInvisible()
+    {
+        birbGraphics.SetActive(false);
+    }
+
     #region RPCs
 
     [PunRPC]
@@ -322,7 +331,7 @@ public class Character : MonoBehaviourPunCallbacks
     {
         GetComponent<CapsuleCollider>().enabled = false;
         firingPoint.SetActive(false);
-        sprite.SetActive(false);
+        birbGraphics.SetActive(false);
 
         if (PV.IsMine)
         {
@@ -340,7 +349,7 @@ public class Character : MonoBehaviourPunCallbacks
         }
         damageable = true;
         GetComponent<CapsuleCollider>().enabled = true;
-        sprite.SetActive(true);
+        birbGraphics.SetActive(true);
         firingPoint.SetActive(true);
     }
 
@@ -565,7 +574,7 @@ public class Character : MonoBehaviourPunCallbacks
     public Camera GetCamera(){ return mainCamera; }
     public Rigidbody GetRigidBody(){ return rigidBody; }
     public GameObject GetBulletPrefab(){ return bulletPrefab; }
-    public GameObject GetSprite(){ return sprite; }
+    public GameObject GetSprite(){ return birbGraphics; }
     public Transform GetFirePoint(){ return firePoint; }
     public GameObject GetFiringPoint(){ return firingPoint; }
     public GameObject GetDeathParticleEffect(){ return deathParticleEffect; }

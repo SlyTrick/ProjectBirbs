@@ -15,9 +15,8 @@ public class ShieldController : MonoBehaviour
     private float elapsedTime;
     
     private BoxCollider boxCollider;
-    private SpriteRenderer sprite;
 
-
+    public GameObject shieldGraphics;
     [SerializeField] private GameObject birb;
     [SerializeField] private float shieldSize;
     [SerializeField] private float rechargeRate;
@@ -92,7 +91,7 @@ public class ShieldController : MonoBehaviour
     {
         transform.localScale = new Vector3(shieldSize * ((float)life / maxLife), transform.localScale.y, transform.localScale.z);
         boxCollider.enabled = true;
-        sprite.enabled = true;
+        SetVisible();
 
         elapsedTime = 0;
         // Cancelamos la recuperación de vida
@@ -103,17 +102,25 @@ public class ShieldController : MonoBehaviour
     public void RemoveShield()
     {
         boxCollider.enabled = false;
-        sprite.enabled = false;
+        SetInvisible();
         // Cancelamos la pérdida de vida
         CancelInvoke();
         InvokeRepeating("RechargeLife", rechargeStart, rechargeRate);
+    }
+
+    public void SetVisible()
+    {
+        shieldGraphics.SetActive(true);
+    }
+    public void SetInvisible()
+    {
+        shieldGraphics.SetActive(false);
     }
     // Start is called before the first frame update
     void Start()
     {
         birbCharacter = birb.GetComponent<Character>();
         boxCollider = gameObject.GetComponent<BoxCollider>();
-        sprite = gameObject.GetComponentInChildren<SpriteRenderer>();
         maxLife = birbCharacter.GetShieldMaxLife();
         shieldTime = birbCharacter.GetShieldTime();
         life = maxLife;

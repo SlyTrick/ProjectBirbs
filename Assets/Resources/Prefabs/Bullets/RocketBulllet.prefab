@@ -86,6 +86,7 @@ MonoBehaviour:
   owner: {fileID: 0}
   particleEffect: {fileID: 4256318742635070123, guid: 8e239c96296c9a545ae7b21bdd9beafa,
     type: 3}
+  bulletGraphics: {fileID: 6828559747075019274}
   explosion: {fileID: 7827132749728700496, guid: 1e5a5917da87762418bd19cc74543841,
     type: 3}
 --- !u!1 &6828559747075019274
