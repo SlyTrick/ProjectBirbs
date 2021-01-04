@@ -15,6 +15,7 @@ public class BulletController : MonoBehaviour
     public Character owner;
 
     public GameObject particleEffect;
+    public GameObject bulletGraphics;
     // Start is called before the first frame update
     public virtual void Start()
     {
@@ -39,5 +40,14 @@ public class BulletController : MonoBehaviour
         yield return new WaitForSeconds(timeToLive);
         Destroy(gameObject);
         Instantiate(particleEffect, transform.position, transform.rotation);
+    }
+
+    public void SetVisible()
+    {
+        bulletGraphics.SetActive(true);
+    }
+    public void SetInvisible()
+    {
+        bulletGraphics.SetActive(false);
     }
 }

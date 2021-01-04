@@ -106,7 +106,7 @@ MonoBehaviour:
   firePoint: {fileID: 5057316786106939017}
   bulletPrefab: {fileID: 5121197064375372632, guid: 9b0a57575713a2a42aea30cd2b115555,
     type: 3}
-  sprite: {fileID: 5057316785514782909}
+  birbGraphics: {fileID: 5057316785514782909}
   firingPoint: {fileID: 5057316786106939016}
   deathParticleEffect: {fileID: 755089928149952151, guid: 09e4b7de7939f96429a3ffc19cccdd36,
     type: 3}
@@ -1023,6 +1023,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   life: 0
   parried: 0
+  shieldGraphics: {fileID: 7614394529630544332}
   birb: {fileID: 786948530341051926}
   shieldSize: 4
   rechargeRate: 0.1
@@ -1064,7 +1065,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &554648079124669418
 Transform:
   m_ObjectHideFlags: 0
@@ -1086,7 +1087,7 @@ SpriteRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7614394529630544332}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
