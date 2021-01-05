@@ -42,5 +42,53 @@ MonoBehaviour:
     m_Localized: Nombre
     m_Metadata:
       m_Items: []
+  - m_Id: 685224525856768
+    m_Localized: Crear Sala
+    m_Metadata:
+      m_Items: []
+  - m_Id: 691863496720384
+    m_Localized: Selecciona una sala
+    m_Metadata:
+      m_Items: []
+  - m_Id: 702834357338112
+    m_Localized: "Eliminaci\xF3n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 704093399318528
+    m_Localized: Rey del Comedero
+    m_Metadata:
+      m_Items: []
+  - m_Id: 704293400510464
+    m_Localized: Acaparaplumas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 709664303251456
+    m_Localized: Cargando...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 711916820660224
+    m_Localized: Nombre de sala
+    m_Metadata:
+      m_Items: []
+  - m_Id: 712901022482432
+    m_Localized: Cambiar Modo de Juego
+    m_Metadata:
+      m_Items: []
+  - m_Id: 715096384110592
+    m_Localized: 'Modo de Juego Actual: {pito}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 717339439169536
+    m_Localized: Comenzar Partida
+    m_Metadata:
+      m_Items: []
+  - m_Id: 719758273314816
+    m_Localized: Siguiente
+    m_Metadata:
+      m_Items: []
+  - m_Id: 719935130337280
+    m_Localized: Anterior
+    m_Metadata:
+      m_Items: []
   references:
     version: 1

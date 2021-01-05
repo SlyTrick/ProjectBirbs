@@ -212,8 +212,8 @@ public class Launcher : MonoBehaviourPunCallbacks
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
-        GameObject entry = Instantiate(listaJugadoresItemPrefab);
-        entry.transform.SetParent(listaJugadores);
+        GameObject entry = Instantiate(listaJugadoresItemPrefab, listaJugadores);
+        //entry.transform.SetParent(listaJugadores);
         entry.transform.localScale = Vector3.one;
         entry.GetComponent<listaJugadoresItem>().SetUp(newPlayer);
 

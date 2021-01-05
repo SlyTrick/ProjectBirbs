@@ -42,5 +42,53 @@ MonoBehaviour:
     m_Localized: Name
     m_Metadata:
       m_Items: []
+  - m_Id: 685224525856768
+    m_Localized: Create Room
+    m_Metadata:
+      m_Items: []
+  - m_Id: 691863496720384
+    m_Localized: Choose a room
+    m_Metadata:
+      m_Items: []
+  - m_Id: 702834357338112
+    m_Localized: Deathmatch
+    m_Metadata:
+      m_Items: []
+  - m_Id: 704093399318528
+    m_Localized: Feeder King
+    m_Metadata:
+      m_Items: []
+  - m_Id: 704293400510464
+    m_Localized: Feather Hoarder
+    m_Metadata:
+      m_Items: []
+  - m_Id: 709664303251456
+    m_Localized: Loading...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 711916820660224
+    m_Localized: Room name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 712901022482432
+    m_Localized: Change Game Mode
+    m_Metadata:
+      m_Items: []
+  - m_Id: 715096384110592
+    m_Localized: 'Current Game Mode: {pito}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 717339439169536
+    m_Localized: Start Game
+    m_Metadata:
+      m_Items: []
+  - m_Id: 719758273314816
+    m_Localized: Next
+    m_Metadata:
+      m_Items: []
+  - m_Id: 719935130337280
+    m_Localized: Previous
+    m_Metadata:
+      m_Items: []
   references:
     version: 1

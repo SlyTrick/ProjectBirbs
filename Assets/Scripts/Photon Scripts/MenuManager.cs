@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.EventSystems;
 
 public class MenuManager : MonoBehaviour
 {
@@ -36,6 +37,7 @@ public class MenuManager : MonoBehaviour
                 CloseMenu(menus[i]);
             }
         }
+
         menu.Open();
     }
 

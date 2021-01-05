@@ -17,7 +17,7 @@ MonoBehaviour:
     - emotitron.TestPackObject
     vals:
     - hashcode: 1161234830446200393
-      filepath: Assets/Scenes/Photon/PhotonUtilities\PackObject\_GeneratedPackExtensions\Pack_TestPackObject.cs
-      codegenFileWriteTime: 637453513402418306
+      filepath: Assets/Photon/PhotonUtilities\PackObject\_GeneratedPackExtensions\Pack_TestPackObject.cs
+      codegenFileWriteTime: 637453549138523574
       localFieldCount: 2
       totalFieldCount: 2
