@@ -9,10 +9,7 @@ public class RocketController : BulletController
     [SerializeField] private GameObject explosion;
     public override void Start()
     {
-        if (PhotonNetwork.IsConnected && !PV.IsMine)
-        {
-            return;
-        }
+        
         StartCoroutine(CreateExplosion());
         base.Start();
     }
@@ -24,18 +21,11 @@ public class RocketController : BulletController
     {
         if (!collision.gameObject.GetComponent<ShieldController>())
         {
-            if (PhotonNetwork.IsConnected && PV.IsMine)
-            {
-                GameObject objExplosion = PhotonNetwork.Instantiate(Path.Combine("Prefabs/Bullets", explosion.name), transform.position, transform.rotation);
-                objExplosion.GetComponent<BulletController>().teamId = teamId;
-                objExplosion.GetComponent<BulletController>().owner = owner;
-            }
-            else
-            {
-                GameObject objExplosion = Instantiate(explosion, transform.position, transform.rotation);
-                objExplosion.GetComponent<BulletController>().teamId = teamId;
-                objExplosion.GetComponent<BulletController>().owner = owner;
-            }
+            
+            GameObject objExplosion = Instantiate(explosion, transform.position, transform.rotation);
+            objExplosion.GetComponent<BulletController>().teamId = teamId;
+            objExplosion.GetComponent<BulletController>().owner = owner;
+           
         }
         base.OnCollisionEnter(collision);
     }
@@ -43,17 +33,10 @@ public class RocketController : BulletController
     IEnumerator CreateExplosion()
     {
         yield return new WaitForSeconds(timeToLive);
-        if (PhotonNetwork.IsConnected && PV.IsMine)
-        {
-            GameObject objExplosion = PhotonNetwork.Instantiate(Path.Combine("Prefabs/Bullets", explosion.name), transform.position, transform.rotation);
-            objExplosion.GetComponent<BulletController>().teamId = teamId;
-            objExplosion.GetComponent<BulletController>().owner = owner;
-        }
-        else
-        {
-            GameObject objExplosion = Instantiate(explosion, transform.position, transform.rotation);
-            objExplosion.GetComponent<BulletController>().teamId = teamId;
-            objExplosion.GetComponent<BulletController>().owner = owner;
-        }
+        
+        GameObject objExplosion = Instantiate(explosion, transform.position, transform.rotation);
+        objExplosion.GetComponent<BulletController>().teamId = teamId;
+        objExplosion.GetComponent<BulletController>().owner = owner;
+        
     }
 }
