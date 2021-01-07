@@ -93,6 +93,8 @@ GameObject:
   - component: {fileID: 3433850957817583337}
   - component: {fileID: 9106719962272866202}
   - component: {fileID: 6365586068144003785}
+  - component: {fileID: 282973412619245743}
+  - component: {fileID: 3296795570241638473}
   m_Layer: 9
   m_Name: LaserBullet
   m_TagString: Untagged
@@ -162,9 +164,49 @@ MonoBehaviour:
   timeToLive: 10
   moveVector: {x: 0, y: 0, z: 0}
   nombre: laserBullet
+  PV: {fileID: 282973412619245743}
   teamId: 0
   owner: {fileID: 0}
   particleEffect: {fileID: 4256318742635070123, guid: 8e239c96296c9a545ae7b21bdd9beafa,
     type: 3}
   bulletGraphics: {fileID: 2171660551807482958}
   maxRicochet: 3
+--- !u!114 &282973412619245743
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2171660552106004524}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  observableSearch: 2
+  Synchronization: 3
+  OwnershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 3296795570241638473}
+  viewIdField: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &3296795570241638473
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2171660552106004524}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1

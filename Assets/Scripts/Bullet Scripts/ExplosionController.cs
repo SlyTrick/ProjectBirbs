@@ -1,11 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class ExplosionController : BulletController
 {
     public override void Start()
     {
+        if (PhotonNetwork.IsConnected && !PV.IsMine)
+        {
+            return;
+        }
         StartCoroutine(DestroyBullet());
     }
     public override void FixedUpdate()
@@ -20,6 +25,13 @@ public class ExplosionController : BulletController
     IEnumerator DestroyBullet()
     {
         yield return new WaitForSeconds(timeToLive);
-        Destroy(gameObject);
+        if (PhotonNetwork.IsConnected)
+        {
+            PhotonNetwork.Destroy(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 }

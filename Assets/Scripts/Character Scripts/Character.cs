@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Realtime;
+using System.IO;
 
 public class Character : MonoBehaviourPunCallbacks
 {
@@ -88,7 +89,12 @@ public class Character : MonoBehaviourPunCallbacks
             canShoot = false;
             if(PhotonNetwork.IsConnected && PV.IsMine)
             {
-                PV.RPC("Shoot_RPC", RpcTarget.All);
+                //PV.RPC("Shoot_RPC", RpcTarget.All);
+                GameObject objBullet = PhotonNetwork.Instantiate(Path.Combine("Prefabs/Bullets", bulletPrefab.name), firePoint.position, transform.rotation);
+                objBullet.GetComponent<BulletController>().teamId = teamId;
+                objBullet.GetComponent<BulletController>().owner = this;
+                Physics.IgnoreCollision(GetComponent<Collider>(), objBullet.GetComponentInChildren<Collider>());
+                Physics.IgnoreCollision(shield.GetComponent<Collider>(), objBullet.GetComponentInChildren<Collider>());
             }
             else
             {
