@@ -6,11 +6,18 @@ using Photon.Realtime;
 using UnityEngine.SceneManagement;
 using System;
 using System.IO;
+using TMPro;
 
 public class RoomManager : MonoBehaviourPunCallbacks
 {
     public static RoomManager Instance;
+
+    public GameObject tituloResultados;
+    [SerializeField] public GameObject listaJugadoresItemPrefab;
+    public GameObject listaJugadoresResults;
+
     [HideInInspector] public string[] pajaros = new string[5] { "Pigeon", "Duck", "Dori", "Kiwi", "RocketBirb" };
+    [HideInInspector] public string[] equiposNombres = new string[4] { "Azul", "Rojo", "Amarillo", "Verde" };
     public Player[] players;
 
     public MatchController matchController;
@@ -23,6 +30,9 @@ public class RoomManager : MonoBehaviourPunCallbacks
 
     GameObject myCharacter;
     GameObject myMatchController;
+
+    public int puntosFinales;
+    public int equipoGanador;
 
     void Awake()
     {
@@ -69,7 +79,9 @@ public class RoomManager : MonoBehaviourPunCallbacks
             if(gameEnded)
             {
                 gameEnded = false;
-                FindObjectOfType<Launcher>().SetUpRoom();
+                MenuManager.Instance.OpenMenu("menuResultados");
+                GoToResultsRoom();
+                //FindObjectOfType<Launcher>().SetUpRoom();
             }
         }
     }
@@ -99,6 +111,8 @@ public class RoomManager : MonoBehaviourPunCallbacks
 
     public void TerminarPartida(int puntos, int equipoGanadorIndex)
     {
+        puntosFinales = puntos;
+        equipoGanador = equipoGanadorIndex;
         gameEnded = true;
         PhotonNetwork.Destroy(myCharacter);
         if (PhotonNetwork.LocalPlayer.IsMasterClient)
@@ -136,5 +150,39 @@ public class RoomManager : MonoBehaviourPunCallbacks
         }
         return -1;
     }
+
+    public void GoToResultsRoom()
+    {
+        tituloResultados = GameObject.FindGameObjectWithTag("tituloResultados");
+        listaJugadoresResults = GameObject.FindGameObjectWithTag("listaJugadoresResultados");
+        tituloResultados.GetComponent<TMP_Text>().text = "Ha ganado el equipo: " + equiposNombres[equipoGanador] + ". Con " + puntosFinales + " puntos";
+        Player[] players = PhotonNetwork.PlayerList;
+        foreach (Transform child in listaJugadoresResults.transform)
+        {
+            Destroy(child.gameObject);
+        }
+        foreach (Player p in players)
+        {
+            object teamId;
+            if(p.CustomProperties.TryGetValue("indiceTeam", out teamId))
+            {
+                if((int)teamId == equipoGanador)
+                {
+                    object pajaroActivo;
+                    if(p.CustomProperties.TryGetValue("indexPajaro", out pajaroActivo))
+                    {
+                        Instantiate(listaJugadoresItemPrefab, listaJugadoresResults.transform).GetComponent<listaJugadoresItem>().
+                            SetUpResultsRoom(p.NickName, (int)pajaroActivo);
+                    }
+                }
+            }
+        }
+        StartCoroutine(ResultsTimer());
+    }
     
+    public IEnumerator ResultsTimer()
+    {
+        yield return new WaitForSeconds(10);
+        FindObjectOfType<Launcher>().SetUpRoom();
+    }
 }

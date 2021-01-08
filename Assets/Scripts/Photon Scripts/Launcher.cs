@@ -287,7 +287,7 @@ public class Launcher : MonoBehaviourPunCallbacks
 
     public void StartGame()
     {
-        if (CheckTeams())
+        if (true/*CheckTeams()*/)
         {
             Debug.Log("All good, comenzando la partida");
             roomManagerLocal.players = PhotonNetwork.PlayerList;
