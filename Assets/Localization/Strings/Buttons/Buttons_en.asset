@@ -19,11 +19,15 @@ MonoBehaviour:
     m_Items:
     - id: 0
     - id: 1
+    - id: 2
+    - id: 3
   m_TableData:
   - m_Id: 21469888512
     m_Localized: Login
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - id: 2
+      - id: 3
   - m_Id: 2866969608192
     m_Localized: 'Life: {value}'
     m_Metadata:
@@ -48,3 +52,11 @@ MonoBehaviour:
       type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
         m_Entries: 0080b4849b020000
+    00000002:
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 0080b4ff04000000
+    00000003:
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 0080b4ff04000000

@@ -20,11 +20,13 @@ MonoBehaviour:
     - id: 0
     - id: 1
     - id: 2
+    - id: 3
   m_TableData:
   - m_Id: 21469888512
     m_Localized: "Iniciar sesi\xF3n"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - id: 3
   - m_Id: 2866969608192
     m_Localized: 'Vida: {value}'
     m_Metadata:
@@ -54,3 +56,7 @@ MonoBehaviour:
       type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
         m_Entries: 00803497d1020000
+    00000003:
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 0080b4ff04000000
