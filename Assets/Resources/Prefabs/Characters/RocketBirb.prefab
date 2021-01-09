@@ -1017,7 +1017,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8619087125948074484}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
   m_Name: 
@@ -1064,7 +1064,7 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 6b013c47-b83e-47b3-9df4-f7973289abda
     m_ActionName: Birb/Look[/GamePad/rightStick,/GamePad1/rightStick,/GamePad2/rightStick,/XInputControllerWindows/rightStick,/GamePad3/rightStick]
-  m_NeverAutoSwitchControlSchemes: 0
+  m_NeverAutoSwitchControlSchemes: 1
   m_DefaultControlScheme: 
   m_DefaultActionMap: Birb
   m_SplitScreenIndex: -1

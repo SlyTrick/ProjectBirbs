@@ -17,6 +17,7 @@ public class listaJugadoresItem : MonoBehaviour
     [SerializeField] GameObject botSiguientePajaro;
     [SerializeField] GameObject botAnteriorTeam;
     [SerializeField] GameObject botSiguienteTeam;
+    [SerializeField] GameObject botEliminar;
     [SerializeField] Image imagenPajaro;
     [SerializeField] Image marcoTeam;
     [HideInInspector] Player player;
@@ -52,6 +53,7 @@ public class listaJugadoresItem : MonoBehaviour
             nombre = _player.NickName;
             pajaroIndex = 0;
             gamemodeIndex = 0;
+            botEliminar.SetActive(false);
 
             object pajaroActivo;
             if (_player.CustomProperties.TryGetValue("indexPajaro", out pajaroActivo))
@@ -95,6 +97,7 @@ public class listaJugadoresItem : MonoBehaviour
             offline = true;
             pajaroIndex = 0;
             teamId = -1;
+            ActualizarPajaro(pajaroIndex);
         }
         
     }
@@ -198,8 +201,15 @@ public class listaJugadoresItem : MonoBehaviour
         botSiguienteTeam.SetActive(false);
         marcoTeam.gameObject.SetActive(false);
         pajaroTexto.gameObject.SetActive(false);
+        botEliminar.SetActive(false);
         nombreTexto.text = nombre;
         ActualizarPajaro(pajaroIndex);
+    }
+
+    public void EliminarJugador()
+    {
+        RoomManagerOffline RMO = FindObjectOfType<RoomManagerOffline>();
+        RMO.RemovePlayer(ownerId);
     }
     
 }
