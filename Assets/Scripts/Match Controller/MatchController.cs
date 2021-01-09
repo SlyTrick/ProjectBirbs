@@ -15,6 +15,7 @@ public class MatchController : MonoBehaviourPunCallbacks
     public int mode;
     public int numPlayers = 4;
     public int numTeams = 4;
+    public int targetScore = 10;
     public ModeController modeController;
     public List<Character> playerList = new List<Character>();
     //public List<int> teamsPoints = new List<int>();
@@ -62,11 +63,16 @@ public class MatchController : MonoBehaviourPunCallbacks
             if (playerList[i].GetTeamId() == team)
                 playerList[i].SetPoints(teamsPoints[team]);
         }
-        if (teamsPoints[team] >= 10)
+        if (teamsPoints[team] >= targetScore)
         {
             if (PhotonNetwork.IsConnected)
             {
                 PV.RPC("EndGame_RPC", RpcTarget.All, teamsPoints[team], team);
+            }
+            else
+            {
+                //Aqui hay que meter que se termine la partida
+                Debug.Log("Puntuacion objetivo alcanzada");
             }
 
         }
@@ -132,7 +138,9 @@ public class MatchController : MonoBehaviourPunCallbacks
         }
         else
         {
-            mode = (int)modes.FEATHER_HOARDER;
+            RoomManagerOffline RMO = FindObjectOfType<RoomManagerOffline>();
+            //mode = (int)modes.FEATHER_HOARDER;
+            mode = RMO.gamemodeIndex;
             Vector3 cloudDir = new Vector3(
                 Random.Range(-1.0f, 1.0f),
                 0,
@@ -148,6 +156,7 @@ public class MatchController : MonoBehaviourPunCallbacks
         switch (mode)
         {
             case (int)modes.DEATHMATCH:
+                targetScore = 10;
                 modeController = new DeathmatchController(this);
                 break;
             case (int)modes.KING_OF_THE_FEEDER:
@@ -159,6 +168,7 @@ public class MatchController : MonoBehaviourPunCallbacks
                 {
                     Object.Instantiate(feederPrefab, feederPos.transform.position, Quaternion.identity);
                 }
+                targetScore = 100;
                 modeController = new KingOfTheFeederController(this);
                 break;
             case (int)modes.FEATHER_HOARDER:
@@ -166,6 +176,7 @@ public class MatchController : MonoBehaviourPunCallbacks
                 {
                     featherSpawns[i].SetActive(true);
                 }
+                targetScore = 20;
                 modeController = new FeatherHoarderController(this);
                 break;
         }

@@ -716,7 +716,7 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 6b013c47-b83e-47b3-9df4-f7973289abda
     m_ActionName: Birb/Look[/GamePad/rightStick,/GamePad1/rightStick,/GamePad2/rightStick,/XInputControllerWindows/rightStick,/GamePad3/rightStick]
-  m_NeverAutoSwitchControlSchemes: 0
+  m_NeverAutoSwitchControlSchemes: 1
   m_DefaultControlScheme: 
   m_DefaultActionMap: Birb
   m_SplitScreenIndex: -1
