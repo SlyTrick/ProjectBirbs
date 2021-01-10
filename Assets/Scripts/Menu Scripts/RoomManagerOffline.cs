@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using TMPro;
+using Photon.Pun;
 
 public class RoomManagerOffline : MonoBehaviour
 {
@@ -13,6 +14,9 @@ public class RoomManagerOffline : MonoBehaviour
     [SerializeField] public GameObject listaJugadoresPrefab;
     [SerializeField] public Transform listaJugadoresOffline;
     [SerializeField] public TMP_Text textoBotonCambiarModo;
+    public GameObject tituloResultados;
+    public GameObject listaJugadoresResults;
+    public Launcher launcher;
 
     public PlayerInputManager PIM;
 
@@ -20,9 +24,12 @@ public class RoomManagerOffline : MonoBehaviour
     public Dictionary<int, int[]> jugadoresInfo; //la posicion 0 del array es pajaroIndex, la 1 el teamId, la Key es el OwnerId
 
     [HideInInspector] public string[] modosDeJuego = new string[3] { "Deathmatch", "Rey del comedero", "Acaparaplumas" };
+    [HideInInspector] public string[] equiposNombres = new string[4] { "Azul", "Rojo", "Amarillo", "Verde" };
 
 
     public int gamemodeIndex; //0 deathmatch, 1 rey del comedero, 2 acaparaplumas
+    public int puntuacionFinal;
+    public int teamIdGanador;
 
     void Awake()
     {
@@ -32,12 +39,6 @@ public class RoomManagerOffline : MonoBehaviour
             return;
         }
         Instance = this;
-        /*Debug.Log(InputSystem.devices.Count);
-        foreach(InputDevice d in InputSystem.devices)
-        {
-            Debug.Log(d.name);
-        }*/
-        
     }
 
     void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
@@ -65,7 +66,16 @@ public class RoomManagerOffline : MonoBehaviour
         }
         else if (scene.buildIndex == 0) //Estamos en el menu principal
         {
-            
+            if (!PhotonNetwork.IsConnected)
+            {
+                launcher = FindObjectOfType<Launcher>();
+                listaJugadoresOffline = launcher.listaJugadoresOffline;
+                textoBotonCambiarModo = launcher.textoBotonCambiarModoOffline;
+                textoBotonCambiarModo.text = "Cambiar Modo de Juego. (Actualmente " + modosDeJuego[gamemodeIndex] + ")";
+                jugadoresSala = null;
+                MenuManager.Instance.OpenMenu("menuResultados");
+                GoToResultsRoom();
+            }
         }
     }
 
@@ -74,7 +84,6 @@ public class RoomManagerOffline : MonoBehaviour
         MenuManager.Instance.OpenMenu("menuSeleccionModoOffline");
         DontDestroyOnLoad(gameObject);
         SceneManager.sceneLoaded += OnSceneLoaded;
-        //DontDestroyOnLoad(gameObject);
     }
 
     public void ChangeGamemode(int newIndex)
@@ -125,6 +134,8 @@ public class RoomManagerOffline : MonoBehaviour
         {
             int idJugador = newDictionary.Count + 1;
             j.Value.GetComponent<listaJugadoresItem>().ownerId = idJugador;
+            j.Value.GetComponent<listaJugadoresItem>().nombre = "Player " + idJugador;
+            j.Value.GetComponent<listaJugadoresItem>().nombreTexto.text = "Player " + idJugador;
             newDictionary.Add(idJugador, j.Value);
         }
         jugadoresSala.Clear();
@@ -178,6 +189,38 @@ public class RoomManagerOffline : MonoBehaviour
         }
         return true;
     }
-    
+
+    public void TerminarPartida(int puntuacion, int teamIndexGanador)
+    {
+        puntuacionFinal = puntuacion;
+        teamIdGanador = teamIndexGanador;
+        SceneManager.LoadScene(0);
+    }
+
+    public void GoToResultsRoom()
+    {
+        tituloResultados = GameObject.FindGameObjectWithTag("tituloResultados");
+        listaJugadoresResults = GameObject.FindGameObjectWithTag("listaJugadoresResultados");
+        tituloResultados.GetComponent<TMP_Text>().text = "Ha ganado el equipo: " + equiposNombres[teamIdGanador] + ". Con " + puntuacionFinal + " puntos";
+        foreach (Transform child in listaJugadoresResults.transform)
+        {
+            Destroy(child.gameObject);
+        }
+        foreach (KeyValuePair<int, int[]> j in jugadoresInfo)
+        {
+            if(j.Value[1] == teamIdGanador)
+            {
+                Instantiate(listaJugadoresPrefab, listaJugadoresResults.transform).GetComponent<listaJugadoresItem>().
+                            SetUpResultsRoom("Jugador " + j.Key, j.Value[0]);
+            }
+        }
+        StartCoroutine(timerResults());
+    }
+
+    public IEnumerator timerResults()
+    {
+        yield return new WaitForSeconds(10);
+        MenuManager.Instance.OpenMenu("menuSalaOffline");
+    }
 
 }

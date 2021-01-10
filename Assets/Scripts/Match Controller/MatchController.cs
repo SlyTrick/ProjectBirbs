@@ -34,6 +34,8 @@ public class MatchController : MonoBehaviourPunCallbacks
     [SerializeField] public PhotonView PV;
     public RoomManager roomManager;
 
+    public RoomManagerOffline RMO;
+
     public void AddPlayer(Character player)
     {
         playerList.Add(player);
@@ -71,7 +73,11 @@ public class MatchController : MonoBehaviourPunCallbacks
             }
             else
             {
-                //Aqui hay que meter que se termine la partida
+                foreach(Character c in playerList)
+                {
+                    GameObject.Destroy(c.gameObject);
+                }
+                RMO.TerminarPartida(teamsPoints[team], team);
                 Debug.Log("Puntuacion objetivo alcanzada");
             }
 
@@ -138,7 +144,7 @@ public class MatchController : MonoBehaviourPunCallbacks
         }
         else
         {
-            RoomManagerOffline RMO = FindObjectOfType<RoomManagerOffline>();
+            RMO = FindObjectOfType<RoomManagerOffline>();
             //mode = (int)modes.FEATHER_HOARDER;
             mode = RMO.gamemodeIndex;
             Vector3 cloudDir = new Vector3(
@@ -156,7 +162,7 @@ public class MatchController : MonoBehaviourPunCallbacks
         switch (mode)
         {
             case (int)modes.DEATHMATCH:
-                targetScore = 10;
+                targetScore = 1;
                 modeController = new DeathmatchController(this);
                 break;
             case (int)modes.KING_OF_THE_FEEDER:
