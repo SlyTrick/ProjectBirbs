@@ -235,8 +235,8 @@ MonoBehaviour:
   rotateJoystick: {fileID: 4937240021297497265}
   mode: {fileID: 1034066630516382756}
   modeSprite:
-  - {fileID: 21300000, guid: 8f8f9f13e1118af42a3c477906885ef8, type: 3}
-  - {fileID: 21300000, guid: b93de30555e32ba4ab371034895aab6a, type: 3}
+  - {fileID: 21300000, guid: 32880a8a270d919408b78ae688fb002c, type: 3}
+  - {fileID: 21300000, guid: 064129e41d1b97540a40cf2f6b49dcbe, type: 3}
 --- !u!1 &1851041863372709431
 GameObject:
   m_ObjectHideFlags: 0
@@ -918,7 +918,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: b93de30555e32ba4ab371034895aab6a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 064129e41d1b97540a40cf2f6b49dcbe, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
