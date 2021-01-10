@@ -488,7 +488,7 @@ public class Character : MonoBehaviourPunCallbacks
             mainCamera.enabled = true;
             playerInput.enabled = true;
             RoomManagerOffline RMO = FindObjectOfType<RoomManagerOffline>();
-            teamId = RMO.jugadoresInfo[GetComponentInChildren<PlayerInput>().playerIndex + 1][1];
+            //teamId = RMO.jugadoresInfo[GetComponentInChildren<PlayerInput>().playerIndex + 1][1];
             matchController = FindObjectOfType<MatchController>();
             matchController.AddPlayer(this);
             spawnPoint = matchController.GetSpawnPoint(this);
@@ -569,6 +569,7 @@ public class Character : MonoBehaviourPunCallbacks
     public int GetTeamId(){ return teamId; }
     public int GetLife(){ return life; }
     public bool GetCanShoot(){ return canShoot; }
+    public void SetCanShoot(bool newCanShoot){ canShoot = newCanShoot; }
     public bool GetCanShield(){ return canShield; }
     public int GetScore(){ return score; }
     public int GetFeathers(){ return feathers; }
