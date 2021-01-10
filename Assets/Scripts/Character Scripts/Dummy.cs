@@ -6,12 +6,16 @@ using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Realtime;
 using System.IO;
+using TMPro;
 
 public class Dummy : Character
 {
     private MatchController matchController;
     private BoxCollider spawnPoint;
+    [SerializeField] private GameObject textDamagePrefab;
+    [SerializeField] private TextMeshProUGUI textDamage;
 
+     
     public new void Shoot()
     {
         if (GetCanShoot())
@@ -34,7 +38,8 @@ public class Dummy : Character
 
     public new void TakeDamage(int damage, BulletController bullet)
     {
-        Debug.Log(damage);
+        textDamage.text = damage + "!";
+        Instantiate(textDamagePrefab, transform);
     }
 
 
@@ -42,6 +47,17 @@ public class Dummy : Character
     #region MonoBehaviour Callbacks
     private void Start()
     {
+        movementSM = new StateMachine();
+
+        groundedState = new GroundedState(this, movementSM);
+        shootingState = new ShootingState(this, movementSM);
+        shieldState = new ShieldState(this, movementSM);
+        deadState = new DeadState(this, movementSM);
+        stunState = new StunState(this, movementSM);
+        feederState = new FeederState(this, movementSM);
+
+        movementSM.Initialize(shootingState);
+           
         GetRigidBody().drag = GetPlayerDeceleration();
 
         life = 1;
@@ -55,16 +71,7 @@ public class Dummy : Character
 
         teamId = 5;
 
-        movementSM = new StateMachine();
-
-        groundedState = new GroundedState(this, movementSM);
-        shootingState = new ShootingState(this, movementSM);
-        shieldState = new ShieldState(this, movementSM);
-        deadState = new DeadState(this, movementSM);
-        stunState = new StunState(this, movementSM);
-        feederState = new FeederState(this, movementSM);
-
-        movementSM.Initialize(shootingState);
+        
     }
 
     private void Update()
