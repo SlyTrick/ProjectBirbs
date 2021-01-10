@@ -116,6 +116,7 @@ MonoBehaviour:
   mode: 0
   numPlayers: 4
   numTeams: 4
+  targetScore: 10
   playerList: []
   teamSpawns:
   - {fileID: 3009518116056409611}
@@ -138,6 +139,7 @@ MonoBehaviour:
   numFeatherSpawns: 3
   PV: {fileID: -6382763942497683615}
   roomManager: {fileID: 0}
+  RMO: {fileID: 0}
 --- !u!114 &-6382763942497683615
 MonoBehaviour:
   m_ObjectHideFlags: 0

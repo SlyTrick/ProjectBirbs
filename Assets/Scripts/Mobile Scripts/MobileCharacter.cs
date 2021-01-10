@@ -19,18 +19,16 @@ public class MobileCharacter : MonoBehaviour
     [SerializeField] private GameObject characterComplete;
     [SerializeField] private Joystick moveJoystick;
     [SerializeField] private Joystick rotateJoystick;
-    [SerializeField] private Canvas canvas;
-    [SerializeField] private GameObject middle;
 
     private void Awake()
     {
         //if (SystemInfo.deviceType != DeviceType.Handheld)
-        if(!Application.isMobilePlatform)
+        /*if(!Application.isMobilePlatform)
         {
             moveJoystick.gameObject.SetActive(false);
             rotateJoystick.gameObject.SetActive(false);
             GetComponent<MobileCharacter>().enabled = false;
-        }
+        }*/
     }
 
     // Start is called before the first frame update

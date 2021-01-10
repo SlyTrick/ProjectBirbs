@@ -10,7 +10,8 @@ public class MatchController : MonoBehaviourPunCallbacks
     {
         DEATHMATCH,
         KING_OF_THE_FEEDER,
-        FEATHER_HOARDER
+        FEATHER_HOARDER,
+        TRAINING
     }
     public int mode;
     public int numPlayers = 4;
@@ -184,6 +185,15 @@ public class MatchController : MonoBehaviourPunCallbacks
                 }
                 targetScore = 20;
                 modeController = new FeatherHoarderController(this);
+                break;
+            case (int)modes.TRAINING:
+                Object.Instantiate(feederPrefab, feederPos.transform.position, Quaternion.identity);
+                for (int i = 0; i < featherSpawns.Count; i++)
+                {
+                    featherSpawns[i].SetActive(true);
+                }
+                targetScore = 999999999;
+                modeController = new TrainingController(this);
                 break;
         }
     }
