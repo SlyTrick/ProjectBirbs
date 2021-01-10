@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MobileCharacter : MonoBehaviour
 {
@@ -16,25 +17,32 @@ public class MobileCharacter : MonoBehaviour
     Rigidbody rigidbody;
 
 
-    [SerializeField] private GameObject characterComplete;
+    [SerializeField] private GameObject character;
     [SerializeField] private Joystick moveJoystick;
     [SerializeField] private Joystick rotateJoystick;
+    [SerializeField] private Button mode;
+    private Character characterScript;
+    private bool shoot;
+    private bool activeShield;
 
     private void Awake()
     {
         //if (SystemInfo.deviceType != DeviceType.Handheld)
-        /*if(!Application.isMobilePlatform)
+        if(!Application.isMobilePlatform)
         {
             moveJoystick.gameObject.SetActive(false);
             rotateJoystick.gameObject.SetActive(false);
+            mode.gameObject.SetActive(false);
             GetComponent<MobileCharacter>().enabled = false;
-        }*/
+        }
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        rigidbody = characterComplete.GetComponent<Rigidbody>();
+        rigidbody = character.GetComponent<Rigidbody>();
+        characterScript = character.GetComponent<Character>();
+        shoot = true;
     }
 
     // Update is called once per frame
@@ -66,8 +74,28 @@ public class MobileCharacter : MonoBehaviour
         joystickRotation = new Vector3(rotateJoystick.Horizontal, 0f, rotateJoystick.Vertical);
 
 
-        characterComplete.transform.LookAt(characterComplete.transform.position + joystickRotation);
-        characterComplete.transform.position += new Vector3(horizontalMove, 0, verticalMove) * Time.deltaTime;
+        character.transform.LookAt(character.transform.position + joystickRotation);
+        character.transform.position += new Vector3(horizontalMove, 0, verticalMove) * Time.deltaTime;
+        if(rotateJoystick.Horizontal != 0.0f || rotateJoystick.Vertical != 0.0f){
+            if (shoot)
+            {
+                Debug.Log("Disparando joystick");
+                characterScript.Shoot();
+            }
+            else if(!activeShield && !shoot)
+            {
+                Debug.Log("Escudo joystick");
+                activeShield = true;
+                characterScript.CreateShield();
+            }
+        }
+        else if(activeShield)
+        {
+            characterScript.RemoveShield();
+        }
+
+
+
 
         /*foreach(Touch t in Input.touches)
         {
@@ -83,5 +111,11 @@ public class MobileCharacter : MonoBehaviour
                 }
             }
         }*/
+    }
+
+    public void changeMode()
+    {
+        shoot = !shoot;
+        Debug.Log("Modo: " + shoot);
     }
 }
