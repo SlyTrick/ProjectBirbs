@@ -70,18 +70,21 @@ public class RoomManager : MonoBehaviourPunCallbacks
             CreateCharacter();
         }else if(scene.buildIndex == 0) //Estamos en el menu principal
         {
-            if (hostLeft)
+            if (PhotonNetwork.IsConnected)
             {
-                MenuManager.Instance.OpenMenu("menuHostDesconectado");
-                PhotonNetwork.LeaveRoom();
-                StartCoroutine(HostLeftTimer());
-            }
-            if(gameEnded)
-            {
-                gameEnded = false;
-                MenuManager.Instance.OpenMenu("menuResultados");
-                GoToResultsRoom();
-                //FindObjectOfType<Launcher>().SetUpRoom();
+                if (hostLeft)
+                {
+                    MenuManager.Instance.OpenMenu("menuHostDesconectado");
+                    PhotonNetwork.LeaveRoom();
+                    StartCoroutine(HostLeftTimer());
+                }
+                if (gameEnded)
+                {
+                    gameEnded = false;
+                    MenuManager.Instance.OpenMenu("menuResultados");
+                    GoToResultsRoom();
+                    //FindObjectOfType<Launcher>().SetUpRoom();
+                }
             }
         }
     }

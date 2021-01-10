@@ -25,7 +25,10 @@ public class Launcher : MonoBehaviourPunCallbacks
     [SerializeField] GameObject cambiarModoGameButton;
     [SerializeField] TMP_Text textoBotonCambiarModo;
     [SerializeField] TMP_Text textoModoDeJuegoActual;
+    [SerializeField] public Transform listaJugadoresOffline;
+    [SerializeField] public TMP_Text textoBotonCambiarModoOffline;
     RoomManager roomManager;
+    public RoomManagerOffline RMO;
 
     [HideInInspector] public string[] modosDeJuego = new string[3] { "Deathmatch", "Rey del comedero", "Acaparaplumas"};
     private Dictionary<int, GameObject> listaJugadoresItems;
@@ -45,6 +48,7 @@ public class Launcher : MonoBehaviourPunCallbacks
         inMenus = false;
         comingFromMainMenu = false;
         roomManager = FindObjectOfType<RoomManager>();
+        RMO = FindObjectOfType<RoomManagerOffline>();
     }
 
     public void ConnectOnline()
@@ -366,5 +370,25 @@ public class Launcher : MonoBehaviourPunCallbacks
             }
         }
         return true;
+    }
+
+    public void JoinOfflineRoom()
+    {
+        RMO.JoinOfflineRoom();
+    }
+
+    public void AddPlayerOffline()
+    {
+        RMO.AddPlayerToRoom();
+    }
+
+    public void ChangeGamemodeOffline(int newGM)
+    {
+        RMO.ChangeGamemode(newGM);
+    }
+
+    public void StartGameOffline()
+    {
+        RMO.StartGame();
     }
 }
