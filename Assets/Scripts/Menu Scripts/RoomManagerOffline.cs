@@ -22,6 +22,8 @@ public class RoomManagerOffline : MonoBehaviour
 
     public Dictionary<int, GameObject> jugadoresSala;
     public Dictionary<int, int[]> jugadoresInfo; //la posicion 0 del array es pajaroIndex, la 1 el teamId, la Key es el OwnerId
+    public GameObject jugadorEntrenamiento;
+    public int pajaroIndexEntrenamiento;
 
     [HideInInspector] public string[] modosDeJuego = new string[3] { "Deathmatch", "Rey del comedero", "Acaparaplumas" };
     [HideInInspector] public string[] equiposNombres = new string[4] { "Azul", "Rojo", "Amarillo", "Verde" };
@@ -39,14 +41,13 @@ public class RoomManagerOffline : MonoBehaviour
             return;
         }
         Instance = this;
+        DontDestroyOnLoad(gameObject);
     }
 
     void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
     {
-        Debug.Log("He entrado en el onsceneLoaded");
         if (scene.buildIndex == 1) //Estamos en el juego Offline
         {
-            Debug.Log("He entrado en el build index 1");
             PIM = FindObjectOfType<PlayerInputManager>();
             foreach(KeyValuePair<int, int[]> j in jugadoresInfo)
             {
@@ -77,12 +78,26 @@ public class RoomManagerOffline : MonoBehaviour
                 GoToResultsRoom();
             }
         }
+        else if(scene.buildIndex == 3) //Estamos en el entrenamiento
+        {
+            PIM = FindObjectOfType<PlayerInputManager>();
+            if(InputSystem.devices.Count > 1)
+            {
+                PIM.playerPrefab = pajarosPrefabs[pajaroIndexEntrenamiento];
+                InputDevice[] tecladoYRaton = new InputDevice[2] { InputSystem.devices[0], InputSystem.devices[1] };
+                PIM.JoinPlayer(-1, -1, "Keyboard and Mouse", tecladoYRaton);
+            }
+            else
+            {
+                PIM.playerPrefab = pajarosPrefabs[pajaroIndexEntrenamiento];
+                PIM.JoinPlayer(-1, -1, "Keyboard and Mouse", InputSystem.devices[0]);
+            }
+        }
     }
 
     public void JoinOfflineRoom()
     {
         MenuManager.Instance.OpenMenu("menuSeleccionModoOffline");
-        DontDestroyOnLoad(gameObject);
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
@@ -221,6 +236,19 @@ public class RoomManagerOffline : MonoBehaviour
     {
         yield return new WaitForSeconds(10);
         MenuManager.Instance.OpenMenu("menuSalaOffline");
+    }
+
+    public void StorePlayerEntrenamiento(GameObject jugador)
+    {
+        jugadorEntrenamiento = jugador;
+        gamemodeIndex = 3;
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    public void EmpezarEntrenamiento()
+    {
+        pajaroIndexEntrenamiento = jugadorEntrenamiento.GetComponent<listaJugadoresItem>().pajaroIndex;
+        SceneManager.LoadScene(3); //Nos vamos a la escena de entrenamiento
     }
 
 }

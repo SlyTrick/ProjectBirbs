@@ -27,6 +27,7 @@ public class Launcher : MonoBehaviourPunCallbacks
     [SerializeField] TMP_Text textoModoDeJuegoActual;
     [SerializeField] public Transform listaJugadoresOffline;
     [SerializeField] public TMP_Text textoBotonCambiarModoOffline;
+    [SerializeField] public Transform listaJugadoresEntrenamiento;
     RoomManager roomManager;
     public RoomManagerOffline RMO;
 
@@ -390,5 +391,22 @@ public class Launcher : MonoBehaviourPunCallbacks
     public void StartGameOffline()
     {
         RMO.StartGame();
+    }
+
+    public void EnterTrainingRoom()
+    {
+        MenuManager.Instance.OpenMenu("menuEntrenamiento");
+        foreach(Transform child in listaJugadoresEntrenamiento)
+        {
+            Destroy(child.gameObject);
+        }
+        GameObject j = Instantiate(listaJugadoresItemPrefab, listaJugadoresEntrenamiento);
+        j.GetComponent<listaJugadoresItem>().SetUpTrainingRoom();
+        RMO.StorePlayerEntrenamiento(j);
+    }
+
+    public void EmpezarEntrenamiento()
+    {
+        RMO.EmpezarEntrenamiento();
     }
 }

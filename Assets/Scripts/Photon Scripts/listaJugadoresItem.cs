@@ -212,4 +212,14 @@ public class listaJugadoresItem : MonoBehaviour
         RMO.RemovePlayer(ownerId);
     }
     
+    public void SetUpTrainingRoom()
+    {
+        botAnteriorTeam.SetActive(false);
+        botSiguienteTeam.SetActive(false);
+        marcoTeam.gameObject.SetActive(false);
+        botEliminar.SetActive(false);
+        nombreTexto.gameObject.SetActive(false);
+        pajaroIndex = 0;
+        ActualizarPajaro(pajaroIndex);
+    }
 }
