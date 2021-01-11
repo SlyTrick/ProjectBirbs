@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 6145597801665356793}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_Children:
   - {fileID: 5644155093893358187}
   m_Father: {fileID: 0}
@@ -86,7 +86,8 @@ MonoBehaviour:
   owner: {fileID: 0}
   particleEffect: {fileID: 4256318742635070123, guid: 8e239c96296c9a545ae7b21bdd9beafa,
     type: 3}
-  bulletGraphics: {fileID: 4980912519901739217}
+  bulletGraphics: {fileID: 919132149155446097, guid: 2bc05f1c64ba9cb449a048957fbf4939,
+    type: 3}
   changeDirectionTime: 0.5
 --- !u!1001 &8090686536509110291
 PrefabInstance:
@@ -108,17 +109,17 @@ PrefabInstance:
     - target: {fileID: 4473188984747498104, guid: cdd8362ac0c1c8a4daf2d84eb1424ced,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.02
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4473188984747498104, guid: cdd8362ac0c1c8a4daf2d84eb1424ced,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.02
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4473188984747498104, guid: cdd8362ac0c1c8a4daf2d84eb1424ced,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.02
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4473188984747498104, guid: cdd8362ac0c1c8a4daf2d84eb1424ced,
         type: 3}
@@ -177,12 +178,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cdd8362ac0c1c8a4daf2d84eb1424ced, type: 3}
---- !u!1 &4980912519901739217 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3843862972944400578, guid: cdd8362ac0c1c8a4daf2d84eb1424ced,
-    type: 3}
-  m_PrefabInstance: {fileID: 8090686536509110291}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5644155093893358187 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4473188984747498104, guid: cdd8362ac0c1c8a4daf2d84eb1424ced,

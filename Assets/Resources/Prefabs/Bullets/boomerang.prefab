@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4473188984747498104}
   - component: {fileID: 701486476241638877}
   - component: {fileID: 3339658208100704535}
-  - component: {fileID: 7926062512071073816}
+  - component: {fileID: 5975743670772960930}
   m_Layer: 0
   m_Name: boomerang
   m_TagString: Untagged
@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 3843862972944400578}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.13981366, y: 0.13981366, z: 0.13981366}
+  m_LocalScale: {x: 0.02, y: 0.02, z: 0.02}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -80,7 +80,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!95 &7926062512071073816
+--- !u!95 &5975743670772960930
 Animator:
   serializedVersion: 3
   m_ObjectHideFlags: 0
@@ -93,7 +93,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: f3574e1d14f383d45a0aa5e72763e0ba, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
