@@ -20,37 +20,41 @@ public class MatchController : MonoBehaviourPunCallbacks
     public int targetScore = 10;
     public ModeController modeController;
     public List<Character> playerList = new List<Character>();
-    //public List<int> teamsPoints = new List<int>();
     public Dictionary<int, int> teamsPoints;
 
-    [SerializeField] public List<BoxCollider> teamSpawns;
+    [SerializeField] public List<BoxCollider> teamSpawnsCiudad;
+    [SerializeField] public List<BoxCollider> teamSpawnsGranja;
     [SerializeField] public List<GameObject> featherSpawns;
     [SerializeField] public GameObject featherPrefab;
     [SerializeField] public GameObject feederPrefab;
     [SerializeField] public GameObject cloudPrefab;
     [SerializeField] public GameObject feederPos;
+    [SerializeField] public GameObject[] mapasPrefabs;
     public float featherRate;
     public float feederRate;
     public int numFeatherSpawns = 3;
 
     [SerializeField] public PhotonView PV;
     public RoomManager roomManager;
-
     public RoomManagerOffline RMO;
+    public int indiceMapa;
 
     public void AddPlayer(Character player)
     {
         playerList.Add(player);
-        //int playerteamId = playerList.Count - 1;
-        //if(teamsPoints.Count != player.GetTeamId() + 1)
-        //if (teamsPoints.Count != playerteamId + 1)
-          //  teamsPoints.Add(0);
-        //return playerList.Count - 1;
     }
 
     public virtual BoxCollider GetSpawnPoint(Character target)
     {
-        return teamSpawns[target.GetTeamId()];
+        if(indiceMapa == 0)
+        {
+            return teamSpawnsCiudad[target.GetTeamId()];
+        }
+        else
+        {
+            return teamSpawnsGranja[target.GetTeamId()];
+        }
+        
     }
     public virtual BoxCollider GetFeatherSpawn()
     {
@@ -123,14 +127,24 @@ public class MatchController : MonoBehaviourPunCallbacks
         }
         return null;
     }
-
-    public virtual void Start()
+    public void startDictionary()
     {
         teamsPoints = new Dictionary<int, int>();
         teamsPoints.Add(0, 0);
         teamsPoints.Add(1, 0);
         teamsPoints.Add(2, 0);
         teamsPoints.Add(3, 0);
+    }
+    public void RandomizeAndSpawnMapOffline()
+    {
+        indiceMapa = Random.Range(0, 2);
+        Vector3 spawnPos = new Vector3(0, 0, 0);
+        Instantiate(mapasPrefabs[indiceMapa], spawnPos, Quaternion.identity);
+    }
+
+    public virtual void Start()
+    {
+        startDictionary();
         if (PhotonNetwork.IsConnected)
         {
             roomManager = FindObjectOfType<RoomManager>();
@@ -142,10 +156,13 @@ public class MatchController : MonoBehaviourPunCallbacks
                 float posX = Random.Range(GetFeatherSpawn().bounds.min.x, GetFeatherSpawn().bounds.max.x);
                 float posZ = Random.Range(GetFeatherSpawn().bounds.min.z, GetFeatherSpawn().bounds.max.z);
                 PV.RPC("SpawnCloud_RPC", RpcTarget.All, dirX, dirZ, posX, posZ);
+                indiceMapa = Random.Range(0, 2);
+                PV.RPC("SpawnMap_RPC", RpcTarget.All, indiceMapa);
             }
         }
         else
         {
+            RandomizeAndSpawnMapOffline();
             RMO = FindObjectOfType<RoomManagerOffline>();
             mode = RMO.gamemodeIndex;
             Vector3 cloudDir = new Vector3(
@@ -251,5 +268,13 @@ public class MatchController : MonoBehaviourPunCallbacks
         Vector3 cloudDir = new Vector3(dx, 0, dz);
         Vector3 cloudPos = new Vector3(px, 0, pz);
         Instantiate(cloudPrefab, cloudPos, Quaternion.LookRotation(cloudDir));
+    }
+
+    [PunRPC]
+    public void SpawnMap_RPC(int inMapa)
+    {
+        indiceMapa = inMapa;
+        Vector3 spawnPos = new Vector3(0, 0, 0);
+        Instantiate(mapasPrefabs[indiceMapa], spawnPos, Quaternion.identity);
     }
 }
