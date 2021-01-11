@@ -32,6 +32,7 @@ public class RoomManagerOffline : MonoBehaviour
     public int gamemodeIndex; //0 deathmatch, 1 rey del comedero, 2 acaparaplumas
     public int puntuacionFinal;
     public int teamIdGanador;
+    public bool partidaOfflineTerminada = false;
 
     void Awake()
     {
@@ -42,6 +43,7 @@ public class RoomManagerOffline : MonoBehaviour
         }
         Instance = this;
         DontDestroyOnLoad(gameObject);
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
     void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
@@ -67,11 +69,11 @@ public class RoomManagerOffline : MonoBehaviour
         }
         else if (scene.buildIndex == 0) //Estamos en el menu principal
         {
-            if (!PhotonNetwork.IsConnected)
+            launcher = FindObjectOfType<Launcher>();
+            listaJugadoresOffline = launcher.listaJugadoresOffline;
+            textoBotonCambiarModo = launcher.textoBotonCambiarModoOffline;
+            if (!PhotonNetwork.IsConnected && partidaOfflineTerminada)
             {
-                launcher = FindObjectOfType<Launcher>();
-                listaJugadoresOffline = launcher.listaJugadoresOffline;
-                textoBotonCambiarModo = launcher.textoBotonCambiarModoOffline;
                 textoBotonCambiarModo.text = "Cambiar Modo de Juego. (Actualmente " + modosDeJuego[gamemodeIndex] + ")";
                 jugadoresSala = null;
                 MenuManager.Instance.OpenMenu("menuResultados");
@@ -98,7 +100,6 @@ public class RoomManagerOffline : MonoBehaviour
     public void JoinOfflineRoom()
     {
         MenuManager.Instance.OpenMenu("menuSeleccionModoOffline");
-        SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
     public void ChangeGamemode(int newIndex)
@@ -118,6 +119,7 @@ public class RoomManagerOffline : MonoBehaviour
                 int[] entry = new int[] { j.Value.GetComponent<listaJugadoresItem>().pajaroIndex, j.Value.GetComponent<listaJugadoresItem>().teamId };
                 jugadoresInfo.Add(j.Key, entry);
             }
+            partidaOfflineTerminada = false;
             SceneManager.LoadScene(1);
         }
     }
@@ -207,6 +209,7 @@ public class RoomManagerOffline : MonoBehaviour
 
     public void TerminarPartida(int puntuacion, int teamIndexGanador)
     {
+        partidaOfflineTerminada = true;
         puntuacionFinal = puntuacion;
         teamIdGanador = teamIndexGanador;
         SceneManager.LoadScene(0);

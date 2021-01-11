@@ -488,7 +488,7 @@ public class Character : MonoBehaviourPunCallbacks
             mainCamera.enabled = true;
             playerInput.enabled = true;
             RoomManagerOffline RMO = FindObjectOfType<RoomManagerOffline>();
-            //teamId = RMO.jugadoresInfo[GetComponentInChildren<PlayerInput>().playerIndex + 1][1];
+            teamId = RMO.jugadoresInfo[GetComponentInChildren<PlayerInput>().playerIndex + 1][1];
             matchController = FindObjectOfType<MatchController>();
             matchController.AddPlayer(this);
             spawnPoint = matchController.GetSpawnPoint(this);

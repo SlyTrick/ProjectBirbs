@@ -175,7 +175,7 @@ public class MatchController : MonoBehaviourPunCallbacks
                 {
                     Object.Instantiate(feederPrefab, feederPos.transform.position, Quaternion.identity);
                 }
-                targetScore = 100;
+                targetScore = 1;
                 modeController = new KingOfTheFeederController(this);
                 break;
             case (int)modes.FEATHER_HOARDER:
