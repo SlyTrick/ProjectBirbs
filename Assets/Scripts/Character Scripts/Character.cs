@@ -40,6 +40,7 @@ public class Character : MonoBehaviourPunCallbacks
     private int feathers;
     private MatchController matchController;
     private BoxCollider spawnPoint;
+    private HUDmanager hudManager;
     public bool damageable;
 
     [SerializeField] private Text scoreText;
@@ -60,6 +61,7 @@ public class Character : MonoBehaviourPunCallbacks
     [SerializeField] private InputController inputController;
     [SerializeField] private PlayerInput playerInput;
     [SerializeField] private MobileCharacter mobileCharacter;
+    
 
     [SerializeField] public PhotonView PV;
     
@@ -363,6 +365,7 @@ public class Character : MonoBehaviourPunCallbacks
             matchController = FindObjectOfType<MatchController>();
         }
         teamId = team;
+        hudManager.setBackground();
         spawnPoint = matchController.GetSpawnPoint(this);
         GetComponent<Transform>().position = spawnPoint.transform.position;
     }
@@ -466,6 +469,7 @@ public class Character : MonoBehaviourPunCallbacks
 
         lifeText.text = "Vida: " + life;
         scoreText.text = "Puntuación: " + score;
+        hudManager = GetComponent<HUDmanager>();
 
         if(PhotonNetwork.IsConnected && PV.IsMine)
         {

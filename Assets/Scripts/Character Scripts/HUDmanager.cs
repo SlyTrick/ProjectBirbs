@@ -15,13 +15,18 @@ public class HUDmanager : MonoBehaviour
     void Start()
     {
         characterScript = GetComponent<Character>();
-        scoreSprite.GetComponent<Image>().sprite = scoreBackgrounds[characterScript.teamId];
+        
         slider.maxValue = characterScript.life;
     }
 
     private void Update()
     {
         slider.value = characterScript.life;
+    }
+
+    public void setBackground()
+    {
+        scoreSprite.GetComponent<Image>().sprite = scoreBackgrounds[characterScript.teamId];
     }
 
 }
