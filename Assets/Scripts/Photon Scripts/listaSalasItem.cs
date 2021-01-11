@@ -13,13 +13,16 @@ public class listaSalasItem : MonoBehaviour
     public void SetUp(RoomInfo _info)
     {
         info = _info;
-        /*
-        if (_info.PlayerCount == 4)
+        bool abierta = _info.IsOpen;
+        if (abierta)
         {
-            texto.text = _info.Name + "  (" + _info.PlayerCount + "/4) Llena";
+            texto.text = _info.Name + "  (" + _info.PlayerCount + "/4) (Esperando...)";
         }
-        */
-        texto.text = _info.Name + "  (" + _info.PlayerCount + "/4)";
+        else
+        {
+            texto.text = _info.Name + "  (" + _info.PlayerCount + "/4) (Jugando)";
+        }
+        
     }
 
     public void OnClick()

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
+using Hastable = ExitGames.Client.Photon.Hashtable;
 
 public class MatchController : MonoBehaviourPunCallbacks
 {
@@ -146,7 +147,6 @@ public class MatchController : MonoBehaviourPunCallbacks
         else
         {
             RMO = FindObjectOfType<RoomManagerOffline>();
-            //mode = (int)modes.FEATHER_HOARDER;
             mode = RMO.gamemodeIndex;
             Vector3 cloudDir = new Vector3(
                 Random.Range(-1.0f, 1.0f),

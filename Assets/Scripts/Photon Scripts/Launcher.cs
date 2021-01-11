@@ -99,14 +99,6 @@ public class Launcher : MonoBehaviourPunCallbacks
     public void JoinRoom(RoomInfo info)
     {
         jugadoresEnSala = info.PlayerCount;
-        object partidaIniciada;
-        if(info.CustomProperties.TryGetValue("partidaComenzada", out partidaIniciada))
-        {
-            if ((bool)partidaIniciada)
-            {
-                return;
-            }
-        }
         if(jugadoresEnSala > 3)
         {
             return;
@@ -120,6 +112,11 @@ public class Launcher : MonoBehaviourPunCallbacks
         SetUpRoom();
     }
 
+    public override void OnJoinRoomFailed(short returnCode, string message)
+    {
+        MenuManager.Instance.OpenMenu("menuSalas");
+    }
+
     public void SetUpRoom()
     {
         if (PhotonNetwork.IsMasterClient)
@@ -128,9 +125,7 @@ public class Launcher : MonoBehaviourPunCallbacks
             startGameButton.SetActive(true);
             cambiarModoGameButton.SetActive(true);
             textoModoDeJuegoActual.gameObject.SetActive(false);
-            bool partidaComenzada = false;
-            Hastable hash = new Hastable() { { "partidaComenzada", partidaComenzada } };
-            PhotonNetwork.CurrentRoom.SetCustomProperties(hash);
+            PhotonNetwork.CurrentRoom.IsOpen = true;
         }
         else
         {
@@ -312,12 +307,10 @@ public class Launcher : MonoBehaviourPunCallbacks
     {
         if (true/*CheckTeams()*/)
         {
-            bool partidaComenzada = true;
-            Hastable hash = new Hastable() { { "partidaComenzada", partidaComenzada } };
-            PhotonNetwork.CurrentRoom.SetCustomProperties(hash);
             Debug.Log("All good, comenzando la partida");
             roomManagerLocal.players = PhotonNetwork.PlayerList;
             PhotonNetwork.LoadLevel(2);
+            PhotonNetwork.CurrentRoom.IsOpen = false;
         }
         else
         {
