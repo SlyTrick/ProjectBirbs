@@ -99,6 +99,14 @@ public class Launcher : MonoBehaviourPunCallbacks
     public void JoinRoom(RoomInfo info)
     {
         jugadoresEnSala = info.PlayerCount;
+        object partidaIniciada;
+        if(info.CustomProperties.TryGetValue("partidaComenzada", out partidaIniciada))
+        {
+            if ((bool)partidaIniciada)
+            {
+                return;
+            }
+        }
         if(jugadoresEnSala > 3)
         {
             return;
@@ -120,6 +128,9 @@ public class Launcher : MonoBehaviourPunCallbacks
             startGameButton.SetActive(true);
             cambiarModoGameButton.SetActive(true);
             textoModoDeJuegoActual.gameObject.SetActive(false);
+            bool partidaComenzada = false;
+            Hastable hash = new Hastable() { { "partidaComenzada", partidaComenzada } };
+            PhotonNetwork.CurrentRoom.SetCustomProperties(hash);
         }
         else
         {
@@ -191,7 +202,6 @@ public class Launcher : MonoBehaviourPunCallbacks
             {
                 Destroy(entry.gameObject);
             }
-
             listaJugadoresItems.Clear();
             listaJugadoresItems = null;
         }
@@ -207,6 +217,14 @@ public class Launcher : MonoBehaviourPunCallbacks
         {
             if (roomList[i].RemovedFromList)
                 continue;
+            object partidaIniciada;
+            if (roomList[i].CustomProperties.TryGetValue("partidaComenzada", out partidaIniciada))
+            {
+                if ((bool)partidaIniciada)
+                {
+                    continue;
+                }
+            }
             Instantiate(listaSalasItemPrefab, listaSalas).GetComponent<listaSalasItem>().SetUp(roomList[i]);
             if(i >= 5)
             {
@@ -294,6 +312,9 @@ public class Launcher : MonoBehaviourPunCallbacks
     {
         if (true/*CheckTeams()*/)
         {
+            bool partidaComenzada = true;
+            Hastable hash = new Hastable() { { "partidaComenzada", partidaComenzada } };
+            PhotonNetwork.CurrentRoom.SetCustomProperties(hash);
             Debug.Log("All good, comenzando la partida");
             roomManagerLocal.players = PhotonNetwork.PlayerList;
             PhotonNetwork.LoadLevel(2);
