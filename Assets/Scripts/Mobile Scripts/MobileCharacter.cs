@@ -31,13 +31,13 @@ public class MobileCharacter : MonoBehaviour
     private void Awake()
     {
         //if (SystemInfo.deviceType != DeviceType.Handheld)
-        /*if(!Application.isMobilePlatform)
+        if(!Application.isMobilePlatform)
         {
             moveJoystick.gameObject.SetActive(false);
             rotateJoystick.gameObject.SetActive(false);
             mode.gameObject.SetActive(false);
             GetComponent<MobileCharacter>().enabled = false;
-        }*/
+        }
     }
 
     // Start is called before the first frame update
