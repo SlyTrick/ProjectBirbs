@@ -497,6 +497,7 @@ MonoBehaviour:
     type: 3}
   inputController: {fileID: 3026375436166853483}
   playerInput: {fileID: 6642174217752996613}
+  mobileCharacter: {fileID: 448463528581233698}
   PV: {fileID: 7883565003543203720}
 --- !u!114 &7883565003543203720
 MonoBehaviour:
@@ -1304,7 +1305,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7883059596028483341}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2af49a9c8d3ea1f40903549158e3c8ec, type: 3}
   m_Name: 

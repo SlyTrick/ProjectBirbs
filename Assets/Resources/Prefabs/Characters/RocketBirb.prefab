@@ -176,7 +176,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0.99}
+  m_AnchoredPosition: {x: 0, y: 0.9899998}
   m_SizeDelta: {x: 10, y: 3.9871159}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1354562215096587181
@@ -491,6 +491,7 @@ MonoBehaviour:
     type: 3}
   inputController: {fileID: 3676272722456178066}
   playerInput: {fileID: 5104505542180140540}
+  mobileCharacter: {fileID: 3444271280223122001}
   PV: {fileID: 5356794792075395265}
 --- !u!114 &5356794792075395265
 MonoBehaviour:
@@ -1577,7 +1578,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8619087125948074484}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2af49a9c8d3ea1f40903549158e3c8ec, type: 3}
   m_Name: 

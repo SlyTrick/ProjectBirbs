@@ -59,6 +59,7 @@ public class Character : MonoBehaviourPunCallbacks
 
     [SerializeField] private InputController inputController;
     [SerializeField] private PlayerInput playerInput;
+    [SerializeField] private MobileCharacter mobileCharacter;
 
     [SerializeField] public PhotonView PV;
     
@@ -470,6 +471,7 @@ public class Character : MonoBehaviourPunCallbacks
         {
             mainCamera.enabled = true;
             playerInput.enabled = true;
+            mobileCharacter.enabled = true;
         }
         if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient)
         {
@@ -485,6 +487,7 @@ public class Character : MonoBehaviourPunCallbacks
         }
         else if (!PhotonNetwork.IsConnected)
         {
+            mobileCharacter.enabled = true;
             mainCamera.enabled = true;
             playerInput.enabled = true;
             RoomManagerOffline RMO = FindObjectOfType<RoomManagerOffline>();
