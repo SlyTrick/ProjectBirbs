@@ -86,7 +86,7 @@ MonoBehaviour:
   owner: {fileID: 0}
   particleEffect: {fileID: 4256318742635070123, guid: 8e239c96296c9a545ae7b21bdd9beafa,
     type: 3}
-  bulletGraphics: {fileID: 0}
+  bulletGraphics: {fileID: 4980912519901739217}
   changeDirectionTime: 0.5
 --- !u!1001 &8090686536509110291
 PrefabInstance:
@@ -170,8 +170,19 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7926062512071073816, guid: cdd8362ac0c1c8a4daf2d84eb1424ced,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cdd8362ac0c1c8a4daf2d84eb1424ced, type: 3}
+--- !u!1 &4980912519901739217 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3843862972944400578, guid: cdd8362ac0c1c8a4daf2d84eb1424ced,
+    type: 3}
+  m_PrefabInstance: {fileID: 8090686536509110291}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5644155093893358187 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4473188984747498104, guid: cdd8362ac0c1c8a4daf2d84eb1424ced,

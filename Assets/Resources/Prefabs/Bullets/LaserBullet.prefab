@@ -85,7 +85,7 @@ MonoBehaviour:
   owner: {fileID: 0}
   particleEffect: {fileID: 4256318742635070123, guid: 8e239c96296c9a545ae7b21bdd9beafa,
     type: 3}
-  bulletGraphics: {fileID: 0}
+  bulletGraphics: {fileID: 5646345359503783382}
   maxRicochet: 3
 --- !u!1001 &8702046111893707726
 PrefabInstance:
@@ -171,6 +171,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 637eafbee8a03c04399186512a91b131, type: 3}
+--- !u!1 &5646345359503783382 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3933957930455117336, guid: 637eafbee8a03c04399186512a91b131,
+    type: 3}
+  m_PrefabInstance: {fileID: 8702046111893707726}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4976488157132730220 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4455160958635734178, guid: 637eafbee8a03c04399186512a91b131,

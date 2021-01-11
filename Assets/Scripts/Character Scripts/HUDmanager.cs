@@ -26,6 +26,7 @@ public class HUDmanager : MonoBehaviour
 
     public void setBackground()
     {
+        characterScript = GetComponent<Character>();
         scoreSprite.GetComponent<Image>().sprite = scoreBackgrounds[characterScript.teamId];
     }
 

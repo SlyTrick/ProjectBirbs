@@ -86,7 +86,7 @@ MonoBehaviour:
   owner: {fileID: 0}
   particleEffect: {fileID: 4256318742635070123, guid: 8e239c96296c9a545ae7b21bdd9beafa,
     type: 3}
-  bulletGraphics: {fileID: 0}
+  bulletGraphics: {fileID: 6773419732829232968}
 --- !u!1001 &8412704570508902625
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -171,6 +171,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 083d946f92d1cd7409b7ca7b98a10037, type: 3}
+--- !u!1 &6773419732829232968 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3080439468307865513, guid: 083d946f92d1cd7409b7ca7b98a10037,
+    type: 3}
+  m_PrefabInstance: {fileID: 8412704570508902625}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6146241346389149170 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2446646248118486291, guid: 083d946f92d1cd7409b7ca7b98a10037,
