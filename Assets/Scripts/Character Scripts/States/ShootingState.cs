@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class ShootingState : State
 {
@@ -13,11 +14,44 @@ public class ShootingState : State
     public override void Enter()
     {
         base.Enter();
+        if (PhotonNetwork.IsConnected && character.PV.IsMine)
+        {
+            if (character.indiceBala == 0 || character.indiceBala == 3)
+            {
+                character.PV.RPC("startLoopableSound_RPC", RpcTarget.All);
+            }
+            else if(character.indiceBala == 2)
+            {
+                character.PV.RPC("startFlameThrower_RPC", RpcTarget.All);
+            }
+        }
+        else
+        {
+            //Cosas del local
+        }
+        
+        
     }
 
     public override void Exit()
     {
         base.Exit();
+        if (PhotonNetwork.IsConnected && character.PV.IsMine)
+        {
+            if (character.indiceBala == 0 || character.indiceBala == 3)
+            {
+                character.PV.RPC("stopLoopableSound_RPC", RpcTarget.All);
+            }
+            else if (character.indiceBala == 2)
+            {
+                character.PV.RPC("stopFlameThrower_RPC", RpcTarget.All);
+            }
+        }
+        else
+        {
+            //Cosas del local
+        }
+        
     }
 
     public override void LogicUpdate()

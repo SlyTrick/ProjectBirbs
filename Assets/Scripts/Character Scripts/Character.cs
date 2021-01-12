@@ -47,6 +47,7 @@ public class Character : MonoBehaviourPunCallbacks
     [SerializeField] private Text lifeText;
 
     [SerializeField] private Camera mainCamera;
+    [SerializeField] private AudioListener audioListener;
     [SerializeField] private Rigidbody rigidBody;
     [SerializeField] private Transform firePoint;
     [SerializeField] private GameObject bulletPrefab;
@@ -61,16 +62,23 @@ public class Character : MonoBehaviourPunCallbacks
     [SerializeField] private InputController inputController;
     [SerializeField] private PlayerInput playerInput;
     [SerializeField] private MobileCharacter mobileCharacter;
-    
+
 
     [SerializeField] public PhotonView PV;
-    
+
+    [SerializeField] public AudioSource sAlas;
+    [SerializeField] public AudioSource sSingleShot;
+    [SerializeField] public AudioSource sLoopableShot;
+    [SerializeField] public AudioSource[] sFlamethrower;
+
+    public int indiceBala;
+
     #endregion
 
     public void Move(Vector2 direction, float acceleration)
     {
         rigidBody.AddForce(new Vector3(direction.x * acceleration * Time.fixedDeltaTime, 0, direction.y * acceleration * Time.fixedDeltaTime), ForceMode.Impulse);
-        
+
     }
 
     public void Rotate(Vector2 direction)
@@ -87,10 +95,10 @@ public class Character : MonoBehaviourPunCallbacks
 
     public void Shoot()
     {
-        if(canShoot)
+        if (canShoot)
         {
             canShoot = false;
-            if(PhotonNetwork.IsConnected && PV.IsMine)
+            if (PhotonNetwork.IsConnected && PV.IsMine)
             {
                 PV.RPC("Shoot_RPC", RpcTarget.All);
             }
@@ -302,11 +310,41 @@ public class Character : MonoBehaviourPunCallbacks
     {
         playerInput.enabled = !playerInput.enabled;
     }
+
+    public void getBalaIndex()
+    {
+        indiceBala = 0;
+        if (bulletPrefab.TryGetComponent<MinigunController>(out MinigunController a))
+        {
+            indiceBala = 0;
+        }
+        else if (bulletPrefab.TryGetComponent<LaserController>(out LaserController b))
+        {
+            indiceBala = 1;
+        }
+        else if (bulletPrefab.TryGetComponent<FlamethrowerController>(out FlamethrowerController flipflop))
+        {
+            indiceBala = 2;
+        }
+        else if (bulletPrefab.TryGetComponent<BoomerangController>(out BoomerangController d))
+        {
+            indiceBala = 3;
+        }
+        else if (bulletPrefab.TryGetComponent<RocketController>(out RocketController w))
+        {
+            indiceBala = 4;
+        }
+    }
+
     #region RPCs
 
     [PunRPC]
     public void Shoot_RPC()
     {
+        if (indiceBala == 1 || indiceBala == 4)
+        {
+            sSingleShot.Play();
+        }
         GameObject objBullet = Instantiate(bulletPrefab, firePoint.position, transform.rotation);
         objBullet.GetComponent<BulletController>().teamId = teamId;
         objBullet.GetComponent<BulletController>().owner = this;
@@ -348,6 +386,7 @@ public class Character : MonoBehaviourPunCallbacks
 
         if (PV.IsMine)
         {
+            sAlas.Stop();
             StartCoroutine(Respawn());
         }
     }
@@ -359,6 +398,7 @@ public class Character : MonoBehaviourPunCallbacks
         {
             life = maxLife;
             lifeText.text = "Vida: " + life;
+            sAlas.Play();
         }
         damageable = true;
         GetComponent<CapsuleCollider>().enabled = true;
@@ -375,7 +415,10 @@ public class Character : MonoBehaviourPunCallbacks
             matchController.AddPlayer(this);
         }
         teamId = team;
-        hudManager.setBackground();
+        if (PV.IsMine)
+        {
+            hudManager.setBackground();
+        }
         spawnPoint = matchController.GetSpawnPoint(this);
         GetComponent<Transform>().position = spawnPoint.transform.position;
     }
@@ -407,7 +450,6 @@ public class Character : MonoBehaviourPunCallbacks
     [PunRPC]
     public void Parry_RPC(int indicePrefab)
     {
-        
         GameObject objBullet = Instantiate(bulletPrefabs[indicePrefab], shieldController.transform.position, shieldController.transform.rotation);
         objBullet.GetComponent<BulletController>().teamId = teamId;
         objBullet.GetComponent<BulletController>().damage *= 2;
@@ -430,7 +472,7 @@ public class Character : MonoBehaviourPunCallbacks
     [PunRPC]
     public void AddFeather_RPC()
     {
-        if(PhotonNetwork.IsMasterClient || PV.IsMine)
+        if (PhotonNetwork.IsMasterClient || PV.IsMine)
         {
             feathers++;
         }
@@ -466,13 +508,45 @@ public class Character : MonoBehaviourPunCallbacks
 
     #endregion
 
+    #region RPCs de sonidos
+
+    [PunRPC]
+    public void startLoopableSound_RPC()
+    {
+        sLoopableShot.Play();
+        Debug.Log("reprouzco la minigun del PV " + PV.Owner);
+    }
+
+    [PunRPC]
+    public void stopLoopableSound_RPC()
+    {
+        sLoopableShot.Stop();
+        Debug.Log("corto la minigun del PV " + PV.Owner);
+    }
+
+    [PunRPC]
+    public void startFlameThrower_RPC()
+    {
+        sFlamethrower[0].Play();
+        sFlamethrower[1].PlayDelayed(sFlamethrower[0].clip.length);
+    }
+
+    [PunRPC]
+    public void stopFlameThrower_RPC()
+    {
+        sFlamethrower[1].Stop();
+        sFlamethrower[2].Play();
+    }
+
+    #endregion
+
     #region MonoBehaviour Callbacks
     private void Start()
     {
         rigidBody.drag = playerDeceleration;
 
         life = maxLife;
-        score= 0;
+        score = 0;
         canShoot = true;
         canShield = true;
         damageable = true;
@@ -480,19 +554,21 @@ public class Character : MonoBehaviourPunCallbacks
         lifeText.text = "Vida: " + life;
         scoreText.text = "Puntuación: " + score;
         hudManager = GetComponent<HUDmanager>();
-
-        if(PhotonNetwork.IsConnected && PV.IsMine)
+        getBalaIndex();
+        if (PhotonNetwork.IsConnected && PV.IsMine)
         {
             mainCamera.enabled = true;
             playerInput.enabled = true;
             mobileCharacter.enabled = true;
+            audioListener.enabled = true;
+            sAlas.Play();
         }
         if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient)
         {
             matchController = FindObjectOfType<MatchController>();
             matchController.AddPlayer(this);
             teamId = FindObjectOfType<RoomManager>().FindTeamIdByPlayer(PV.Owner);
-            if(teamId == -1)
+            if (teamId == -1)
             {
                 teamId = 0;
                 Debug.Log("No se ha encontrado el teamId, se le ha añadido al equipo 0");
@@ -504,8 +580,9 @@ public class Character : MonoBehaviourPunCallbacks
             mobileCharacter.enabled = true;
             mainCamera.enabled = true;
             playerInput.enabled = true;
+            audioListener.enabled = true;
             RoomManagerOffline RMO = FindObjectOfType<RoomManagerOffline>();
-            if(RMO.gamemodeIndex == 3)
+            if (RMO.gamemodeIndex == 3)
             {
                 teamId = 0;
             }
@@ -528,7 +605,7 @@ public class Character : MonoBehaviourPunCallbacks
         deadState = new DeadState(this, movementSM);
         stunState = new StunState(this, movementSM);
         feederState = new FeederState(this, movementSM);
-        
+
         movementSM.Initialize(groundedState);
     }
 
@@ -581,34 +658,34 @@ public class Character : MonoBehaviourPunCallbacks
     #endregion
 
     #region Getters and Setters
-    public float GetPlayerAcceleration(){ return playerAcceleration; }
-    public float GetPlayerDeceleration(){ return playerDeceleration; }
-    public float GetShootingAcceleration(){ return shootingAcceleration; }
-    public float GetStunnedAcceleration(){ return stunnedAcceleration; }
-    public float GetFeederAcceleration(){ return feederAcceleration; }
-    public float GetTimeBetweenShots(){ return timeBetweenShots; }
-    public float GetRespawnTime(){ return respawnTime; }
-    public int GetMaxLife(){ return maxLife; }
-    public int GetShieldMaxLife(){ return shieldMaxLife; }
-    public float GetShieldTime(){ return shieldTime; }
-    public int GetTeamId(){ return teamId; }
-    public int GetLife(){ return life; }
-    public bool GetCanShoot(){ return canShoot; }
-    public void SetCanShoot(bool newCanShoot){ canShoot = newCanShoot; }
-    public bool GetCanShield(){ return canShield; }
-    public int GetScore(){ return score; }
-    public int GetFeathers(){ return feathers; }
-    public Text GetScoreText(){ return scoreText; }
-    public Text GetLifeText(){ return lifeText; }
-    public Camera GetCamera(){ return mainCamera; }
-    public Rigidbody GetRigidBody(){ return rigidBody; }
-    public GameObject GetBulletPrefab(){ return bulletPrefab; }
-    public GameObject GetSprite(){ return birbGraphics; }
-    public Transform GetFirePoint(){ return firePoint; }
-    public GameObject GetFiringPoint(){ return firingPoint; }
-    public GameObject GetDeathParticleEffect(){ return deathParticleEffect; }
-    public GameObject GetShield(){ return shield; }
-    public InputController GetInputController(){ return inputController; }
-    public MatchController GetMatchController(){ return matchController; }
+    public float GetPlayerAcceleration() { return playerAcceleration; }
+    public float GetPlayerDeceleration() { return playerDeceleration; }
+    public float GetShootingAcceleration() { return shootingAcceleration; }
+    public float GetStunnedAcceleration() { return stunnedAcceleration; }
+    public float GetFeederAcceleration() { return feederAcceleration; }
+    public float GetTimeBetweenShots() { return timeBetweenShots; }
+    public float GetRespawnTime() { return respawnTime; }
+    public int GetMaxLife() { return maxLife; }
+    public int GetShieldMaxLife() { return shieldMaxLife; }
+    public float GetShieldTime() { return shieldTime; }
+    public int GetTeamId() { return teamId; }
+    public int GetLife() { return life; }
+    public bool GetCanShoot() { return canShoot; }
+    public void SetCanShoot(bool newCanShoot) { canShoot = newCanShoot; }
+    public bool GetCanShield() { return canShield; }
+    public int GetScore() { return score; }
+    public int GetFeathers() { return feathers; }
+    public Text GetScoreText() { return scoreText; }
+    public Text GetLifeText() { return lifeText; }
+    public Camera GetCamera() { return mainCamera; }
+    public Rigidbody GetRigidBody() { return rigidBody; }
+    public GameObject GetBulletPrefab() { return bulletPrefab; }
+    public GameObject GetSprite() { return birbGraphics; }
+    public Transform GetFirePoint() { return firePoint; }
+    public GameObject GetFiringPoint() { return firingPoint; }
+    public GameObject GetDeathParticleEffect() { return deathParticleEffect; }
+    public GameObject GetShield() { return shield; }
+    public InputController GetInputController() { return inputController; }
+    public MatchController GetMatchController() { return matchController; }
     #endregion
 }
