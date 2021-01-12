@@ -9,6 +9,7 @@ using System.Linq;
 using System.IO;
 using ExitGames.Client.Photon;
 using Hastable = ExitGames.Client.Photon.Hashtable;
+using UnityEngine.Localization.Settings;
 
 public class Launcher : MonoBehaviourPunCallbacks
 {
@@ -31,7 +32,8 @@ public class Launcher : MonoBehaviourPunCallbacks
     RoomManager roomManager;
     public RoomManagerOffline RMO;
 
-    [HideInInspector] public string[] modosDeJuego = new string[3] { "Deathmatch", "Rey del comedero", "Acaparaplumas"};
+    [HideInInspector] public string[] modosDeJuegoSpanish = new string[3] { "Eliminación", "Rey del comedero", "Acaparaplumas"};
+    [HideInInspector] public string[] modosDeJuegoEnglish = new string[3] { "Deathmatch", "King of the Feeder", "Feather Hoarder"};
     private Dictionary<int, GameObject> listaJugadoresItems;
 
     private int jugadoresEnSala;
@@ -39,7 +41,6 @@ public class Launcher : MonoBehaviourPunCallbacks
     private bool comingFromMainMenu;
 
     [SerializeField] TMP_InputField nombre;
-    JugadorInfo Jugador;
     [SerializeField] RoomManager roomManagerLocal;
     
     
@@ -161,9 +162,23 @@ public class Launcher : MonoBehaviourPunCallbacks
             {
                 if (!PhotonNetwork.IsMasterClient)
                 {
-                    textoModoDeJuegoActual.text = "Modo de Juego actual: " + modosDeJuego[(int)indiceModo];
+                    if (LocalizationSettings.SelectedLocale.name == "Spanish (es)")
+                    {
+                        textoModoDeJuegoActual.text = "Modo de Juego actual: " + modosDeJuegoSpanish[(int)indiceModo];
+                    }
+                    else
+                    {
+                        textoModoDeJuegoActual.text = "Current Game Mode: " + modosDeJuegoEnglish[(int)indiceModo];
+                    }
                 }
-                textoBotonCambiarModo.text = "Cambiar Modo de Juego. Actual (" + modosDeJuego[(int)indiceModo] + ")";
+                if (LocalizationSettings.SelectedLocale.name == "Spanish (es)")
+                {
+                    textoBotonCambiarModo.text = "Cambiar Modo de Juego. Actual (" + modosDeJuegoSpanish[(int)indiceModo] + ")";
+                }
+                else
+                {
+                    textoBotonCambiarModo.text = "Change Game Mode: Current (" + modosDeJuegoEnglish[(int)indiceModo] + ")";
+                }
             }
             object teamIdCambiado;
             if (p.CustomProperties.TryGetValue("indiceTeam", out teamIdCambiado))
@@ -273,9 +288,23 @@ public class Launcher : MonoBehaviourPunCallbacks
                 roomManager.ChangeGamemode((int)indiceModo);
                 if (!PhotonNetwork.IsMasterClient)
                 {
-                    textoModoDeJuegoActual.text = "Modo de Juego actual: " + modosDeJuego[(int)indiceModo];
+                    if (LocalizationSettings.SelectedLocale.name == "Spanish (es)")
+                    {
+                        textoModoDeJuegoActual.text = "Modo de Juego actual: " + modosDeJuegoSpanish[(int)indiceModo];
+                    }
+                    else
+                    {
+                        textoModoDeJuegoActual.text = "Current Game Mode: " + modosDeJuegoEnglish[(int)indiceModo];
+                    }
                 }
-                textoBotonCambiarModo.text = "Cambiar Modo de Juego. Actual (" + modosDeJuego[(int)indiceModo] + ")";
+                if (LocalizationSettings.SelectedLocale.name == "Spanish (es)")
+                {
+                    textoBotonCambiarModo.text = "Cambiar Modo de Juego. Actual (" + modosDeJuegoSpanish[(int)indiceModo] + ")";
+                }
+                else
+                {
+                    textoBotonCambiarModo.text = "Change Game Mode: Current (" + modosDeJuegoEnglish[(int)indiceModo] + ")";
+                }
                 entry.GetComponent<listaJugadoresItem>().CambiarModoDeJuego((int)indiceModo);
             }
 
@@ -296,7 +325,14 @@ public class Launcher : MonoBehaviourPunCallbacks
 
     public void CambiarModoDeJuego(int indiceModo)
     {
-        textoBotonCambiarModo.text = "Cambiar Modo de Juego. Actual (" + modosDeJuego[indiceModo] + ")";
+        if(LocalizationSettings.SelectedLocale.name == "Spanish (es)")
+        {
+            textoBotonCambiarModo.text = "Cambiar Modo de Juego. Actual (" + modosDeJuegoSpanish[indiceModo] + ")";
+        }
+        else
+        {
+            textoBotonCambiarModo.text = "Change Game Mode: Current (" + modosDeJuegoEnglish[(int)indiceModo] + ")";
+        }
         Hastable hash = new Hastable() { { "indiceModo", indiceModo } };
         PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
         MenuManager.Instance.OpenMenu("menuSala");

@@ -693,8 +693,8 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 50
-  m_fontSizeBase: 50
+  m_fontSize: 70
+  m_fontSizeBase: 70
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1171,8 +1171,8 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 40
-  m_fontSizeBase: 40
+  m_fontSize: 60
+  m_fontSizeBase: 60
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1625,12 +1625,18 @@ MonoBehaviour:
   ownerId: 0
   teamId: 0
   gamemodeIndex: 0
-  pajaros:
-  - paloma
-  - pato
-  - agapornis
-  - kiwi
-  - cuervo
+  pajarosSpanish:
+  - Crnl. Columba
+  - Dr. Platyrhynski
+  - Dori
+  - Apsteryx
+  - Corvin
+  pajarosEnglish:
+  - Lt. Columba
+  - Dr. Platyrhynski
+  - Dori
+  - Apsteryx
+  - Corvin
   coloresTeam:
   - {r: 0, g: 0, b: 1, a: 1}
   - {r: 1, g: 0, b: 0, a: 1}

@@ -10,7 +10,6 @@ public class MenuManager : MonoBehaviour
 
     [SerializeField] Menu[] menus;
     [SerializeField] TMP_InputField nombre;
-    [SerializeField] JugadorInfo jugador;
 
     void Awake()
     {

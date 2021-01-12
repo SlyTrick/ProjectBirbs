@@ -8,6 +8,7 @@ using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using Hastable = ExitGames.Client.Photon.Hashtable;
 using ExitGames.Client.Photon;
+using UnityEngine.Localization.Settings;
 
 public class listaJugadoresItem : MonoBehaviour
 {
@@ -29,10 +30,11 @@ public class listaJugadoresItem : MonoBehaviour
     public int teamId;
 
     public int gamemodeIndex; //0: deathmatch, 1: rey del comedero, 2: acaparaplumas
-    [HideInInspector] public string[] pajaros = new string[5] { "Pigeon", "Duck", "Dori", "Kiwi", "RocketBirb" };
+    [HideInInspector] public string[] pajarosSpanish = new string[5] { "Crnl. Columba", "Dr. Platyrhynski", "Dori", "Apsteryx", "Corvin" };
+    [HideInInspector] public string[] pajarosEnglish = new string[5] { "Lt. Columba", "Dr. Platyrhynski", "Dori", "Apsteryx", "Corvin" };
     [HideInInspector] public Color[] coloresTeam = new Color[5] { Color.blue, Color.red, Color.yellow, Color.green, Color.gray };
     [HideInInspector] public int pajaroIndex;
-    [HideInInspector] public string pajaroActivo;
+    public string pajaroActivo;
 
     [HideInInspector] public string indiceHashtable = "indexPajaro";
     [HideInInspector] public string indiceModoHastable = "indiceModo";
@@ -112,7 +114,14 @@ public class listaJugadoresItem : MonoBehaviour
         {
             pajaroIndex++;
         }
-        pajaroActivo = pajaros[pajaroIndex];
+        if (LocalizationSettings.SelectedLocale.name == "Spanish (es)")
+        {
+            pajaroActivo = pajarosSpanish[pajaroIndex];
+        }
+        else
+        {
+            pajaroActivo = pajarosEnglish[pajaroIndex];
+        }
         NuevoPajaro(pajaroIndex);
     }
 
@@ -126,7 +135,14 @@ public class listaJugadoresItem : MonoBehaviour
         {
             pajaroIndex--;
         }
-        pajaroActivo = pajaros[pajaroIndex];
+        if (LocalizationSettings.SelectedLocale.name == "Spanish (es)")
+        {
+            pajaroActivo = pajarosSpanish[pajaroIndex];
+        }
+        else
+        {
+            pajaroActivo = pajarosEnglish[pajaroIndex];
+        }
         NuevoPajaro(pajaroIndex);
     }
 
@@ -165,7 +181,14 @@ public class listaJugadoresItem : MonoBehaviour
 
     public void ActualizarPajaro(int index)
     {
-        pajaroTexto.text = pajaros[index];
+        if (LocalizationSettings.SelectedLocale.name == "Spanish (es)")
+        {
+            pajaroTexto.text = pajarosSpanish[pajaroIndex];
+        }
+        else
+        {
+            pajaroTexto.text = pajarosEnglish[pajaroIndex];
+        }
         imagenPajaro.sprite = sprites[index];
     }
 

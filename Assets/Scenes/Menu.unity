@@ -121,6 +121,18 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!114 &13007088 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5241730257947188546, guid: dcf1a6e11931d934fa1aa7a644ef9d45,
+    type: 3}
+  m_PrefabInstance: {fileID: 189697178}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &21691662
 GameObject:
   m_ObjectHideFlags: 0
@@ -1338,6 +1350,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Change Mode Button (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5241730257739093209, guid: dcf1a6e11931d934fa1aa7a644ef9d45,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5241730257739093215, guid: dcf1a6e11931d934fa1aa7a644ef9d45,
         type: 3}
@@ -2832,17 +2849,21 @@ MonoBehaviour:
   listaJugadoresItemPrefab: {fileID: 8825540213082730114, guid: 89fcf7623c15e9345ad5c97e208af2ef,
     type: 3}
   startGameButton: {fileID: 743021388}
-  cambiarModoGameButton: {fileID: 0}
-  textoBotonCambiarModo: {fileID: 0}
+  cambiarModoGameButton: {fileID: 1042354306}
+  textoBotonCambiarModo: {fileID: 13007088}
   textoModoDeJuegoActual: {fileID: 1121599190}
   listaJugadoresOffline: {fileID: 195496294}
   textoBotonCambiarModoOffline: {fileID: 1656730931587960038}
   listaJugadoresEntrenamiento: {fileID: 324484668}
   RMO: {fileID: 0}
-  modosDeJuego:
-  - Deathmatch
+  modosDeJuegoSpanish:
+  - "Eliminaci\xF3n"
   - Rey del comedero
   - Acaparaplumas
+  modosDeJuegoEnglish:
+  - Deathmatch
+  - King of the Feeder
+  - Feather Hoarder
   inMenus: 0
   nombre: {fileID: 513809027}
   roomManagerLocal: {fileID: 814460392}
@@ -2874,7 +2895,6 @@ MonoBehaviour:
   - {fileID: 553418384}
   - {fileID: 1421318860}
   nombre: {fileID: 513809027}
-  jugador: {fileID: 0}
 --- !u!114 &277867995
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10548,6 +10568,12 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!1 &1042354306 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5241730257739093209, guid: dcf1a6e11931d934fa1aa7a644ef9d45,
+    type: 3}
+  m_PrefabInstance: {fileID: 189697178}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1047049446
 GameObject:
   m_ObjectHideFlags: 0
@@ -12700,6 +12726,7 @@ MonoBehaviour:
   puntuacionFinal: 0
   teamIdGanador: 0
   partidaOfflineTerminada: 0
+  salirSinTerminar: 0
 --- !u!4 &1167214961
 Transform:
   m_ObjectHideFlags: 0
