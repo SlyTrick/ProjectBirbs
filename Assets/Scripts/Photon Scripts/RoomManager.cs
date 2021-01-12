@@ -27,6 +27,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
     private bool hostLeft;
     private float timerAmount = 5;
     private bool gameEnded = false;
+    private bool tirarDelCable = false;
 
     GameObject myCharacter;
     GameObject myMatchController;
@@ -63,6 +64,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
         actualScene = scene;
         if(scene.buildIndex == 2) //Estamos en el juego Online
         {
+            players = PhotonNetwork.PlayerList;
             if (PhotonNetwork.IsMasterClient)
             {
                 myMatchController = PhotonNetwork.Instantiate(Path.Combine("Prefabs/Match Elements", "Match Controller"), Vector3.zero, Quaternion.identity);
@@ -85,6 +87,12 @@ public class RoomManager : MonoBehaviourPunCallbacks
                     GoToResultsRoom();
                     //FindObjectOfType<Launcher>().SetUpRoom();
                 }
+                if (tirarDelCable)
+                {
+                    tirarDelCable = false;
+                    FindObjectOfType<Launcher>().VolverAlMenuPrincipal();
+                }
+                
             }
         }
     }
@@ -187,5 +195,11 @@ public class RoomManager : MonoBehaviourPunCallbacks
     {
         yield return new WaitForSeconds(10);
         FindObjectOfType<Launcher>().SetUpRoom();
+    }
+
+    public void TirarDelCable()
+    {
+        tirarDelCable = true;
+        SceneManager.LoadScene(0); //Al menu principal
     }
 }

@@ -1029,7 +1029,7 @@ PrefabInstance:
     - target: {fileID: 1656730932253180415, guid: 79b1bcb44b077754e9022d5ea13376cb,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1656730932253180415, guid: 79b1bcb44b077754e9022d5ea13376cb,
         type: 3}
@@ -1049,7 +1049,7 @@ PrefabInstance:
     - target: {fileID: 1656730932253180415, guid: 79b1bcb44b077754e9022d5ea13376cb,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: Unpause
+      value: LeaveGame
       objectReference: {fileID: 0}
     - target: {fileID: 1656730932253180415, guid: 79b1bcb44b077754e9022d5ea13376cb,
         type: 3}

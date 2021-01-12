@@ -85,7 +85,6 @@ public class MatchController : MonoBehaviourPunCallbacks
                     GameObject.Destroy(c.gameObject);
                 }
                 RMO.TerminarPartida(teamsPoints[team], team);
-                Debug.Log("Puntuacion objetivo alcanzada");
             }
 
         }
@@ -186,6 +185,23 @@ public class MatchController : MonoBehaviourPunCallbacks
             }
         }
        
+    }
+
+    public void LeaveGame()
+    {
+        pauseCanvas.SetActive(false);
+        if (PhotonNetwork.IsConnected)
+        {
+            roomManager.TirarDelCable();
+        }
+        else
+        {
+            foreach (Character c in playerList)
+            {
+                GameObject.Destroy(c.gameObject);
+            }
+            RMO.SalirPartida();
+        }
     }
 
     public virtual void Start()

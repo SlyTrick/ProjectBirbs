@@ -193,12 +193,15 @@ public class Launcher : MonoBehaviourPunCallbacks
         {
             inMenus = false;
             MenuManager.Instance.OpenMenu("menuSalas");
-            foreach (GameObject entry in listaJugadoresItems.Values)
+            if(listaJugadoresItems != null)
             {
-                Destroy(entry.gameObject);
+                foreach (GameObject entry in listaJugadoresItems.Values)
+                {
+                    Destroy(entry.gameObject);
+                }
+                listaJugadoresItems.Clear();
+                listaJugadoresItems = null;
             }
-            listaJugadoresItems.Clear();
-            listaJugadoresItems = null;
         }
     }
 
@@ -212,13 +215,9 @@ public class Launcher : MonoBehaviourPunCallbacks
         {
             if (roomList[i].RemovedFromList)
                 continue;
-            object partidaIniciada;
-            if (roomList[i].CustomProperties.TryGetValue("partidaComenzada", out partidaIniciada))
+            if (!roomList[i].IsOpen)
             {
-                if ((bool)partidaIniciada)
-                {
-                    continue;
-                }
+                continue;
             }
             Instantiate(listaSalasItemPrefab, listaSalas).GetComponent<listaSalasItem>().SetUp(roomList[i]);
             if(i >= 5)

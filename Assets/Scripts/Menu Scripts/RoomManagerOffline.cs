@@ -33,6 +33,7 @@ public class RoomManagerOffline : MonoBehaviour
     public int puntuacionFinal;
     public int teamIdGanador;
     public bool partidaOfflineTerminada = false;
+    public bool salirSinTerminar = false;
 
     void Awake()
     {
@@ -72,13 +73,19 @@ public class RoomManagerOffline : MonoBehaviour
             launcher = FindObjectOfType<Launcher>();
             listaJugadoresOffline = launcher.listaJugadoresOffline;
             textoBotonCambiarModo = launcher.textoBotonCambiarModoOffline;
+            jugadoresSala = null;
             if (!PhotonNetwork.IsConnected && partidaOfflineTerminada)
             {
+                partidaOfflineTerminada = false;
                 textoBotonCambiarModo.text = "Cambiar Modo de Juego. (Actualmente " + modosDeJuego[gamemodeIndex] + ")";
-                jugadoresSala = null;
                 MenuManager.Instance.OpenMenu("menuResultados");
                 GoToResultsRoom();
             }
+            if (salirSinTerminar)
+            {
+                MenuManager.Instance.OpenMenu("menuPrincipal");
+            }
+            
         }
         else if(scene.buildIndex == 3) //Estamos en el entrenamiento
         {
@@ -120,6 +127,7 @@ public class RoomManagerOffline : MonoBehaviour
                 jugadoresInfo.Add(j.Key, entry);
             }
             partidaOfflineTerminada = false;
+            salirSinTerminar = false;
             SceneManager.LoadScene(1);
         }
     }
@@ -252,6 +260,12 @@ public class RoomManagerOffline : MonoBehaviour
     {
         pajaroIndexEntrenamiento = jugadorEntrenamiento.GetComponent<listaJugadoresItem>().pajaroIndex;
         SceneManager.LoadScene(3); //Nos vamos a la escena de entrenamiento
+    }
+
+    public void SalirPartida()
+    {
+        salirSinTerminar = true;
+        SceneManager.LoadScene(0); //Al menu principal
     }
 
 }
