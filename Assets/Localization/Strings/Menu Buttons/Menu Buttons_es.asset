@@ -18,6 +18,7 @@ MonoBehaviour:
   m_Metadata:
     m_Items:
     - id: 0
+    - id: 1
   m_TableData:
   - m_Id: 22350692352
     m_Localized: Local {0}
@@ -92,9 +93,51 @@ MonoBehaviour:
     m_Localized: Anterior
     m_Metadata:
       m_Items: []
+  - m_Id: 3149075947225088
+    m_Localized: Reanudar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3149249960509440
+    m_Localized: Pausa
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3151157412528128
+    m_Localized: Salir
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3195947709661184
+    m_Localized: "A\xF1adir Jugador"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3198579073384448
+    m_Localized: 'Lo sentimos, parece que el host ha abandonado la partida...
+
+      La
+      sala se ha disuelto.
+
+      Volviendo al selector de salas...'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3199218637635584
+    m_Localized: Y la victoria es para...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3199633584324608
+    m_Localized: "M\xDASICA\n"
+    m_Metadata:
+      m_Items:
+      - id: 1
+  - m_Id: 3199936094306304
+    m_Localized: EFECTOS DE SONIDO
+    m_Metadata:
+      m_Items: []
   references:
     version: 1
     00000000:
       type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
         m_Entries: 0080343405000000
+    00000001:
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 008034bf0c5e0b00

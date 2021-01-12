@@ -20,6 +20,11 @@ public class Dummy : Character
     {
         if (GetCanShoot())
         {
+            if (indiceBala == 1 || indiceBala == 4)
+            {
+                sSingleShot.Play();
+            }
+
             SetCanShoot(false);
             GameObject objBullet = Instantiate(GetBulletPrefab(), GetFirePoint().position, transform.rotation);
             objBullet.GetComponent<BulletController>().teamId = teamId;
@@ -47,17 +52,8 @@ public class Dummy : Character
     #region MonoBehaviour Callbacks
     private void Start()
     {
-        movementSM = new StateMachine();
+        GetBalaIndex();
 
-        groundedState = new GroundedState(this, movementSM);
-        shootingState = new ShootingState(this, movementSM);
-        shieldState = new ShieldState(this, movementSM);
-        deadState = new DeadState(this, movementSM);
-        stunState = new StunState(this, movementSM);
-        feederState = new FeederState(this, movementSM);
-
-        movementSM.Initialize(shootingState);
-           
         GetRigidBody().drag = GetPlayerDeceleration();
 
         life = 1;
@@ -71,7 +67,16 @@ public class Dummy : Character
 
         teamId = 5;
 
-        
+        movementSM = new StateMachine();
+
+        groundedState = new GroundedState(this, movementSM);
+        shootingState = new ShootingState(this, movementSM);
+        shieldState = new ShieldState(this, movementSM);
+        deadState = new DeadState(this, movementSM);
+        stunState = new StunState(this, movementSM);
+        feederState = new FeederState(this, movementSM);
+
+        movementSM.Initialize(shootingState);
     }
 
     private void Update()
