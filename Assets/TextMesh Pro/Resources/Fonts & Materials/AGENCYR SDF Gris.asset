@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 71c1514a6bd24e1e882cebbe1904ce04, type: 3}
-  m_Name: AGENCYR SDF
+  m_Name: AGENCYR SDF Gris
   m_EditorClassIdentifier: 
-  hashCode: 1306387636
+  hashCode: -101932677
   material: {fileID: 8251393070077772596}
   materialHashCode: -726053563
   m_Version: 1.1.0
@@ -2351,7 +2351,7 @@ Material:
     - _FaceColor: {r: 1, g: 1, b: 1, a: 1}
     - _GlowColor: {r: 0, g: 1, b: 0, a: 0.5}
     - _MaskCoord: {r: 0, g: 0, b: 32767, a: 32767}
-    - _OutlineColor: {r: 0.9339623, g: 0.14804833, b: 0, a: 1}
+    - _OutlineColor: {r: 0.3372549, g: 0.34901962, b: 0.40784317, a: 1}
     - _ReflectFaceColor: {r: 0, g: 0, b: 0, a: 1}
     - _ReflectOutlineColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecularColor: {r: 1, g: 1, b: 1, a: 1}
