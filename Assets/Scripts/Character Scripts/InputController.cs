@@ -80,4 +80,9 @@ public class InputController : MonoBehaviour
             character.movementSM.CurrentState.OnLook();
         }
     }
+
+    private void OnPause()
+    {
+        character.Pause();
+    }
 }

@@ -30,6 +30,7 @@ public class MatchController : MonoBehaviourPunCallbacks
     [SerializeField] public GameObject cloudPrefab;
     [SerializeField] public GameObject feederPos;
     [SerializeField] public GameObject[] mapasPrefabs;
+    [SerializeField] private GameObject pauseCanvas;
     public float featherRate;
     public float feederRate;
     public int numFeatherSpawns = 3;
@@ -140,6 +141,51 @@ public class MatchController : MonoBehaviourPunCallbacks
         indiceMapa = Random.Range(0, 2);
         Vector3 spawnPos = new Vector3(0, 0, 0);
         Instantiate(mapasPrefabs[indiceMapa], spawnPos, Quaternion.identity);
+    }
+
+    public void Pause()
+    {
+        pauseCanvas.SetActive(true);
+        if (PhotonNetwork.IsConnected)
+        {
+            foreach (Character character in playerList)
+            {
+                if (character.PV.IsMine)
+                {
+                    character.ChangePlayerInputState();
+                }
+            }
+        }
+        else
+        {
+            foreach (Character character in playerList)
+            {
+                character.ChangePlayerInputState();
+            }
+        }
+    }
+
+    public void Unpause()
+    {
+        pauseCanvas.SetActive(false);
+        if (PhotonNetwork.IsConnected)
+        {
+            foreach (Character character in playerList)
+            {
+                if (character.PV.IsMine)
+                {
+                    character.ChangePlayerInputState();
+                }
+            }
+        }
+        else
+        {
+            foreach (Character character in playerList)
+            {
+                character.ChangePlayerInputState();
+            }
+        }
+       
     }
 
     public virtual void Start()

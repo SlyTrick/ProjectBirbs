@@ -293,6 +293,15 @@ public class Character : MonoBehaviourPunCallbacks
         birbGraphics.SetActive(false);
     }
 
+    public void Pause()
+    {
+        matchController.Pause();
+    }
+
+    public void ChangePlayerInputState()
+    {
+        playerInput.enabled = !playerInput.enabled;
+    }
     #region RPCs
 
     [PunRPC]
@@ -363,6 +372,7 @@ public class Character : MonoBehaviourPunCallbacks
         if (!PhotonNetwork.IsMasterClient)
         {
             matchController = FindObjectOfType<MatchController>();
+            matchController.AddPlayer(this);
         }
         teamId = team;
         hudManager.setBackground();
