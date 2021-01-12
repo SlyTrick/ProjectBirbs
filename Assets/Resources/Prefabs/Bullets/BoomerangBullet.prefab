@@ -88,6 +88,8 @@ MonoBehaviour:
     type: 3}
   bulletGraphics: {fileID: 919132149155446097, guid: 2bc05f1c64ba9cb449a048957fbf4939,
     type: 3}
+  bulletWallSoundPrefab: {fileID: 3326849637991485287, guid: 7e3a4469f07430644a4131097692b328,
+    type: 3}
   changeDirectionTime: 0.5
 --- !u!1001 &8090686536509110291
 PrefabInstance:

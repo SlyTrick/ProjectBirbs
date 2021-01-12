@@ -70,6 +70,8 @@ public class Character : MonoBehaviourPunCallbacks
     [SerializeField] public AudioSource sSingleShot;
     [SerializeField] public AudioSource sLoopableShot;
     [SerializeField] public AudioSource[] sFlamethrower;
+    [SerializeField] public AudioSource sStun;
+    [SerializeField] public AudioSource sDamage;
 
     public int indiceBala;
 
@@ -102,8 +104,12 @@ public class Character : MonoBehaviourPunCallbacks
             {
                 PV.RPC("Shoot_RPC", RpcTarget.All);
             }
-            else
+            else if (!PhotonNetwork.IsConnected)
             {
+                if (indiceBala == 1 || indiceBala == 4)
+                {
+                    sSingleShot.Play();
+                }
                 GameObject objBullet = Instantiate(bulletPrefab, firePoint.position, transform.rotation);
                 objBullet.GetComponent<BulletController>().teamId = teamId;
                 objBullet.GetComponent<BulletController>().owner = this;
@@ -126,6 +132,9 @@ public class Character : MonoBehaviourPunCallbacks
         lifeText.text = "Vida: " + life;
         if (damageable)
         {
+            if (!sDamage.isPlaying) {
+                sDamage.Play();
+            }         
             if (life <= 0)
             {
                 damageable = false;
@@ -254,6 +263,7 @@ public class Character : MonoBehaviourPunCallbacks
     public void Stun()
     {
         StartCoroutine(StunCooldown());
+        sStun.Play();
     }
 
     public IEnumerator StunCooldown()
@@ -462,6 +472,7 @@ public class Character : MonoBehaviourPunCallbacks
     [PunRPC]
     public void DestroyShield_RPC()
     {
+        sStun.Play();
         Instantiate(destroyedParticleEffect, shieldController.transform.position, shieldController.transform.rotation);
         if (PV.IsMine)
         {
@@ -648,7 +659,6 @@ public class Character : MonoBehaviourPunCallbacks
             else
             {
                 //Debug.Log("Del mismo equipo?");
-
                 // Podría haber daño aliado pero daño entre 2
                 TakeDamage(collided.damage / collided.sameTeamDamage, collided);
             }

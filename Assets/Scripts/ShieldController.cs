@@ -27,6 +27,7 @@ public class ShieldController : MonoBehaviour
     [SerializeField] private GameObject destroyedParticleEffect;
 
     [SerializeField] private PhotonView PV;
+    [SerializeField] public AudioSource sShield;
 
     private void TakeDamage(int damage)
     {
@@ -143,18 +144,21 @@ public class ShieldController : MonoBehaviour
     
     private void OnCollisionEnter(Collision collision)
     {
-        if (PhotonNetwork.IsConnected)
-        {
-            if (!PV.IsMine)
-            {
-                return;
-            }
-        }
         BulletController collided;
         if (collision.gameObject.TryGetComponent<BulletController>(out collided) && collided.speed != 0)
         {
+            if (!sShield.isPlaying) {
+                sShield.Play();
+            }
+            if (PhotonNetwork.IsConnected)
+            {
+                if (!PV.IsMine)
+                {
+                    return;
+                }
+            }
             // Si todavia no ha pasado el tiempo, rebota, si ha pasado se recibe daño
-            if(elapsedTime < parryTime)
+            if (elapsedTime < parryTime)
             {
                 parried = true;
                 if (PhotonNetwork.IsConnected)

@@ -17,6 +17,8 @@ public class BulletController : MonoBehaviour
 
     public GameObject particleEffect;
     public GameObject bulletGraphics;
+
+    [SerializeField] public GameObject bulletWallSoundPrefab;
     // Start is called before the first frame update
     public virtual void Start()
     {
@@ -32,6 +34,10 @@ public class BulletController : MonoBehaviour
 
     public virtual void OnCollisionEnter(Collision collision)
     {
+        if(collision.gameObject.layer == 11) //Las paredes estan en la layer 11
+        {
+            Instantiate(bulletWallSoundPrefab, transform.position, Quaternion.identity);
+        }
         Destroy(gameObject);
         Instantiate(particleEffect, transform.position, transform.rotation);
     }

@@ -86,6 +86,8 @@ MonoBehaviour:
   particleEffect: {fileID: 4256318742635070123, guid: 8e239c96296c9a545ae7b21bdd9beafa,
     type: 3}
   bulletGraphics: {fileID: 5646345359503783382}
+  bulletWallSoundPrefab: {fileID: 3326849637991485287, guid: 7e3a4469f07430644a4131097692b328,
+    type: 3}
   maxRicochet: 3
 --- !u!1001 &8702046111893707726
 PrefabInstance:

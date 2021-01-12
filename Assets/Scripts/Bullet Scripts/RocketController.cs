@@ -21,11 +21,9 @@ public class RocketController : BulletController
     {
         if (!collision.gameObject.GetComponent<ShieldController>())
         {
-            
             GameObject objExplosion = Instantiate(explosion, transform.position, transform.rotation);
             objExplosion.GetComponent<BulletController>().teamId = teamId;
             objExplosion.GetComponent<BulletController>().owner = owner;
-           
         }
         base.OnCollisionEnter(collision);
     }

@@ -25,9 +25,17 @@ public class ShootingState : State
                 character.PV.RPC("startFlameThrower_RPC", RpcTarget.All);
             }
         }
-        else
+        else if (!PhotonNetwork.IsConnected)
         {
-            //Cosas del local
+            if (character.indiceBala == 0 || character.indiceBala == 3)
+            {
+                character.sLoopableShot.Play();
+            }
+            else if (character.indiceBala == 2)
+            {
+                character.sFlamethrower[0].Play();
+                character.sFlamethrower[1].PlayDelayed(character.sFlamethrower[0].clip.length);
+            }
         }
         
         
@@ -47,9 +55,17 @@ public class ShootingState : State
                 character.PV.RPC("stopFlameThrower_RPC", RpcTarget.All);
             }
         }
-        else
+        else if(!PhotonNetwork.IsConnected)
         {
-            //Cosas del local
+            if (character.indiceBala == 0 || character.indiceBala == 3)
+            {
+                character.sLoopableShot.Stop();
+            }
+            else if (character.indiceBala == 2)
+            {
+                character.sFlamethrower[1].Stop();
+                character.sFlamethrower[2].Play();
+            }
         }
         
     }
