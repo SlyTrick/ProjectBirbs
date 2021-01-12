@@ -119,6 +119,50 @@ MonoBehaviour:
     m_Key: SOUND EFFECTS
     m_Metadata:
       m_Items: []
+  - m_Id: 3306449211260928
+    m_Key: Deathmatch Description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3307889518477312
+    m_Key: Feeder King Description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3308079218458624
+    m_Key: Shoot
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3308229135466496
+    m_Key: Shield
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3308458790387712
+    m_Key: Look
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3308529015619584
+    m_Key: Move
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3308801892843520
+    m_Key: Feather Hoarder Description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3313502046683136
+    m_Key: Shoot Mode
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3313637501730816
+    m_Key: Shield Mode
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3313788144353280
+    m_Key: 'Right: Look'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3313872957374464
+    m_Key: 'Left: Move'
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

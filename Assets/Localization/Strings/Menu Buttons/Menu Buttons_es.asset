@@ -131,6 +131,54 @@ MonoBehaviour:
     m_Localized: EFECTOS DE SONIDO
     m_Metadata:
       m_Items: []
+  - m_Id: 3306449211260928
+    m_Localized: "Elimina a tus enemigos para alzarte con la victoria, cada vez que
+      consigas realizar una eliminaci\xF3n se te otorgar\xE1 un punto y al llegar
+      a diez te har\xE1s con la victoria."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3307889518477312
+    m_Localized: "Monopoliza el \xE1rea del comedero para ganar cien puntos y conseguir
+      la victoria. Pero cuidado, mientras comes no puedes defenderte."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3308079218458624
+    m_Localized: Disparar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3308229135466496
+    m_Localized: Escudo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3308458790387712
+    m_Localized: Mirar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3308529015619584
+    m_Localized: Mover
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3308801892843520
+    m_Localized: "Recoge plumas mientras que combates contra tus enemigos pero cuidado,
+      si mueres soltar\xE1s parte de tus plumas, consigue veinte para ganar."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3313502046683136
+    m_Localized: Cambiar a Modo Disparo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3313637501730816
+    m_Localized: Cambiar a Modo Escudo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3313788144353280
+    m_Localized: 'Derecha: Mirar'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3313872957374464
+    m_Localized: 'Izquierda: Mover'
+    m_Metadata:
+      m_Items: []
   references:
     version: 1
     00000000:

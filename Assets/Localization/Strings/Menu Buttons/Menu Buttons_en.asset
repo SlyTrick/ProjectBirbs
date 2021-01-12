@@ -131,6 +131,54 @@ MonoBehaviour:
     m_Localized: SOUND EFFECTS
     m_Metadata:
       m_Items: []
+  - m_Id: 3306449211260928
+    m_Localized: Eliminate your enemies in order to rise to victory. Every time you
+      manage to make an elimination you will be awarded one point and when you reach
+      ten you will win.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3307889518477312
+    m_Localized: Monopolize the trough area until you win a hundred points and get
+      the victory but be careful, while you eat you can not defend yourself.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3308079218458624
+    m_Localized: Shoot
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3308229135466496
+    m_Localized: Shield
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3308458790387712
+    m_Localized: Look
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3308529015619584
+    m_Localized: Move
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3308801892843520
+    m_Localized: Collect feathers while you fight your enemies but be careful, if
+      you die you will drop part of your feathers. Get twenty to win.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3313502046683136
+    m_Localized: Change to Shoot Mode
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3313637501730816
+    m_Localized: Change to Shield Mode
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3313788144353280
+    m_Localized: 'Right: Look'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3313872957374464
+    m_Localized: 'Left: Move'
+    m_Metadata:
+      m_Items: []
   references:
     version: 1
     00000000:
