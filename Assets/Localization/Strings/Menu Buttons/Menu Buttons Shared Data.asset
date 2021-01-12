@@ -87,6 +87,38 @@ MonoBehaviour:
     m_Key: Previous
     m_Metadata:
       m_Items: []
+  - m_Id: 3149075947225088
+    m_Key: Resume
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3149249960509440
+    m_Key: Pause
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3151157412528128
+    m_Key: Exit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3195947709661184
+    m_Key: Add Player
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3198579073384448
+    m_Key: Host Disconnected
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3199218637635584
+    m_Key: Winner
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3199633584324608
+    m_Key: MUSIC
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3199936094306304
+    m_Key: SOUND EFFECTS
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

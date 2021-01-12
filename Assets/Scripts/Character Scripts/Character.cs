@@ -321,7 +321,7 @@ public class Character : MonoBehaviourPunCallbacks
         playerInput.enabled = !playerInput.enabled;
     }
 
-    public void getBalaIndex()
+    public void GetBalaIndex()
     {
         indiceBala = 0;
         if (bulletPrefab.TryGetComponent<MinigunController>(out MinigunController a))
@@ -565,7 +565,7 @@ public class Character : MonoBehaviourPunCallbacks
         lifeText.text = "Vida: " + life;
         scoreText.text = "Puntuación: " + score;
         hudManager = GetComponent<HUDmanager>();
-        getBalaIndex();
+        GetBalaIndex();
         if (PhotonNetwork.IsConnected && PV.IsMine)
         {
             mainCamera.enabled = true;
