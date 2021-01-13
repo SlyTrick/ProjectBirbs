@@ -21,6 +21,7 @@ public class MobileCharacter : MonoBehaviour
     [SerializeField] private Joystick moveJoystick;
     [SerializeField] private Joystick rotateJoystick;
     [SerializeField] private Button mode;
+    [SerializeField] private Button pause;
     [SerializeField] private Sprite[] modeSprite;
     private Character characterScript;
     private bool shoot;
@@ -36,6 +37,7 @@ public class MobileCharacter : MonoBehaviour
             moveJoystick.gameObject.SetActive(false);
             rotateJoystick.gameObject.SetActive(false);
             mode.gameObject.SetActive(false);
+            pause.gameObject.SetActive(false);
             GetComponent<MobileCharacter>().enabled = false;
         }
     }
@@ -65,13 +67,13 @@ public class MobileCharacter : MonoBehaviour
         if(!stickState && rotateJoystick.Horizontal != 0.0f || rotateJoystick.Vertical != 0.0f){
             if (shoot)
             {
-                Debug.Log("Disparando joystick");
+                //Debug.Log("Disparando joystick");
                 characterScript.GetInputController().shootInput = true;
                 characterScript.movementSM.CurrentState.OnShoot();
             }
             else
             {
-                Debug.Log("Escudo joystick");
+                //Debug.Log("Escudo joystick");
                 characterScript.GetInputController().shieldInput = true;
                 characterScript.movementSM.CurrentState.OnShield();
             }
@@ -114,6 +116,6 @@ public class MobileCharacter : MonoBehaviour
         }
         mode.GetComponent<Image>().sprite = modeSprite[currentMode];
         shoot = !shoot;
-        Debug.Log("Modo: " + shoot);
+        //Debug.Log("Modo: " + shoot);
     }
 }

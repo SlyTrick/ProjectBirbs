@@ -59,6 +59,7 @@ public class Character : MonoBehaviourPunCallbacks
     [SerializeField] private ShieldController shieldController;
     [SerializeField] public GameObject[] bulletPrefabs;
     [SerializeField] private GameObject destroyedParticleEffect;
+    [SerializeField] private GameObject canvas;
     [SerializeField] public Slider stunSlider;
 
     [SerializeField] private InputController inputController;
@@ -573,6 +574,7 @@ public class Character : MonoBehaviourPunCallbacks
         GetBalaIndex();
         if (PhotonNetwork.IsConnected && PV.IsMine)
         {
+            canvas.SetActive(true);
             mainCamera.enabled = true;
             playerInput.enabled = true;
             mobileCharacter.enabled = true;
@@ -593,9 +595,10 @@ public class Character : MonoBehaviourPunCallbacks
         }
         else if (!PhotonNetwork.IsConnected)
         {
-            mobileCharacter.enabled = true;
+            canvas.SetActive(true);
             mainCamera.enabled = true;
             playerInput.enabled = true;
+            mobileCharacter.enabled = true;
             RoomManagerOffline RMO = FindObjectOfType<RoomManagerOffline>();
             if (RMO.gamemodeIndex == 3)
             {

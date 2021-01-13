@@ -78,7 +78,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 715096384110592
-    m_Localized: 'Modo de Juego Actual: {pito}'
+    m_Localized: Modo de Juego Actual
     m_Metadata:
       m_Items: []
   - m_Id: 717339439169536
@@ -143,7 +143,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 3308079218458624
-    m_Localized: Pausa
+    m_Localized: Disparar
     m_Metadata:
       m_Items: []
   - m_Id: 3308229135466496
@@ -189,6 +189,18 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 3565979377954816
     m_Localized: No se puede comenzar partida hasta que haya 2 o mas equipos presentes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3596382715019264
+    m_Localized: Modo Escudo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3609733750882304
+    m_Localized: Pulsa para Comenzar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3621308289286144
+    m_Localized: Selecciona Modo de Juego
     m_Metadata:
       m_Items: []
   references:

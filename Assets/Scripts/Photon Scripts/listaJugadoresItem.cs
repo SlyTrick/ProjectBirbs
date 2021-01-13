@@ -188,11 +188,11 @@ public class listaJugadoresItem : MonoBehaviour
     {
         if (LocalizationSettings.SelectedLocale.name == "Spanish (es)")
         {
-            pajaroTexto.text = pajarosSpanish[pajaroIndex];
+            pajaroTexto.text = pajarosSpanish[index];
         }
         else
         {
-            pajaroTexto.text = pajarosEnglish[pajaroIndex];
+            pajaroTexto.text = pajarosEnglish[index];
         }
         imagenPajaro.sprite = spritesPajaros[index];
     }

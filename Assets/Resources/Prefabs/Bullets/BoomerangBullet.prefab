@@ -76,10 +76,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6cd4ceb248a61346b43e4a7fe7c3282, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 15
+  damage: 25
   sameTeamDamage: 2
-  speed: 12
-  timeToLive: 2
+  speed: 20
+  timeToLive: 2.5
   moveVector: {x: 0, y: 0, z: 0}
   nombre: boomerangBullet
   teamId: 0
@@ -102,6 +102,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: boomerang
+      objectReference: {fileID: 0}
+    - target: {fileID: 3843862972944400578, guid: cdd8362ac0c1c8a4daf2d84eb1424ced,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4473188984747498104, guid: cdd8362ac0c1c8a4daf2d84eb1424ced,
         type: 3}

@@ -254,7 +254,7 @@ public class MatchController : MonoBehaviourPunCallbacks
         switch (mode)
         {
             case (int)modes.DEATHMATCH:
-                targetScore = 1;
+                targetScore = 10;
                 modeController = new DeathmatchController(this);
                 break;
             case (int)modes.KING_OF_THE_FEEDER:
@@ -266,7 +266,7 @@ public class MatchController : MonoBehaviourPunCallbacks
                 {
                     Object.Instantiate(feederPrefab, feederPos.transform.position, Quaternion.identity);
                 }
-                targetScore = 1;
+                targetScore = 100;
                 modeController = new KingOfTheFeederController(this);
                 break;
             case (int)modes.FEATHER_HOARDER:

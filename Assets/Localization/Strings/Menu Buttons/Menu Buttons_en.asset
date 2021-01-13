@@ -79,7 +79,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 715096384110592
-    m_Localized: 'Current Game Mode: {pito}'
+    m_Localized: Current Game Mode
     m_Metadata:
       m_Items: []
   - m_Id: 717339439169536
@@ -144,7 +144,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 3308079218458624
-    m_Localized: Pause
+    m_Localized: Shoot
     m_Metadata:
       m_Items: []
   - m_Id: 3308229135466496
@@ -193,6 +193,18 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - id: 2
+  - m_Id: 3596382715019264
+    m_Localized: Shield Mode
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3609733750882304
+    m_Localized: Press to Start
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3621308289286144
+    m_Localized: Select Game Mode
+    m_Metadata:
+      m_Items: []
   references:
     version: 1
     00000000:
