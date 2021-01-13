@@ -61,7 +61,7 @@
                     "path": "<XInputController>/leftStick",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Controller",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -178,11 +178,22 @@
                 },
                 {
                     "name": "",
+                    "id": "a91c510f-5493-4453-8508-969082a8a120",
+                    "path": "<Gamepad>/leftStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "67616696-6d60-428f-a6a9-103025182e44",
                     "path": "<XInputController>/rightShoulder",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Controller",
                     "action": "Shoot",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -200,11 +211,33 @@
                 },
                 {
                     "name": "",
+                    "id": "2ef5fb7f-0137-4992-b95c-fe5ded0b8407",
+                    "path": "<Gamepad>/rightShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "Shoot",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "e45c625b-1f02-4c8c-b72f-b873fd048786",
                     "path": "<XInputController>/rightStick",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Controller",
+                    "action": "Look",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d7e3cc1f-05e9-4820-8036-2ce252fde899",
+                    "path": "<Gamepad>/rightStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
                     "action": "Look",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -244,6 +277,17 @@
                 },
                 {
                     "name": "",
+                    "id": "f228e94b-12b7-4d14-af18-9e4b779386b9",
+                    "path": "<Gamepad>/leftShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "Shield",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "18e44ffb-79f9-42ec-afff-fb8d865f0160",
                     "path": "<Keyboard>/p",
                     "interactions": "",
@@ -257,6 +301,17 @@
                     "name": "",
                     "id": "a9ee157d-3412-4941-b52b-6b7523812da6",
                     "path": "<XInputController>/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d401bd26-980a-48c3-a211-b2e23cc5daea",
+                    "path": "<Gamepad>/start",
                     "interactions": "",
                     "processors": "",
                     "groups": "Controller",
