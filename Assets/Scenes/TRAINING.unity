@@ -347,6 +347,7 @@ MonoBehaviour:
   destroyedParticleEffect: {fileID: 8378930425983463328, guid: c78be698dedf9e24cae612cd87ce7d1d,
     type: 3}
   canvas: {fileID: 0}
+  lineRenderer: {fileID: 0}
   stunSlider: {fileID: 0}
   inputController: {fileID: 2116724256}
   playerInput: {fileID: 0}
@@ -914,6 +915,7 @@ MonoBehaviour:
   destroyedParticleEffect: {fileID: 8378930425983463328, guid: c78be698dedf9e24cae612cd87ce7d1d,
     type: 3}
   canvas: {fileID: 0}
+  lineRenderer: {fileID: 0}
   stunSlider: {fileID: 0}
   inputController: {fileID: 2116724256}
   playerInput: {fileID: 0}
@@ -1281,6 +1283,7 @@ MonoBehaviour:
   destroyedParticleEffect: {fileID: 8378930425983463328, guid: c78be698dedf9e24cae612cd87ce7d1d,
     type: 3}
   canvas: {fileID: 0}
+  lineRenderer: {fileID: 0}
   stunSlider: {fileID: 0}
   inputController: {fileID: 2116724256}
   playerInput: {fileID: 0}
@@ -1355,6 +1358,7 @@ MonoBehaviour:
   destroyedParticleEffect: {fileID: 8378930425983463328, guid: c78be698dedf9e24cae612cd87ce7d1d,
     type: 3}
   canvas: {fileID: 0}
+  lineRenderer: {fileID: 0}
   stunSlider: {fileID: 0}
   inputController: {fileID: 2116724256}
   playerInput: {fileID: 0}
@@ -1535,6 +1539,7 @@ MonoBehaviour:
   destroyedParticleEffect: {fileID: 8378930425983463328, guid: c78be698dedf9e24cae612cd87ce7d1d,
     type: 3}
   canvas: {fileID: 0}
+  lineRenderer: {fileID: 0}
   stunSlider: {fileID: 0}
   inputController: {fileID: 513139986}
   playerInput: {fileID: 0}
@@ -1943,9 +1948,9 @@ AudioSource:
     type: 2}
   m_audioClip: {fileID: 8300000, guid: f419110154a55764b998f27279a22fcb, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.5
+  m_Volume: 0.3
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -2389,7 +2394,7 @@ MonoBehaviour:
   m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
-  m_firstOverflowCharacterIndex: -1
+  m_firstOverflowCharacterIndex: 0
   m_linkedTextComponent: {fileID: 0}
   m_isLinkedTextComponent: 0
   m_isTextTruncated: 0
@@ -2418,7 +2423,7 @@ MonoBehaviour:
     spaceCount: 0
     wordCount: 1
     linkCount: 0
-    lineCount: 1
+    lineCount: 2
     pageCount: 1
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
