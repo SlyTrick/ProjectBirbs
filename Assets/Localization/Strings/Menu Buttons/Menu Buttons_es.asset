@@ -143,7 +143,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 3308079218458624
-    m_Localized: Disparar
+    m_Localized: Pausa
     m_Metadata:
       m_Items: []
   - m_Id: 3308229135466496
@@ -168,7 +168,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 3313637501730816
-    m_Localized: Cambiar a Modo Escudo
+    m_Localized: Volver
     m_Metadata:
       m_Items: []
   - m_Id: 3313788144353280

@@ -144,7 +144,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 3308079218458624
-    m_Localized: Shoot
+    m_Localized: Pause
     m_Metadata:
       m_Items: []
   - m_Id: 3308229135466496
@@ -169,7 +169,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 3313637501730816
-    m_Localized: Change to Shield Mode
+    m_Localized: Return
     m_Metadata:
       m_Items: []
   - m_Id: 3313788144353280
