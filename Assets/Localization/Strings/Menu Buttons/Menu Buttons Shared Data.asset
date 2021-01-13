@@ -171,6 +171,10 @@ MonoBehaviour:
     m_Key: Room
     m_Metadata:
       m_Items: []
+  - m_Id: 3527588848107520
+    m_Key: How to Play
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

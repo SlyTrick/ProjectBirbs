@@ -596,7 +596,6 @@ public class Character : MonoBehaviourPunCallbacks
             mobileCharacter.enabled = true;
             mainCamera.enabled = true;
             playerInput.enabled = true;
-            audioListener.enabled = true;
             RoomManagerOffline RMO = FindObjectOfType<RoomManagerOffline>();
             if (RMO.gamemodeIndex == 3)
             {
@@ -606,11 +605,16 @@ public class Character : MonoBehaviourPunCallbacks
             {
                 teamId = RMO.jugadoresInfo[GetComponentInChildren<PlayerInput>().playerIndex + 1][1];
             }
+            if (playerInput.playerIndex == 0)
+            {
+                audioListener.enabled = true;
+            }
             matchController = FindObjectOfType<MatchController>();
             matchController.AddPlayer(this);
             spawnPoint = matchController.GetSpawnPoint(this);
             GetComponent<Transform>().position = spawnPoint.transform.position;
             hudManager.setBackground();
+
         }
 
         movementSM = new StateMachine();
