@@ -173,6 +173,10 @@ public class RoomManagerOffline : MonoBehaviour
     public bool CheckEquipos()
     {
         int cantEquipo1 = 0, cantEquipo2 = 0, cantEquipo3 = 0, cantEquipo4 = 0;
+        if (jugadoresSala == null)
+        {
+            return false;
+        }
         foreach (KeyValuePair<int, GameObject> p in jugadoresSala)
         {
             int teamId = p.Value.GetComponent<listaJugadoresItem>().teamId;
