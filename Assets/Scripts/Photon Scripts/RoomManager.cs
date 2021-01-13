@@ -209,7 +209,14 @@ public class RoomManager : MonoBehaviourPunCallbacks
     public IEnumerator ResultsTimer()
     {
         yield return new WaitForSeconds(10);
-        FindObjectOfType<Launcher>().SetUpRoom();
+        if (PhotonNetwork.InRoom)
+        {
+            FindObjectOfType<Launcher>().SetUpRoom();
+        }
+        else
+        {
+            MenuManager.Instance.OpenMenu("menuSalas");
+        }
     }
 
     public void TirarDelCable()
