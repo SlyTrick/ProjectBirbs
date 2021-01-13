@@ -15,7 +15,8 @@ public class RoomManagerOffline : MonoBehaviour
     [SerializeField] public Transform listaJugadoresOffline;
     [SerializeField] public TMP_Text textoBotonCambiarModo;
     public GameObject tituloResultados;
-    public GameObject listaJugadoresResults;
+    public GameObject listaJugadoresResultsWinners;
+    public GameObject listaJugadoresResultsLosers;
     public Launcher launcher;
 
     public PlayerInputManager PIM;
@@ -34,6 +35,7 @@ public class RoomManagerOffline : MonoBehaviour
     public int teamIdGanador;
     public bool partidaOfflineTerminada = false;
     public bool salirSinTerminar = false;
+    public bool doOnce = false;
 
     void Awake()
     {
@@ -51,21 +53,24 @@ public class RoomManagerOffline : MonoBehaviour
     {
         if (scene.buildIndex == 1) //Estamos en el juego Offline
         {
-            PIM = FindObjectOfType<PlayerInputManager>();
-            foreach(KeyValuePair<int, int[]> j in jugadoresInfo)
+            if (doOnce)
             {
-                if(j.Key == 1)
+                doOnce = false;
+                PIM = FindObjectOfType<PlayerInputManager>();
+                foreach (KeyValuePair<int, int[]> j in jugadoresInfo)
                 {
-                    PIM.playerPrefab = pajarosPrefabs[j.Value[0]];
-                    InputDevice[] tecladoYRaton = new InputDevice[2] { InputSystem.devices[0], InputSystem.devices[1] };
-                    PIM.JoinPlayer(-1, -1, "Keyboard and Mouse", tecladoYRaton);
+                    if (j.Key == 1)
+                    {
+                        PIM.playerPrefab = pajarosPrefabs[j.Value[0]];
+                        InputDevice[] tecladoYRaton = new InputDevice[2] { InputSystem.devices[0], InputSystem.devices[1] };
+                        PIM.JoinPlayer(-1, -1, "Keyboard and Mouse", tecladoYRaton);
+                    }
+                    else
+                    {
+                        PIM.playerPrefab = pajarosPrefabs[j.Value[0]];
+                        PIM.JoinPlayer(-1, -1, "Controller", InputSystem.devices[j.Key]);
+                    }
                 }
-                else
-                {
-                    PIM.playerPrefab = pajarosPrefabs[j.Value[0]];
-                    PIM.JoinPlayer(-1, -1, "Controller", InputSystem.devices[j.Key]);
-                }
-                
             }
         }
         else if (scene.buildIndex == 0) //Estamos en el menu principal
@@ -89,17 +94,14 @@ public class RoomManagerOffline : MonoBehaviour
         }
         else if(scene.buildIndex == 3) //Estamos en el entrenamiento
         {
-            PIM = FindObjectOfType<PlayerInputManager>();
-            if(InputSystem.devices.Count > 1)
+            if (doOnce)
             {
+                doOnce = false;
+                Debug.Log("Creo un jugador para el entrenamiento");
+                PIM = FindObjectOfType<PlayerInputManager>();
                 PIM.playerPrefab = pajarosPrefabs[pajaroIndexEntrenamiento];
                 InputDevice[] tecladoYRaton = new InputDevice[2] { InputSystem.devices[0], InputSystem.devices[1] };
                 PIM.JoinPlayer(-1, -1, "Keyboard and Mouse", tecladoYRaton);
-            }
-            else
-            {
-                PIM.playerPrefab = pajarosPrefabs[pajaroIndexEntrenamiento];
-                PIM.JoinPlayer(-1, -1, "Keyboard and Mouse", InputSystem.devices[0]);
             }
         }
     }
@@ -128,6 +130,7 @@ public class RoomManagerOffline : MonoBehaviour
             }
             partidaOfflineTerminada = false;
             salirSinTerminar = false;
+            doOnce = true;
             SceneManager.LoadScene(1);
         }
     }
@@ -226,9 +229,14 @@ public class RoomManagerOffline : MonoBehaviour
     public void GoToResultsRoom()
     {
         tituloResultados = GameObject.FindGameObjectWithTag("tituloResultados");
-        listaJugadoresResults = GameObject.FindGameObjectWithTag("listaJugadoresResultados");
+        listaJugadoresResultsWinners = GameObject.FindGameObjectWithTag("listaJugadoresResultados");
+        listaJugadoresResultsLosers = GameObject.FindGameObjectWithTag("listaJugadoresResultadosLosers");
         tituloResultados.GetComponent<TMP_Text>().text = "Ha ganado el equipo: " + equiposNombres[teamIdGanador] + ". Con " + puntuacionFinal + " puntos";
-        foreach (Transform child in listaJugadoresResults.transform)
+        foreach (Transform child in listaJugadoresResultsWinners.transform)
+        {
+            Destroy(child.gameObject);
+        }
+        foreach (Transform child in listaJugadoresResultsLosers.transform)
         {
             Destroy(child.gameObject);
         }
@@ -236,8 +244,13 @@ public class RoomManagerOffline : MonoBehaviour
         {
             if(j.Value[1] == teamIdGanador)
             {
-                Instantiate(listaJugadoresPrefab, listaJugadoresResults.transform).GetComponent<listaJugadoresItem>().
-                            SetUpResultsRoom("Jugador " + j.Key, j.Value[0]);
+                Instantiate(listaJugadoresPrefab, listaJugadoresResultsWinners.transform).GetComponent<listaJugadoresItem>().
+                            SetUpResultsRoom("Jugador " + j.Key, j.Value[0], true);
+            }
+            else
+            {
+                Instantiate(listaJugadoresPrefab, listaJugadoresResultsLosers.transform).GetComponent<listaJugadoresItem>().
+                            SetUpResultsRoom("Jugador " + j.Key, j.Value[0], false);
             }
         }
         StartCoroutine(timerResults());
@@ -258,6 +271,7 @@ public class RoomManagerOffline : MonoBehaviour
 
     public void EmpezarEntrenamiento()
     {
+        doOnce = true;
         pajaroIndexEntrenamiento = jugadorEntrenamiento.GetComponent<listaJugadoresItem>().pajaroIndex;
         SceneManager.LoadScene(3); //Nos vamos a la escena de entrenamiento
     }

@@ -9,6 +9,7 @@ TagManager:
   - listaJugadoresResultados
   - listaJugadoresOffline
   - textoCambiarModoOffline
+  - listaJugadoresResultadosLosers
   layers:
   - Default
   - TransparentFX

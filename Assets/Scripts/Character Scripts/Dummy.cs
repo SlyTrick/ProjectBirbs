@@ -62,7 +62,7 @@ public class Dummy : Character
         damageable = true;
 
         matchController = FindObjectOfType<MatchController>();
-        matchController.AddPlayer(this);
+        //matchController.AddPlayer(this);
         spawnPoint = matchController.GetSpawnPoint(this);
 
         teamId = 5;

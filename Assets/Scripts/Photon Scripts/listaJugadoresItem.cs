@@ -22,7 +22,11 @@ public class listaJugadoresItem : MonoBehaviour
     [SerializeField] Image imagenPajaro;
     [SerializeField] Image marcoTeam;
     [HideInInspector] Player player;
-    [SerializeField] Sprite[] sprites;
+    [SerializeField] Sprite[] spritesPajaros;
+    [SerializeField] Sprite[] spritesResultsWinners;
+    [SerializeField] Sprite[] spritesResultsLosers;
+    [SerializeField] Image imagenResults;
+    [SerializeField] TMP_Text nombreResults;
     
 
     [HideInInspector] public string nombre;
@@ -189,7 +193,7 @@ public class listaJugadoresItem : MonoBehaviour
         {
             pajaroTexto.text = pajarosEnglish[pajaroIndex];
         }
-        imagenPajaro.sprite = sprites[index];
+        imagenPajaro.sprite = spritesPajaros[index];
     }
 
     public void CambiarModoDeJuego(int indiceNuevo)
@@ -216,7 +220,7 @@ public class listaJugadoresItem : MonoBehaviour
         }
     }
 
-    public void SetUpResultsRoom(string nombre, int pajaroIndex)
+    public void SetUpResultsRoom(string nombre, int pajaroIndex, bool winner)
     {
         botAnteriorPajaro.SetActive(false);
         botSiguientePajaro.SetActive(false);
@@ -225,8 +229,20 @@ public class listaJugadoresItem : MonoBehaviour
         marcoTeam.gameObject.SetActive(false);
         pajaroTexto.gameObject.SetActive(false);
         botEliminar.SetActive(false);
-        nombreTexto.text = nombre;
-        ActualizarPajaro(pajaroIndex);
+        imagenPajaro.gameObject.SetActive(false);
+        nombreTexto.gameObject.SetActive(false);
+        nombreResults.gameObject.SetActive(true);
+        imagenResults.gameObject.SetActive(true);
+        nombreResults.text = nombre;
+        if (winner)
+        {
+            imagenResults.sprite = spritesResultsWinners[pajaroIndex];
+        }
+        else
+        {
+            imagenResults.sprite = spritesResultsLosers[pajaroIndex];
+            this.gameObject.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+        }
     }
 
     public void EliminarJugador()
@@ -244,5 +260,6 @@ public class listaJugadoresItem : MonoBehaviour
         nombreTexto.gameObject.SetActive(false);
         pajaroIndex = 0;
         ActualizarPajaro(pajaroIndex);
+        this.gameObject.transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
     }
 }

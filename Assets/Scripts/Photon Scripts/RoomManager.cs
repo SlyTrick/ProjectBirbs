@@ -14,7 +14,8 @@ public class RoomManager : MonoBehaviourPunCallbacks
 
     public GameObject tituloResultados;
     [SerializeField] public GameObject listaJugadoresItemPrefab;
-    public GameObject listaJugadoresResults;
+    public GameObject listaJugadoresResultsWinners;
+    public GameObject listaJugadoresResultsLosers;
 
     [HideInInspector] public string[] pajaros = new string[5] { "Pigeon", "Duck", "Dori", "Kiwi", "RocketBirb" };
     [HideInInspector] public string[] equiposNombres = new string[4] { "Azul", "Rojo", "Amarillo", "Verde" };
@@ -165,10 +166,15 @@ public class RoomManager : MonoBehaviourPunCallbacks
     public void GoToResultsRoom()
     {
         tituloResultados = GameObject.FindGameObjectWithTag("tituloResultados");
-        listaJugadoresResults = GameObject.FindGameObjectWithTag("listaJugadoresResultados");
+        listaJugadoresResultsWinners = GameObject.FindGameObjectWithTag("listaJugadoresResultados");
+        listaJugadoresResultsLosers = GameObject.FindGameObjectWithTag("listaJugadoresResultadosLosers");
         tituloResultados.GetComponent<TMP_Text>().text = "Ha ganado el equipo: " + equiposNombres[equipoGanador] + ". Con " + puntosFinales + " puntos";
         Player[] players = PhotonNetwork.PlayerList;
-        foreach (Transform child in listaJugadoresResults.transform)
+        foreach (Transform child in listaJugadoresResultsWinners.transform)
+        {
+            Destroy(child.gameObject);
+        }
+        foreach (Transform child in listaJugadoresResultsLosers.transform)
         {
             Destroy(child.gameObject);
         }
@@ -182,8 +188,17 @@ public class RoomManager : MonoBehaviourPunCallbacks
                     object pajaroActivo;
                     if(p.CustomProperties.TryGetValue("indexPajaro", out pajaroActivo))
                     {
-                        Instantiate(listaJugadoresItemPrefab, listaJugadoresResults.transform).GetComponent<listaJugadoresItem>().
-                            SetUpResultsRoom(p.NickName, (int)pajaroActivo);
+                        Instantiate(listaJugadoresItemPrefab, listaJugadoresResultsWinners.transform).GetComponent<listaJugadoresItem>().
+                            SetUpResultsRoom(p.NickName, (int)pajaroActivo, true);
+                    }
+                }
+                else
+                {
+                    object pajaroActivo;
+                    if (p.CustomProperties.TryGetValue("indexPajaro", out pajaroActivo))
+                    {
+                        Instantiate(listaJugadoresItemPrefab, listaJugadoresResultsLosers.transform).GetComponent<listaJugadoresItem>().
+                            SetUpResultsRoom(p.NickName, (int)pajaroActivo, false);
                     }
                 }
             }
