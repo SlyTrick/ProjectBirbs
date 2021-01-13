@@ -34,6 +34,7 @@ public class Character : MonoBehaviourPunCallbacks
     public bool onFeeder;
     public int teamId;
     public int life;
+    public float stunCounter;
     private bool canShoot;
     private bool canShield;
     public int score;
@@ -43,7 +44,7 @@ public class Character : MonoBehaviourPunCallbacks
     private HUDmanager hudManager;
     public bool damageable;
 
-    [SerializeField] private Text scoreText;
+    [SerializeField] private GameObject scoreText;
     [SerializeField] private Text lifeText;
 
     [SerializeField] private Camera mainCamera;
@@ -58,6 +59,7 @@ public class Character : MonoBehaviourPunCallbacks
     [SerializeField] private ShieldController shieldController;
     [SerializeField] public GameObject[] bulletPrefabs;
     [SerializeField] private GameObject destroyedParticleEffect;
+    [SerializeField] public Slider stunSlider;
 
     [SerializeField] private InputController inputController;
     [SerializeField] private PlayerInput playerInput;
@@ -164,7 +166,7 @@ public class Character : MonoBehaviourPunCallbacks
         else
         {
             score = newScore;
-            scoreText.text = "Puntuación: " + score;
+            scoreText.GetComponent<TMPro.TextMeshProUGUI>().text = score + " pts";
         }
     }
 
@@ -269,6 +271,8 @@ public class Character : MonoBehaviourPunCallbacks
     public IEnumerator StunCooldown()
     {
         yield return new WaitForSeconds(stunTime);
+        stunSlider.value = stunSlider.maxValue;
+        stunSlider.gameObject.SetActive(false);
         shieldController.RestoreLife();
         if (!onFeeder)
             movementSM.ChangeState(groundedState);
@@ -504,7 +508,7 @@ public class Character : MonoBehaviourPunCallbacks
         if (PV.IsMine)
         {
             score = newScore;
-            scoreText.text = "Puntuación: " + score;
+            scoreText.GetComponent<TMPro.TextMeshProUGUI>().text = score + " pts";
         }
     }
 
@@ -561,9 +565,10 @@ public class Character : MonoBehaviourPunCallbacks
         canShoot = true;
         canShield = true;
         damageable = true;
+        stunSlider.maxValue = stunTime;
 
         lifeText.text = "Vida: " + life;
-        scoreText.text = "Puntuación: " + score;
+        scoreText.GetComponent<TMPro.TextMeshProUGUI>().text = score + " pts";
         hudManager = GetComponent<HUDmanager>();
         GetBalaIndex();
         if (PhotonNetwork.IsConnected && PV.IsMine)
@@ -627,6 +632,7 @@ public class Character : MonoBehaviourPunCallbacks
             if (!PV.IsMine)
                 return;
         }
+        stunSlider.value = stunCounter;
         movementSM.CurrentState.LogicUpdate();
     }
 
@@ -685,7 +691,7 @@ public class Character : MonoBehaviourPunCallbacks
     public bool GetCanShield() { return canShield; }
     public int GetScore() { return score; }
     public int GetFeathers() { return feathers; }
-    public Text GetScoreText() { return scoreText; }
+    public GameObject GetScoreText() { return scoreText; }
     public Text GetLifeText() { return lifeText; }
     public Camera GetCamera() { return mainCamera; }
     public Rigidbody GetRigidBody() { return rigidBody; }

@@ -12,6 +12,9 @@ public class StunState : State
     public override void Enter()
     {
         base.Enter();
+        character.stunSlider.gameObject.SetActive(true);
+        character.stunCounter = 5;
+        //character.stunSlider.value = character.stunSlider.maxValue;
         character.Stun();
     }
 
@@ -23,6 +26,7 @@ public class StunState : State
     public override void LogicUpdate()
     {
         base.LogicUpdate();
+        character.stunCounter -= Time.deltaTime;
     }
 
     public override void PhysicsUpdate()
