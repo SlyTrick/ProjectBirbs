@@ -12,7 +12,7 @@ public class SetSliderVolume : MonoBehaviour
 
     void Start()
     {
-        float value = PlayerPrefs.GetFloat(valueName, 0.75f);
+        float value = PlayerPrefs.GetFloat(valueName, 0.5f);
         slider.value = value;
         mixer.SetFloat(valueName, Mathf.Log10(value) * 20);
         Debug.Log("Cargo el valor " + slider.value + " en " + valueName);

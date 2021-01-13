@@ -10,6 +10,7 @@ using System.IO;
 using ExitGames.Client.Photon;
 using Hastable = ExitGames.Client.Photon.Hashtable;
 using UnityEngine.Localization.Settings;
+using UnityEngine.Audio;
 
 public class Launcher : MonoBehaviourPunCallbacks
 {
@@ -42,8 +43,11 @@ public class Launcher : MonoBehaviourPunCallbacks
 
     [SerializeField] TMP_InputField nombre;
     [SerializeField] RoomManager roomManagerLocal;
-    
-    
+
+    [SerializeField] public AudioMixer mixer;
+    public string[] valueNames = new string[2] { "effectVolume", "musicVolume" };
+
+
     void Awake()
     {
         Instance = this;
@@ -51,6 +55,11 @@ public class Launcher : MonoBehaviourPunCallbacks
         comingFromMainMenu = false;
         roomManager = FindObjectOfType<RoomManager>();
         RMO = FindObjectOfType<RoomManagerOffline>();
+        float valueE = PlayerPrefs.GetFloat(valueNames[0], 0.5f);
+        float valueM = PlayerPrefs.GetFloat(valueNames[1], 0.5f);
+        Debug.Log("Cargo el valor " + valueM + " en " + valueNames[1]);
+        mixer.SetFloat(valueNames[0], Mathf.Log10(valueE) * 20);
+        mixer.SetFloat(valueNames[1], Mathf.Log10(valueM) * 20);
     }
 
     public void ConnectOnline()
@@ -457,5 +466,17 @@ public class Launcher : MonoBehaviourPunCallbacks
     public void EmpezarEntrenamiento()
     {
         RMO.EmpezarEntrenamiento();
+    }
+
+    public void OpenHowToPlay()
+    {
+        if (!Application.isMobilePlatform)
+        {
+            MenuManager.Instance.OpenMenu("menuControlesPC");
+        }
+        else
+        {
+            MenuManager.Instance.OpenMenu("menuControlesMovil");
+        }
     }
 }

@@ -3281,6 +3281,10 @@ MonoBehaviour:
   inMenus: 0
   nombre: {fileID: 513809027}
   roomManagerLocal: {fileID: 814460392}
+  mixer: {fileID: 24100000, guid: 2c6b41b0aa441734ea9e089c7393b30b, type: 2}
+  valueNames:
+  - effectVolume
+  - musicVolume
 --- !u!114 &277867994
 MonoBehaviour:
   m_ObjectHideFlags: 0
