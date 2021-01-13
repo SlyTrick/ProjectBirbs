@@ -179,6 +179,10 @@ MonoBehaviour:
     m_Localized: 'Izquierda: Mover'
     m_Metadata:
       m_Items: []
+  - m_Id: 3519559587102720
+    m_Localized: Sala
+    m_Metadata:
+      m_Items: []
   references:
     version: 1
     00000000:

@@ -34,7 +34,7 @@ public class MatchController : MonoBehaviourPunCallbacks
     [SerializeField] private GameObject pauseCanvas;
     public float featherRate;
     public float feederRate;
-    public int numFeatherSpawns = 3;
+    public int numFeatherSpawns;
 
     [SerializeField] public PhotonView PV;
     public RoomManager roomManager;
@@ -287,6 +287,7 @@ public class MatchController : MonoBehaviourPunCallbacks
                 modeController = new TrainingController(this);
                 break;
         }
+        numFeatherSpawns = featherSpawns.Count;
     }
 
     public void Update()
