@@ -794,6 +794,7 @@ MonoBehaviour:
   destroyedParticleEffect: {fileID: 8378930425983463328, guid: c78be698dedf9e24cae612cd87ce7d1d,
     type: 3}
   canvas: {fileID: 9125791477919767920}
+  lineRenderer: {fileID: 8747671711226008336}
   stunSlider: {fileID: 9125009560624579204}
   inputController: {fileID: 3026375436166853483}
   playerInput: {fileID: 6642174217752996613}

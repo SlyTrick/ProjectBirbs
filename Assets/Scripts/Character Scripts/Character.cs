@@ -60,6 +60,7 @@ public class Character : MonoBehaviourPunCallbacks
     [SerializeField] public GameObject[] bulletPrefabs;
     [SerializeField] private GameObject destroyedParticleEffect;
     [SerializeField] private GameObject canvas;
+    [SerializeField] private LineRenderer lineRenderer;
     [SerializeField] public Slider stunSlider;
 
     [SerializeField] private InputController inputController;
@@ -310,10 +311,12 @@ public class Character : MonoBehaviourPunCallbacks
     public void SetVisible()
     {
         birbGraphics.SetActive(true);
+        lineRenderer.enabled = true;
     }
     public void SetInvisible()
     {
         birbGraphics.SetActive(false);
+        lineRenderer.enabled = false;
     }
 
     public void Pause()
