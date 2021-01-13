@@ -87,7 +87,7 @@ MonoBehaviour:
   owner: {fileID: 0}
   particleEffect: {fileID: 4256318742635070123, guid: 8e239c96296c9a545ae7b21bdd9beafa,
     type: 3}
-  bulletGraphics: {fileID: 0}
+  bulletGraphics: {fileID: 9183966510610067386}
   bulletWallSoundPrefab: {fileID: 0}
 --- !u!1 &8373938547730588023
 GameObject:
@@ -286,6 +286,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: acf39d9f4addf294d93fa56fa373961b, type: 3}
+--- !u!1 &9183966510610067386 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1000011797152326, guid: acf39d9f4addf294d93fa56fa373961b,
+    type: 3}
+  m_PrefabInstance: {fileID: 9184965411019419132}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &9185575896862075556 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4000010212820824, guid: acf39d9f4addf294d93fa56fa373961b,

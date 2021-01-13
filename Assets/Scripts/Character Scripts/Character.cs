@@ -690,6 +690,7 @@ public class Character : MonoBehaviourPunCallbacks
     public float GetShieldTime() { return shieldTime; }
     public int GetTeamId() { return teamId; }
     public int GetLife() { return life; }
+    public float GetStunTime() { return stunTime; }
     public bool GetCanShoot() { return canShoot; }
     public void SetCanShoot(bool newCanShoot) { canShoot = newCanShoot; }
     public bool GetCanShield() { return canShield; }

@@ -175,6 +175,10 @@ MonoBehaviour:
     m_Key: How to Play
     m_Metadata:
       m_Items: []
+  - m_Id: 3565979377954816
+    m_Key: explicacionEquipos
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

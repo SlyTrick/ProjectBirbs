@@ -667,6 +667,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: Spawn Team Amarillo Ciudad
       objectReference: {fileID: 0}
+    - target: {fileID: 6899991602262047547, guid: 40cf2cd91e510904098f57437590c86a,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 9.853094
+      objectReference: {fileID: 0}
+    - target: {fileID: 6899991602262047547, guid: 40cf2cd91e510904098f57437590c86a,
+        type: 3}
+      propertyPath: m_Size.z
+      value: 6.4672813
+      objectReference: {fileID: 0}
+    - target: {fileID: 6899991602262047547, guid: 40cf2cd91e510904098f57437590c86a,
+        type: 3}
+      propertyPath: m_Center.x
+      value: -0.63449836
+      objectReference: {fileID: 0}
+    - target: {fileID: 6899991602262047547, guid: 40cf2cd91e510904098f57437590c86a,
+        type: 3}
+      propertyPath: m_Center.z
+      value: -2.2336407
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 40cf2cd91e510904098f57437590c86a, type: 3}
 --- !u!65 &6274365146735464026 stripped
@@ -747,6 +767,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Spawn Team Verde Granja
+      objectReference: {fileID: 0}
+    - target: {fileID: 6899991602262047547, guid: 40cf2cd91e510904098f57437590c86a,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 11.744411
+      objectReference: {fileID: 0}
+    - target: {fileID: 6899991602262047547, guid: 40cf2cd91e510904098f57437590c86a,
+        type: 3}
+      propertyPath: m_Size.z
+      value: 10.665275
+      objectReference: {fileID: 0}
+    - target: {fileID: 6899991602262047547, guid: 40cf2cd91e510904098f57437590c86a,
+        type: 3}
+      propertyPath: m_Center.x
+      value: 1.6420498
+      objectReference: {fileID: 0}
+    - target: {fileID: 6899991602262047547, guid: 40cf2cd91e510904098f57437590c86a,
+        type: 3}
+      propertyPath: m_Center.z
+      value: 1.5629134
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 40cf2cd91e510904098f57437590c86a, type: 3}
@@ -1034,6 +1074,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: Spawn Team Rojo Granja
       objectReference: {fileID: 0}
+    - target: {fileID: 6899991602262047547, guid: 40cf2cd91e510904098f57437590c86a,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 10.482852
+      objectReference: {fileID: 0}
+    - target: {fileID: 6899991602262047547, guid: 40cf2cd91e510904098f57437590c86a,
+        type: 3}
+      propertyPath: m_Size.z
+      value: 12.693716
+      objectReference: {fileID: 0}
+    - target: {fileID: 6899991602262047547, guid: 40cf2cd91e510904098f57437590c86a,
+        type: 3}
+      propertyPath: m_Center.x
+      value: 1.4455605
+      objectReference: {fileID: 0}
+    - target: {fileID: 6899991602262047547, guid: 40cf2cd91e510904098f57437590c86a,
+        type: 3}
+      propertyPath: m_Center.z
+      value: -2.068334
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 40cf2cd91e510904098f57437590c86a, type: 3}
 --- !u!65 &7456605432294169526 stripped
@@ -1114,6 +1174,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Spawn Team Amarillo Granja
+      objectReference: {fileID: 0}
+    - target: {fileID: 6899991602262047547, guid: 40cf2cd91e510904098f57437590c86a,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 12.637077
+      objectReference: {fileID: 0}
+    - target: {fileID: 6899991602262047547, guid: 40cf2cd91e510904098f57437590c86a,
+        type: 3}
+      propertyPath: m_Size.z
+      value: 10.286661
+      objectReference: {fileID: 0}
+    - target: {fileID: 6899991602262047547, guid: 40cf2cd91e510904098f57437590c86a,
+        type: 3}
+      propertyPath: m_Center.x
+      value: 1.244667
+      objectReference: {fileID: 0}
+    - target: {fileID: 6899991602262047547, guid: 40cf2cd91e510904098f57437590c86a,
+        type: 3}
+      propertyPath: m_Center.z
+      value: -1.6312485
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 40cf2cd91e510904098f57437590c86a, type: 3}
@@ -1196,6 +1276,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: Spawn Team Azul Granja
       objectReference: {fileID: 0}
+    - target: {fileID: 6899991602262047547, guid: 40cf2cd91e510904098f57437590c86a,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 10.305587
+      objectReference: {fileID: 0}
+    - target: {fileID: 6899991602262047547, guid: 40cf2cd91e510904098f57437590c86a,
+        type: 3}
+      propertyPath: m_Size.z
+      value: 11.825523
+      objectReference: {fileID: 0}
+    - target: {fileID: 6899991602262047547, guid: 40cf2cd91e510904098f57437590c86a,
+        type: 3}
+      propertyPath: m_Center.x
+      value: -2.9548569
+      objectReference: {fileID: 0}
+    - target: {fileID: 6899991602262047547, guid: 40cf2cd91e510904098f57437590c86a,
+        type: 3}
+      propertyPath: m_Center.z
+      value: -1.7309966
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 40cf2cd91e510904098f57437590c86a, type: 3}
 --- !u!4 &1065762651035184007 stripped
@@ -1220,7 +1320,7 @@ PrefabInstance:
     - target: {fileID: -5998613553903423094, guid: 237244af8d204f242b4a632a84aed4f3,
         type: 3}
       propertyPath: m_Size.x
-      value: 10.582008
+      value: 6.2073507
       objectReference: {fileID: 0}
     - target: {fileID: -5998613553903423094, guid: 237244af8d204f242b4a632a84aed4f3,
         type: 3}
@@ -1230,17 +1330,17 @@ PrefabInstance:
     - target: {fileID: -5998613553903423094, guid: 237244af8d204f242b4a632a84aed4f3,
         type: 3}
       propertyPath: m_Size.z
-      value: 11.6883335
+      value: 8.913873
       objectReference: {fileID: 0}
     - target: {fileID: -5998613553903423094, guid: 237244af8d204f242b4a632a84aed4f3,
         type: 3}
       propertyPath: m_Center.x
-      value: -0.26393127
+      value: -0.9495417
       objectReference: {fileID: 0}
     - target: {fileID: -5998613553903423094, guid: 237244af8d204f242b4a632a84aed4f3,
         type: 3}
       propertyPath: m_Center.z
-      value: 1.3993065
+      value: 1.5323281
       objectReference: {fileID: 0}
     - target: {fileID: 2951582865705049529, guid: 237244af8d204f242b4a632a84aed4f3,
         type: 3}
@@ -1336,7 +1436,7 @@ PrefabInstance:
     - target: {fileID: 6899991602262047540, guid: 40cf2cd91e510904098f57437590c86a,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -11.14
+      value: -13.79
       objectReference: {fileID: 0}
     - target: {fileID: 6899991602262047540, guid: 40cf2cd91e510904098f57437590c86a,
         type: 3}
@@ -1387,6 +1487,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Spawn Team Azul Ciudad
+      objectReference: {fileID: 0}
+    - target: {fileID: 6899991602262047547, guid: 40cf2cd91e510904098f57437590c86a,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 8.331709
+      objectReference: {fileID: 0}
+    - target: {fileID: 6899991602262047547, guid: 40cf2cd91e510904098f57437590c86a,
+        type: 3}
+      propertyPath: m_Size.z
+      value: 9.017884
+      objectReference: {fileID: 0}
+    - target: {fileID: 6899991602262047547, guid: 40cf2cd91e510904098f57437590c86a,
+        type: 3}
+      propertyPath: m_Center.x
+      value: -0.8048191
+      objectReference: {fileID: 0}
+    - target: {fileID: 6899991602262047547, guid: 40cf2cd91e510904098f57437590c86a,
+        type: 3}
+      propertyPath: m_Center.z
+      value: -1.0200381
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 40cf2cd91e510904098f57437590c86a, type: 3}
@@ -1469,6 +1589,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: Spawn Team Verde Ciudad
       objectReference: {fileID: 0}
+    - target: {fileID: 6899991602262047547, guid: 40cf2cd91e510904098f57437590c86a,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 7.560354
+      objectReference: {fileID: 0}
+    - target: {fileID: 6899991602262047547, guid: 40cf2cd91e510904098f57437590c86a,
+        type: 3}
+      propertyPath: m_Size.z
+      value: 10.003871
+      objectReference: {fileID: 0}
+    - target: {fileID: 6899991602262047547, guid: 40cf2cd91e510904098f57437590c86a,
+        type: 3}
+      propertyPath: m_Center.x
+      value: -2.280177
+      objectReference: {fileID: 0}
+    - target: {fileID: 6899991602262047547, guid: 40cf2cd91e510904098f57437590c86a,
+        type: 3}
+      propertyPath: m_Center.z
+      value: -4.0019355
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 40cf2cd91e510904098f57437590c86a, type: 3}
 --- !u!65 &2862405178128692938 stripped
@@ -1498,7 +1638,7 @@ PrefabInstance:
     - target: {fileID: 6899991602262047540, guid: 40cf2cd91e510904098f57437590c86a,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.4
+      value: 0.18
       objectReference: {fileID: 0}
     - target: {fileID: 6899991602262047540, guid: 40cf2cd91e510904098f57437590c86a,
         type: 3}
@@ -1508,7 +1648,7 @@ PrefabInstance:
     - target: {fileID: 6899991602262047540, guid: 40cf2cd91e510904098f57437590c86a,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 11.35
+      value: 14.12
       objectReference: {fileID: 0}
     - target: {fileID: 6899991602262047540, guid: 40cf2cd91e510904098f57437590c86a,
         type: 3}
@@ -1549,6 +1689,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Spawn Team Rojo Ciudad
+      objectReference: {fileID: 0}
+    - target: {fileID: 6899991602262047547, guid: 40cf2cd91e510904098f57437590c86a,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 7.314064
+      objectReference: {fileID: 0}
+    - target: {fileID: 6899991602262047547, guid: 40cf2cd91e510904098f57437590c86a,
+        type: 3}
+      propertyPath: m_Size.z
+      value: 6.462547
+      objectReference: {fileID: 0}
+    - target: {fileID: 6899991602262047547, guid: 40cf2cd91e510904098f57437590c86a,
+        type: 3}
+      propertyPath: m_Center.x
+      value: 2.9173121
+      objectReference: {fileID: 0}
+    - target: {fileID: 6899991602262047547, guid: 40cf2cd91e510904098f57437590c86a,
+        type: 3}
+      propertyPath: m_Center.z
+      value: 0.5758138
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 40cf2cd91e510904098f57437590c86a, type: 3}

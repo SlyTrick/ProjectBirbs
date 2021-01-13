@@ -19,6 +19,7 @@ MonoBehaviour:
     m_Items:
     - id: 0
     - id: 1
+    - id: 2
   m_TableData:
   - m_Id: 22350692352
     m_Localized: Local {0}
@@ -187,6 +188,11 @@ MonoBehaviour:
     m_Localized: How to Play
     m_Metadata:
       m_Items: []
+  - m_Id: 3565979377954816
+    m_Localized: You can only start a game when 2 or more teams are present
+    m_Metadata:
+      m_Items:
+      - id: 2
   references:
     version: 1
     00000000:
@@ -197,3 +203,7 @@ MonoBehaviour:
       type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
         m_Entries: 008034bf0c5e0b00
+    00000002:
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 007019463dab0c00

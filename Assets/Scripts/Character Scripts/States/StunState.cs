@@ -13,7 +13,7 @@ public class StunState : State
     {
         base.Enter();
         character.stunSlider.gameObject.SetActive(true);
-        character.stunCounter = 5;
+        character.stunCounter = character.GetStunTime();
         //character.stunSlider.value = character.stunSlider.maxValue;
         character.Stun();
     }

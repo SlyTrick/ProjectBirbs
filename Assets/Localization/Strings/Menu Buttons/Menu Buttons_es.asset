@@ -187,6 +187,10 @@ MonoBehaviour:
     m_Localized: "C\xF3mo Jugar"
     m_Metadata:
       m_Items: []
+  - m_Id: 3565979377954816
+    m_Localized: No se puede comenzar partida hasta que haya 2 o mas equipos presentes
+    m_Metadata:
+      m_Items: []
   references:
     version: 1
     00000000:
