@@ -24,6 +24,7 @@ public class MatchController : MonoBehaviourPunCallbacks
 
     [SerializeField] public List<BoxCollider> teamSpawnsCiudad;
     [SerializeField] public List<BoxCollider> teamSpawnsGranja;
+    [SerializeField] public BoxCollider spawnEntrenamiento;
     [SerializeField] public List<GameObject> featherSpawns;
     [SerializeField] public GameObject featherPrefab;
     [SerializeField] public GameObject feederPrefab;
@@ -51,9 +52,13 @@ public class MatchController : MonoBehaviourPunCallbacks
         {
             return teamSpawnsCiudad[target.GetTeamId()];
         }
-        else
+        else if(indiceMapa == 1)
         {
             return teamSpawnsGranja[target.GetTeamId()];
+        }
+        else
+        {
+            return spawnEntrenamiento;
         }
         
     }
@@ -137,7 +142,14 @@ public class MatchController : MonoBehaviourPunCallbacks
     }
     public void RandomizeAndSpawnMapOffline()
     {
-        indiceMapa = Random.Range(0, 2);
+        if(RMO.gamemodeIndex == 3)
+        {
+            indiceMapa = 2;
+        }
+        else
+        {
+            indiceMapa = Random.Range(0, 2);
+        }
         Vector3 spawnPos = new Vector3(0, 0, 0);
         Instantiate(mapasPrefabs[indiceMapa], spawnPos, Quaternion.identity);
     }
@@ -224,8 +236,8 @@ public class MatchController : MonoBehaviourPunCallbacks
         }
         else
         {
-            RandomizeAndSpawnMapOffline();
             RMO = FindObjectOfType<RoomManagerOffline>();
+            RandomizeAndSpawnMapOffline();
             mode = RMO.gamemodeIndex;
             Vector3 cloudDir = new Vector3(
                 Random.Range(-1.0f, 1.0f),

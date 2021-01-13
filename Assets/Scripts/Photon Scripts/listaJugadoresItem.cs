@@ -26,6 +26,7 @@ public class listaJugadoresItem : MonoBehaviour
     [SerializeField] Sprite[] spritesResultsWinners;
     [SerializeField] Sprite[] spritesResultsLosers;
     [SerializeField] Image imagenResults;
+    [SerializeField] Image glowTeam;
     [SerializeField] TMP_Text nombreResults;
     
 
@@ -220,7 +221,7 @@ public class listaJugadoresItem : MonoBehaviour
         }
     }
 
-    public void SetUpResultsRoom(string nombre, int pajaroIndex, bool winner)
+    public void SetUpResultsRoom(string nombre, int pajaroIndex, bool winner, int teamId)
     {
         botAnteriorPajaro.SetActive(false);
         botSiguientePajaro.SetActive(false);
@@ -233,7 +234,9 @@ public class listaJugadoresItem : MonoBehaviour
         nombreTexto.gameObject.SetActive(false);
         nombreResults.gameObject.SetActive(true);
         imagenResults.gameObject.SetActive(true);
+        glowTeam.gameObject.SetActive(true);
         nombreResults.text = nombre;
+        glowTeam.color = coloresTeam[teamId];
         if (winner)
         {
             imagenResults.sprite = spritesResultsWinners[pajaroIndex];

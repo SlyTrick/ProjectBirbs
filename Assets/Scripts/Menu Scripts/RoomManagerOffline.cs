@@ -245,12 +245,12 @@ public class RoomManagerOffline : MonoBehaviour
             if(j.Value[1] == teamIdGanador)
             {
                 Instantiate(listaJugadoresPrefab, listaJugadoresResultsWinners.transform).GetComponent<listaJugadoresItem>().
-                            SetUpResultsRoom("Jugador " + j.Key, j.Value[0], true);
+                            SetUpResultsRoom("Jugador " + j.Key, j.Value[0], true, j.Value[1]);
             }
             else
             {
                 Instantiate(listaJugadoresPrefab, listaJugadoresResultsLosers.transform).GetComponent<listaJugadoresItem>().
-                            SetUpResultsRoom("Jugador " + j.Key, j.Value[0], false);
+                            SetUpResultsRoom("Jugador " + j.Key, j.Value[0], false, j.Value[1]);
             }
         }
         StartCoroutine(timerResults());

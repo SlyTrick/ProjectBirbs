@@ -318,7 +318,6 @@ public class Character : MonoBehaviourPunCallbacks
 
     public void ChangePlayerInputState()
     {
-        Debug.Log("pito noseque");
         playerInput.enabled = !playerInput.enabled;
     }
 

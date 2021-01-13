@@ -166,7 +166,7 @@ PrefabInstance:
     - target: {fileID: 3720837788615089737, guid: d3b1d79f91e932b4db48934b41db3f13,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 12
+      value: 10.3
       objectReference: {fileID: 0}
     - target: {fileID: 3720837788615089737, guid: d3b1d79f91e932b4db48934b41db3f13,
         type: 3}
@@ -176,7 +176,7 @@ PrefabInstance:
     - target: {fileID: 3720837788615089737, guid: d3b1d79f91e932b4db48934b41db3f13,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -2.5
+      value: -4.61
       objectReference: {fileID: 0}
     - target: {fileID: 3720837788615089737, guid: d3b1d79f91e932b4db48934b41db3f13,
         type: 3}
@@ -306,7 +306,7 @@ MonoBehaviour:
   shootingAcceleration: 50
   stunnedAcceleration: 20
   feederAcceleration: 10
-  timeBetweenShots: 0.3
+  timeBetweenShots: 1
   shieldCooldown: 1
   respawnTime: 3
   stunTime: 10
@@ -422,7 +422,7 @@ PrefabInstance:
     - target: {fileID: 5057316786034826194, guid: 1f04d35c744ec7146aed238166cc77e5,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 12
+      value: 10.2
       objectReference: {fileID: 0}
     - target: {fileID: 5057316786034826194, guid: 1f04d35c744ec7146aed238166cc77e5,
         type: 3}
@@ -432,7 +432,7 @@ PrefabInstance:
     - target: {fileID: 5057316786034826194, guid: 1f04d35c744ec7146aed238166cc77e5,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 5
+      value: 9.69
       objectReference: {fileID: 0}
     - target: {fileID: 5057316786034826194, guid: 1f04d35c744ec7146aed238166cc77e5,
         type: 3}
@@ -883,7 +883,7 @@ MonoBehaviour:
   shootingAcceleration: 30
   stunnedAcceleration: 10
   feederAcceleration: 10
-  timeBetweenShots: 0.15
+  timeBetweenShots: 0.5
   shieldCooldown: 1
   respawnTime: 3
   stunTime: 10
@@ -1179,7 +1179,7 @@ Light:
     m_Type: 2
     m_Resolution: -1
     m_CustomResolution: -1
-    m_Strength: 1
+    m_Strength: 0.091
     m_Bias: 0.05
     m_NormalBias: 0.4
     m_NearPlane: 0.2
@@ -1268,7 +1268,7 @@ MonoBehaviour:
   shootingAcceleration: 20
   stunnedAcceleration: 10
   feederAcceleration: 10
-  timeBetweenShots: 0.4
+  timeBetweenShots: 2
   shieldCooldown: 1
   respawnTime: 3
   stunTime: 10
@@ -1687,7 +1687,7 @@ MonoBehaviour:
   shootingAcceleration: 20
   stunnedAcceleration: 10
   feederAcceleration: 10
-  timeBetweenShots: 0.5
+  timeBetweenShots: 2
   shieldCooldown: 1
   respawnTime: 3
   stunTime: 10
@@ -2089,7 +2089,7 @@ PrefabInstance:
     - target: {fileID: 8747671711033589324, guid: 1521d95ae3d634e4aacce4cc03593187,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 12
+      value: 10.24
       objectReference: {fileID: 0}
     - target: {fileID: 8747671711033589324, guid: 1521d95ae3d634e4aacce4cc03593187,
         type: 3}
@@ -2099,7 +2099,7 @@ PrefabInstance:
     - target: {fileID: 8747671711033589324, guid: 1521d95ae3d634e4aacce4cc03593187,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -5
+      value: -9.11
       objectReference: {fileID: 0}
     - target: {fileID: 8747671711033589324, guid: 1521d95ae3d634e4aacce4cc03593187,
         type: 3}
@@ -2191,7 +2191,7 @@ PrefabInstance:
     - target: {fileID: 2193414823619280139, guid: 766ffbab374853f4894d2340d2990e5e,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 12
+      value: 10.2
       objectReference: {fileID: 0}
     - target: {fileID: 2193414823619280139, guid: 766ffbab374853f4894d2340d2990e5e,
         type: 3}
@@ -2201,7 +2201,7 @@ PrefabInstance:
     - target: {fileID: 2193414823619280139, guid: 766ffbab374853f4894d2340d2990e5e,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 2.5
+      value: 5.14
       objectReference: {fileID: 0}
     - target: {fileID: 2193414823619280139, guid: 766ffbab374853f4894d2340d2990e5e,
         type: 3}
@@ -3011,7 +3011,7 @@ PrefabInstance:
     - target: {fileID: 7178350702658838709, guid: d44f6bc85d23e364eb2242c566e1ee14,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 12
+      value: 10.3
       objectReference: {fileID: 0}
     - target: {fileID: 7178350702658838709, guid: d44f6bc85d23e364eb2242c566e1ee14,
         type: 3}
@@ -3021,7 +3021,7 @@ PrefabInstance:
     - target: {fileID: 7178350702658838709, guid: d44f6bc85d23e364eb2242c566e1ee14,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.63
+      value: 0.34
       objectReference: {fileID: 0}
     - target: {fileID: 7178350702658838709, guid: d44f6bc85d23e364eb2242c566e1ee14,
         type: 3}

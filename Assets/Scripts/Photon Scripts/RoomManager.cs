@@ -189,7 +189,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
                     if(p.CustomProperties.TryGetValue("indexPajaro", out pajaroActivo))
                     {
                         Instantiate(listaJugadoresItemPrefab, listaJugadoresResultsWinners.transform).GetComponent<listaJugadoresItem>().
-                            SetUpResultsRoom(p.NickName, (int)pajaroActivo, true);
+                            SetUpResultsRoom(p.NickName, (int)pajaroActivo, true, (int)teamId);
                     }
                 }
                 else
@@ -198,7 +198,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
                     if (p.CustomProperties.TryGetValue("indexPajaro", out pajaroActivo))
                     {
                         Instantiate(listaJugadoresItemPrefab, listaJugadoresResultsLosers.transform).GetComponent<listaJugadoresItem>().
-                            SetUpResultsRoom(p.NickName, (int)pajaroActivo, false);
+                            SetUpResultsRoom(p.NickName, (int)pajaroActivo, false, (int)teamId);
                     }
                 }
             }
